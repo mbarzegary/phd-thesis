@@ -1,0 +1,180 @@
+\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws]{adsphd}
+%\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,doctoralschool=ads]{adsphd}
+%\documentclass[showinstructions,showlabels,coverfontpercent=100,faculty=firw,department=cws,phddegree=cws]{adsphd}
+%\documentclass[croppedpdf,showinstructions,faculty=firw,department=cws,phddegree=cws]{adsphd}
+%\documentclass[online,faculty=firw,department=cws,phddegree=cws]{adsphd}
+%\documentclass[print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws]{adsphd} % include bleed for the print service
+%\documentclass[print,faculty=firw,department=cws,phddegree=cws]{adsphd}
+%\documentclass[final,faculty=firw,department=cws,phddegree=cws]{adsphd}
+%\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,epub]{adsphd}
+
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!                                                               !!
+% !!  WARNING: do not remove the following lines between           !!
+% !!  "%%% COVER: Settings %%%" and "%%% COVER: End settings %%%"  !!
+% !!                                                               !!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+%%% COVER: Settings %%%
+\title{The Title of Your PhD Dissertation}
+%\subtitle{Multiscale computing for Dummies}
+
+\author{Your}{Name}
+
+\supervisor{Prof.~dr.~ir.~F.~Leader}{}
+\supervisor{Prof.~dr.~ir.~S.~Leader}{}
+\president{Prof.~dr.~ir.~The~Chairman}{}
+\jurymember{Prof.~dr.~ir.~The~One}{}
+\jurymember{Prof.~dr.~ir.~The~Other}{}
+\externaljurymember{Prof.~dr.~External~Jurymember}{Far Away}
+
+% Your research group within the department
+% e.g. iMinds-DistriNet, Scientific Computing Group, ...
+\researchgroup{XXXXX}
+\website{http://www.XXXXX.cs.kuleuven.be} % Leave empty to hide
+\email{first.last@cs.kuleuven.be} % Leave empty to hide
+
+\address{Celestijnenlaan 200A box 2402}
+% \addresscity{B-3001 Leuven} % This is the default value. Note
+                              % that 'B-3001 Heverlee' is _incorrect_!!
+                              % /[https://www.kuleuven.be/communicatie/marketing/intranet/huisstijl/taalgebruik.html]
+
+\date{January 2016}
+\copyyear{2016}
+%\udc{XXX.XX}            % UDC, deposit number and ISBN are no longer necessary.
+%\depot{XXXX/XXXX/XX}    % Leave out the initial D/ (it is added
+                         % automatically)
+%\isbn{XXX-XX-XXXX-XXX-X}
+
+
+% Set spine width:
+\setlength{\adsphdspinewidth}{9mm}
+
+%% Set bleeds
+%\setlength{\defaultlbleed}{7mm}
+%\setlength{\defaultrbleed}{7mm}
+
+% Set custom cover page
+% \setcustomcoverpage{mycoverpage.tex} % mycoverpage.tex is the default
+
+%%% COVER: End settings %%%
+
+% for the nomenclature (comment out if you do not use the nomencl package
+\usepackage{nomencl}   % For nomenclature
+\renewcommand{\nomname}{List of Symbols}
+\newcommand{\myprintnomenclature}{%
+  \cleardoublepage%
+  \printnomenclature%
+  \chaptermark{\nomname}
+  \addcontentsline{toc}{chapter}{\nomname} %% comment to exclude from TOC
+}
+\makenomenclature%
+
+% for the list of abbreviations (comment out if you do not use the glossaries package
+\usepackage{glossaries} % For list of abbreviations
+\newcommand{\glossname}{List of Abbreviations}
+\newcommand{\myprintglossary}{%
+  \renewcommand{\glossaryname}{\glossname}
+  \cleardoublepage%
+  \printglossary[title=\glossname]
+  \chaptermark{\glossname}
+  \addcontentsline{toc}{chapter}{\glossname} %% comment to exclude from TOC
+}
+\makeglossaries%
+
+
+% BibLaTeX
+%\usepackage[utf8]{inputenc}
+%\usepackage{csquotes}
+%\usepackage[
+  %hyperref=auto,
+  %mincrossrefs=999,
+  %backend=biber,
+  %style=authoryear-icomp
+%]{biblatex}
+%\addbibresource{allpapers.bib}
+
+% Fonts
+\usepackage{textcomp} % nice greek alphabet
+\usepackage{pifont}   % Dingbats
+\usepackage{booktabs}
+\usepackage{amssymb,amsthm}
+\usepackage{amsmath}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makefrontcoverXII
+
+\maketitle
+
+\frontmatter % to get \pagenumbering{roman}
+
+\includepreface{preface}
+\includeabstract{abstract}
+\includeabstractnl{abstractnl}
+
+% To create a list of abbreviations, there are 2 options
+% 1. manual creation of list of abbreviations and inclusion as a chapter
+%    \includeabbreviations{abbreviations}
+% 2. automatic generation via the glossary package
+%    \glossary{name=MD,description=molecular dynamics}
+\myprintglossary
+
+% To create a list of symbols, there are 2 options
+% 1. include a manually created nomenclature as a chapter
+%    \includenomenclature{nomenclaturechapter}
+% 2. automatic generation via the nomencl package
+%    \nomenclature[cB]{$c_B(\vec{x})$}{Characteristic function of $B$}
+\myprintnomenclature
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter % to get \pagenumbering{arabic}
+
+% Show instructions on a separate page
+\instructionschapters\cleardoublepage
+
+\includechapter{introduction}
+\includechapter{manual} % Remove this chapter
+
+% Insert here your own chapters
+% Chapters are expected to be in a tex-file with the given name dot
+% tex and in a directory with the given name in the chapters
+% directory.
+
+\includechapter{conclusion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\includeappendix{myappendix}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+
+\includebibliography
+% BibTex
+\bibliographystyle{acm}
+\bibliography{allpapers}
+% BibLatex (comment lines above and comment out biblatex lines in preamble)
+%\printbibliography[title=\bibname]
+\instructionsbibliography
+
+\includecv{curriculum}
+
+\includepublications{publications}
+
+\makebackcoverXII
+
+\end{document}
+
