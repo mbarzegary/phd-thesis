@@ -94,12 +94,36 @@
 %\addbibresource{allpapers.bib}
 
 % Fonts
+
 \usepackage{textcomp} % nice greek alphabet
 \usepackage{pifont}   % Dingbats
 \usepackage{booktabs}
 \usepackage{amssymb,amsthm}
 \usepackage{amsmath}
 
+\usepackage{fontspec}
+
+\usepackage{mathpazo}% for math
+\usepackage{tgpagella}% for text
+\usepackage[T1]{fontenc}
+\linespread{1.1} % Palatino needs more leading
+\frenchspacing
+
+% Setup babel
+\usepackage[dutch,english,bidi=default]{babel} % order of passed options seems to be
+
+                                  % important!
+% Make sure babel does not overwrite our lof/lot name
+\addto\captionsenglish{%
+  \renewcommand\listfigurename{\lofname}
+  \renewcommand\listtablename{\lotname}
+}
+\babelprovide[import]{persian}
+
+\usepackage{sectsty}
+\allsectionsfont{\fontfamily{qpl}\selectfont}
+
+%\babelfont[english]{sf}{qpl}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

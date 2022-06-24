@@ -618,15 +618,15 @@
 %\RequirePackage{textcomp} % nice greek alphabet
 %\RequirePackage{pifont}   % Dingbats
 
-\newcommand{\labfont}{\fontfamily{phv}\selectfont} % fonts used in labels
+%\newcommand{\labfont}{\fontfamily{phv}\selectfont} % fonts used in labels
 \usepackage{sectsty}
-\allsectionsfont{\sffamily}
+%\allsectionsfont{\sffamily}
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 
 % TABLE OF CONTENTS
 \usepackage[titles]{tocloft}
-\renewcommand{\cftchapfont}{\sffamily\bfseries\selectfont}
-\renewcommand{\cftchappagefont}{\sffamily\bfseries\selectfont}
+%\renewcommand{\cftchapfont}{\sffamily\bfseries\selectfont}
+%\renewcommand{\cftchappagefont}{\sffamily\bfseries\selectfont}
 
 % PAGE LAYOUT
 %\setlength{\textwidth}{12.5truecm}
@@ -739,15 +739,6 @@
 \tolerance=1500
 
 % <-- end ADS
-
-% Setup babel
-\usepackage[dutch,english]{babel} % order of passed options seems to be
-                                  % important!
-% Make sure babel does not overwrite our lof/lot name
-\addto\captionsenglish{%
-  \renewcommand\listfigurename{\lofname}
-  \renewcommand\listtablename{\lotname}
-}
 
 % Conditionals
 \RequirePackage{ifthen}
