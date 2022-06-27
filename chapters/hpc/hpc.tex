@@ -40,12 +40,12 @@ Before elaborating the parallel implementation strategy, the mathematical model 
 In metals, degradation occurs through the corrosion process, which usually consists of electrochemical reactions, including anodic and cathodic reactions as well as the formation of side products \cite{Zheng2014}.
 
 For Mg, the corrosion reactions comprise the following steps \cite{Zheng2014}: first, the material is released as metallic ions and free electrons, which causes the volume of the bulk material to be reduced:
-\begin{equation} \label{eq:oxidation_react}
+\begin{equation} \label{eq:oxidation_react_parallel}
 \mathrm{Mg} \longrightarrow \mathrm{Mg}^{2+}+2 \mathrm{e}^{-}.
 \end{equation}
 
 The free electron reduces water to hydrogen gas and hydroxide ions:
-\begin{equation} \label{eq:reduction_react}
+\begin{equation} \label{eq:reduction_react_parallel}
 2 \mathrm{H}_{2} \mathrm{O}+2 \mathrm{e}^{-} \longrightarrow \mathrm{H}_{2}+2 \mathrm{OH}^{-}.
 \end{equation}
 
@@ -55,7 +55,7 @@ Then, with the combination of the metallic and hydroxide ions, a porous film is 
 \end{equation}
 
 With the presence of some specific ions in the surrounding medium, such as chloride ions in a saline solution, the protective film might be broken partially, which contributes to an increase of the rate of degradation:
-\begin{equation} \label{eq:break_react}
+\begin{equation} \label{eq:break_react_parallel}
 \mathrm{Mg}(\mathrm{OH})_{2}+2\mathrm{Cl}^{-} \longrightarrow \mathrm{Mg}^{2+} + 2\mathrm{Cl}^{-} + 2\mathrm{OH}^{-}.
 \end{equation}
 
@@ -75,7 +75,7 @@ In the example used in this study, the state variable in Eq. \ref{eq:react_diff}
 C_{\mathrm{Mg}} = C_{\mathrm{Mg}}(\mathbf{x},t), \quad C_{\mathrm{Film}} = C_{\mathrm{Film}}(\mathbf{x},t) \quad \mathbf{x} \in \Omega \subset \mathbb{R}^{3}
 \end{equation}
 
-\noindent  $\Omega$ is the whole domain of interest, including the bulk material and its surrounding medium. So, by assuming that the reaction rates of Eqs. \ref{eq:formation_react} and \ref{eq:break_react} are $k_1$ and $k_2$ respectively,  one can write the change of those state variables according to Eq. \ref{eq:formation_react} and Eq. \ref{eq:break_react} as
+\noindent  $\Omega$ is the whole domain of interest, including the bulk material and its surrounding medium. So, by assuming that the reaction rates of Eqs. \ref{eq:formation_react} and \ref{eq:break_react_parallel} are $k_1$ and $k_2$ respectively,  one can write the change of those state variables according to Eq. \ref{eq:formation_react} and Eq. \ref{eq:break_react_parallel} as
 \begin{equation} \label{eq:pde_mg_primary}
 \frac{\partial C_{\mathrm{Mg}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{Mg}}^{e}   \nabla C_{\mathrm{Mg}} \right)-k_{1} C_{\mathrm{Mg}} +k_{2} C_{\mathrm{Film}} [\mathrm{Cl}]^{2}
 \end{equation}
@@ -90,17 +90,17 @@ C_{\mathrm{Mg}} = C_{\mathrm{Mg}}(\mathbf{x},t), \quad C_{\mathrm{Film}} = C_{\m
 \end{equation}
 
 The defined saturation term acts as a function of space that varies between 0 and 1 in each point. By adding this term to the concentration of Mg ions, we can write
-\begin{equation} \label{eq:pde_mg}
+\begin{equation} \label{eq:pde_mg_parallel}
 \frac{\partial C_{\mathrm{Mg}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{Mg}}^{e}  \nabla C_{\mathrm{Mg}} \right)-k_{1} C_{\mathrm{Mg}}\left(1-\frac{C_{\mathrm{Film}}}{[\mathrm{Film}]_{\max }}\right) +k_{2} C_{\mathrm{Film}} [\mathrm{Cl}]^{2}
 \end{equation}
 
-\begin{equation} \label{eq:pde_film}
+\begin{equation} \label{eq:pde_film_parallel}
 \frac{\partial C_\mathrm{Film}}{\partial t}=k_{1} C_{\mathrm{Mg}}\left(1-\frac{C_{\mathrm{Film}}}{[\mathrm{Film}]_{\max }}\right) -k_{2} C_{\mathrm{Film}} [\mathrm{Cl}]^{2}.
 \end{equation}
 
-Since the film is a porous layer and allows the ions to diffuse through it, the diffusion coefficient in Eq. \ref{eq:pde_mg} is a function of space and not a constant value (which is the reason for being denoted as $D_{\mathrm{Mg}}^{e}$). We can calculate this effective diffusion function by interpolating two values at any point: 1) $D_{\mathrm{Mg}}^{e} = D_{\mathrm{Mg}}$ when $C_\mathrm{Film} = 0$, and 2) $D_{\mathrm{Mg}}^{e} = \frac{\epsilon}{\tau} D_{\mathrm{Mg}}$ when $C_\mathrm{Film} = [\mathrm{Film}]_{\max }$, in which $\epsilon$ and $\tau$ are the porosity and tortuosity of the protective film, respectively. The interpolation leads to the effective diffusion function:
+Since the film is a porous layer and allows the ions to diffuse through it, the diffusion coefficient in Eq. \ref{eq:pde_mg_parallel} is a function of space and not a constant value (which is the reason for being denoted as $D_{\mathrm{Mg}}^{e}$). We can calculate this effective diffusion function by interpolating two values at any point: 1) $D_{\mathrm{Mg}}^{e} = D_{\mathrm{Mg}}$ when $C_\mathrm{Film} = 0$, and 2) $D_{\mathrm{Mg}}^{e} = \frac{\epsilon}{\tau} D_{\mathrm{Mg}}$ when $C_\mathrm{Film} = [\mathrm{Film}]_{\max }$, in which $\epsilon$ and $\tau$ are the porosity and tortuosity of the protective film, respectively. The interpolation leads to the effective diffusion function:
 
-\begin{equation} \label{eq:diff_coeff}
+\begin{equation} \label{eq:diff_coeff_parallel}
 D_{\mathrm{Mg}}^{e}=D_{\mathrm{Mg}}\left(\left(1-\frac{C_{\mathrm{Film}}}{[\mathrm{Film}]_{\max }}\right)+\frac{C_{\mathrm{Film}}}{[\mathrm{Film}]_{\max }} \frac{\epsilon}{\tau}\right).
 \end{equation}
 
@@ -116,42 +116,42 @@ The level set method is a methodology that allows moving interfaces to be descri
 \end{figure}
 
 The level set equation defines this implicit function. The full level set equation can be written as \cite{RonaldFedkiw2002}:
-%\begin{equation} \label{eq:lsm_full}
+%\begin{equation} \label{eq:lsm_full_parallel}
 %\frac{\partial \phi}{\partial t}+{\overrightarrow{V^\mathrm{E}} \cdot \nabla \phi}+{\mathrm{V}^\mathrm{N}|\nabla \phi|}={b \kappa|\nabla \phi|}
 %\end{equation}
-\begin{equation} \label{eq:lsm_full}
+\begin{equation} \label{eq:lsm_full_parallel}
 \frac{\partial \phi}{\partial t}+\underbrace{\overrightarrow{V^\mathrm{E}} \cdot \nabla \phi}_{\text {External velocity field }}+\underbrace{\mathrm{V}^\mathrm{N}|\nabla \phi|}_{\text {Normal direction motion }}=\underbrace{b \kappa|\nabla \phi|}_{\text {Curvature - dependent term }}
 \end{equation}
 in which the terms correspond to temporal changes, external velocity field effect, normal direction motion, and curvature-dependent interface movement, respectively.
-$\overrightarrow{V^\mathrm{E}}$ is the external velocity field, and  $\mathrm{V}^\mathrm{N}$ is the magnitude of the interface velocity along the normal axis. In practical usage, some of the terms are  neglected. In this study, perfusion (rotation of the liquid around the bulk sample) is not considered, and the degradation rate does not depend on the curvature of the interface. As a result, by assuming that the interface moves in normal direction only, Eq. \ref{eq:lsm_full} can be simplified to
-\begin{equation} \label{eq:lsm_simplified}
+$\overrightarrow{V^\mathrm{E}}$ is the external velocity field, and  $\mathrm{V}^\mathrm{N}$ is the magnitude of the interface velocity along the normal axis. In practical usage, some of the terms are  neglected. In this study, perfusion (rotation of the liquid around the bulk sample) is not considered, and the degradation rate does not depend on the curvature of the interface. As a result, by assuming that the interface moves in normal direction only, Eq. \ref{eq:lsm_full_parallel} can be simplified to
+\begin{equation} \label{eq:lsm_simplified_parallel}
 \frac{\partial \phi}{\partial t}+\mathrm{V}^\mathrm{N}|\nabla \phi|=0
 \end{equation}
 \noindent where $\mathrm{V}^\mathrm{N}$ is depicted in Fig. \ref{fig:level_set_domain}. The Rankine–Hugoniot equation can be used to calculate the interface velocity in mass transfer problems \cite{Scheiner2007}:
 
-\begin{equation} \label{eq:rankine}
+\begin{equation} \label{eq:rankine_parallel}
 \left\{\mathbf{J}(x, t)-\left(c_{\mathrm{sol}}-c_{\mathrm{sat}}\right) \mathrm{V}(x, t)\right\} \cdot n=0
 \end{equation}
-\noindent in which $\mathbf{J}$ is the mass flux, $c_{\mathrm{sol}}$ is the concentration of the material in the bulk part (i.e. its density), and $c_{\mathrm{sat}}$ is the concentration at which the material (here, the ions) saturates through the medium. So, for the investigated Mg degradation problem, Eq. \ref{eq:rankine} will be:
+\noindent in which $\mathbf{J}$ is the mass flux, $c_{\mathrm{sol}}$ is the concentration of the material in the bulk part (i.e. its density), and $c_{\mathrm{sat}}$ is the concentration at which the material (here, the ions) saturates through the medium. So, for the investigated Mg degradation problem, Eq. \ref{eq:rankine_parallel} will be:
 \begin{equation} \label{eq:rankine_mg}
 D_{\mathrm{Mg}}^{e} \nabla_{n} C_\mathrm{Mg}-\left([\mathrm{Mg}]_{\mathrm{sol}}-[\mathrm{Mg}]_{\mathrm{sat}}\right) \mathrm{V}^\mathrm{N}=0.
 \end{equation}
 
-Inserting the obtained velocity of Eq. \ref{eq:rankine_mg} into Eq. \ref{eq:lsm_simplified} and considering the direction of the shrinkage velocity, which is in the opposite direction of the surface normal vector, yields
-\begin{equation} \label{eq:lsm_final}
+Inserting the obtained velocity of Eq. \ref{eq:rankine_mg} into Eq. \ref{eq:lsm_simplified_parallel} and considering the direction of the shrinkage velocity, which is in the opposite direction of the surface normal vector, yields
+\begin{equation} \label{eq:lsm_final_parallel}
 \frac{\partial \phi}{\partial t}-\frac{D_{\mathrm{Mg}}^{e} \nabla_{n} C_\mathrm{Mg}}{[\mathrm{Mg}]_{\mathrm{sol}}-[\mathrm{Mg}]_{\mathrm{sat}}}|\nabla \phi|=0.
 \end{equation}
 
-Eq. \ref{eq:lsm_final} is the final formulation of the level set equation in the current study, which alongside Eqs. \ref{eq:pde_mg} and \ref{eq:pde_film} forms the mathematical model of degradation of Mg with a moving interface. Eq. \ref{eq:lsm_final} contributes indirectly to the evolution of Eqs. \ref{eq:pde_mg} and \ref{eq:pde_film} as it defines the boundary, the zero iso-contour of the $\phi$ function, on which the boundary conditions of the equations are applied.
+Eq. \ref{eq:lsm_final_parallel} is the final formulation of the level set equation in the current study, which alongside Eqs. \ref{eq:pde_mg_parallel} and \ref{eq:pde_film_parallel} forms the mathematical model of degradation of Mg with a moving interface. Eq. \ref{eq:lsm_final_parallel} contributes indirectly to the evolution of Eqs. \ref{eq:pde_mg_parallel} and \ref{eq:pde_film_parallel} as it defines the boundary, the zero iso-contour of the $\phi$ function, on which the boundary conditions of the equations are applied.
 
 
 \section{Methodology of model implementation}
 
-The developed mathematical model comprised of Eqs. \ref{eq:pde_mg}, \ref{eq:pde_film}, and \ref{eq:lsm_final} cannot be solved using analytical techniques. The alternative approach in these scenarios is solving the derived PDEs numerically. In this study, we used a combination of finite element and finite difference methods to solve the aforementioned equations. In the developed numerical model, the PDEs are solved one by one, each of which is a linear equation, so the model implementation follows the principles of solving linear systems. In the following section, only the process to obtain the solution of Eq. \ref{eq:pde_mg} is described in detail, but the other PDEs were solved using the same principle. Although the adopted finite element method is standard, we elaborate on its derivation to clarify the bottlenecks of the later-discussed implementation.
+The developed mathematical model comprised of Eqs. \ref{eq:pde_mg_parallel}, \ref{eq:pde_film_parallel}, and \ref{eq:lsm_final_parallel} cannot be solved using analytical techniques. The alternative approach in these scenarios is solving the derived PDEs numerically. In this study, we used a combination of finite element and finite difference methods to solve the aforementioned equations. In the developed numerical model, the PDEs are solved one by one, each of which is a linear equation, so the model implementation follows the principles of solving linear systems. In the following section, only the process to obtain the solution of Eq. \ref{eq:pde_mg_parallel} is described in detail, but the other PDEs were solved using the same principle. Although the adopted finite element method is standard, we elaborate on its derivation to clarify the bottlenecks of the later-discussed implementation.
 
 \subsection{Finite element discretization (bottleneck of the algorithm)}
 
-In order to solve Eq. \ref{eq:pde_mg} numerically, we used a finite difference scheme for the temporal term and a finite element formulation for the spatial terms. For simplicity of writing, notations of variables are changed, so $C_\mathrm{Mg}$ is represented as $u$ (the main unknown state variable to find), $C_\mathrm{Film}$ is denoted by $p$, $[\mathrm{Cl}]$ is denoted by $q$, and the saturation term $(1-\frac{F}{F_{\max }})$ is denoted by $s$. By doing this, Eq. \ref{eq:pde_mg} can be written as
+In order to solve Eq. \ref{eq:pde_mg_parallel} numerically, we used a finite difference scheme for the temporal term and a finite element formulation for the spatial terms. For simplicity of writing, notations of variables are changed, so $C_\mathrm{Mg}$ is represented as $u$ (the main unknown state variable to find), $C_\mathrm{Film}$ is denoted by $p$, $[\mathrm{Cl}]$ is denoted by $q$, and the saturation term $(1-\frac{F}{F_{\max }})$ is denoted by $s$. By doing this, Eq. \ref{eq:pde_mg_parallel} can be written as
 \begin{equation} \label{eq:pde_changed_not}
 \frac{\partial u}{\partial t}=\nabla \cdot (D   \nabla u)-k_{1} s u+k_{2} p q^{2}.
 \end{equation}
@@ -262,9 +262,9 @@ $M$ (which traditionally is called the mass matrix), $K$ (which traditionally is
 \begin{aligned} M &=\left\{M_{i, j}\right\}, \quad M_{i, j}=\left(\psi_{i}, \psi_{j}\right), \quad i, j \in \mathcal{I}_{s} \\ K &=\left\{K_{i, j}\right\}, \quad K_{i, j}=\left(\nabla \psi_{i}, D \nabla \psi_{j}\right), \quad i, j \in \mathcal{I}_{s} \\ f &=\left\{f_{i}\right\}, \quad f_{i}=\left(f\left(\boldsymbol{x}, t_{n}\right), \psi_{i}\right), \quad i \in \mathcal{I}_{s} \\ c &=\left\{c_{i}\right\}, \quad i \in \mathcal{I}_{s} \\ c_{1} &=\left\{c_{i}^{n}\right\}, \quad i \in \mathcal{I}_{s} \end{aligned}
 \end{equation}
 
-By solving Eq. \ref{eq:linear_system} and substituting the obtained $c$ in Eq. \ref{eq:u_definition}, $u$ ($C_{\mathrm{Mg}}$ in the example in this study) can be calculated in the current time step. As stated before, the same approach can be applied to Eq. \ref{eq:pde_film} and Eq. \ref{eq:lsm_final} to get $C_{\mathrm{Film}}$ and $\phi$. This procedure is repeated in each time step to compute the values of $C_{\mathrm{Mg}}$, $C_{\mathrm{Film}}$, and $\phi$ over time.
+By solving Eq. \ref{eq:linear_system} and substituting the obtained $c$ in Eq. \ref{eq:u_definition}, $u$ ($C_{\mathrm{Mg}}$ in the example in this study) can be calculated in the current time step. As stated before, the same approach can be applied to Eq. \ref{eq:pde_film_parallel} and Eq. \ref{eq:lsm_final_parallel} to get $C_{\mathrm{Film}}$ and $\phi$. This procedure is repeated in each time step to compute the values of $C_{\mathrm{Mg}}$, $C_{\mathrm{Film}}$, and $\phi$ over time.
 
-A common practice to save time for solving Eq. \ref{eq:linear_system}  for a constant time step size is to compute the left-hand side matrix ($A$ in Eq. \ref{eq:system_a}) once and compute only the right-hand side vector of the equation at each time iteration. But in this case, although the time step size is fixed, due to the presence of the $\alpha$ coefficient, the matrix changes along the time. The $\alpha$ coefficient is not constant and should be updated in each time step because it depends on the penalization term $s$ (which is a function of the concentration of the film as can be seen by comparing Eq. \ref{eq:pde_mg} and Eq. \ref{eq:pde_changed_not}). In addition to this, the diffusion coefficient is not constant (Eq. \ref{eq:diff_coeff}), making the second term in Eq. \ref{eq:system_a} non-constant even in the absence of $\alpha$ coefficient. Consequently, the left-hand side matrix of the Eq. \ref{eq:linear_system} cannot be computed before the start of the main time loop, and computing it in each time step is an extra but inevitable computational task in comparison to similar efficient and high-performance finite element implementations. This contributes to a slower algorithm for solving the aforementioned PDEs.
+A common practice to save time for solving Eq. \ref{eq:linear_system}  for a constant time step size is to compute the left-hand side matrix ($A$ in Eq. \ref{eq:system_a}) once and compute only the right-hand side vector of the equation at each time iteration. But in this case, although the time step size is fixed, due to the presence of the $\alpha$ coefficient, the matrix changes along the time. The $\alpha$ coefficient is not constant and should be updated in each time step because it depends on the penalization term $s$ (which is a function of the concentration of the film as can be seen by comparing Eq. \ref{eq:pde_mg_parallel} and Eq. \ref{eq:pde_changed_not}). In addition to this, the diffusion coefficient is not constant (Eq. \ref{eq:diff_coeff_parallel}), making the second term in Eq. \ref{eq:system_a} non-constant even in the absence of $\alpha$ coefficient. Consequently, the left-hand side matrix of the Eq. \ref{eq:linear_system} cannot be computed before the start of the main time loop, and computing it in each time step is an extra but inevitable computational task in comparison to similar efficient and high-performance finite element implementations. This contributes to a slower algorithm for solving the aforementioned PDEs.
 
 
 \subsection{Implementation and parallelization}
@@ -318,39 +318,39 @@ In order to yield the highest performance, a variety of different combinations o
 \subsection{Level set issues}
 
 
-As mentioned before, in order to track the interface of the bulk material and the surrounding fluid, an implicit signed distance function is defined as the solution of Eq. \ref{eq:lsm_final}. This equation can be solved using the aforementioned finite element discretization, but in a practical implementation, there are usually a couple of problems associated with this PDE.
+As mentioned before, in order to track the interface of the bulk material and the surrounding fluid, an implicit signed distance function is defined as the solution of Eq. \ref{eq:lsm_final_parallel}. This equation can be solved using the aforementioned finite element discretization, but in a practical implementation, there are usually a couple of problems associated with this PDE.
 
 The first issue is defining $D_{\mathrm{Mg}}^{e}$ and $\nabla_{n} C_\mathrm{Mg}$ on the moving interface. To ensure correct boundary conditions for Eq. \ref{eq:rankine_mg}, the value of $C_\mathrm{Mg}$ is set constant on the whole bulk material by using the penalty method. As a result, the implicit interface is not necessarily aligned on the computational mesh. Although this is a beneficial fact for the interface tracking, it inserts the problem of overestimation of $C_\mathrm{Mg}$ on the nodes close to the interface, which makes it difficult to calculate $\nabla_{n} C_\mathrm{Mg}$ on these nodes correctly. The same problem exists for calculating $D_{\mathrm{Mg}}^{e}$. To overcome this issue, the values of $C_\mathrm{Mg}$ and $D_{\mathrm{Mg}}^{e}$ are calculated at the distance $h$ from the interface in the normal direction (towards the medium), where $h$ is the edge size of the smallest element of the computational mesh.
 
-The next issue is a well-known problem of the level set method: if the velocity of the interface is not constant (as in Eq. \ref{eq:lsm_full}), the level set function $\phi$ may become distorted by having too flat or too steep gradients close to the moving front. This could cause unwanted movements of the interface. The problem becomes even worse when the distance function is advected. A solution to this issue is re-initializing the distance function in each time step (re-distancing), but this operation requires solving a new PDE. From numerical investigations, it has been observed that this operation inserts new errors in the numerical computation of the level set equation \cite{Russo2000}. This can be resolved by improving the method of reconstruction of the distance function \cite{Russo2000}.
+The next issue is a well-known problem of the level set method: if the velocity of the interface is not constant (as in Eq. \ref{eq:lsm_full_parallel}), the level set function $\phi$ may become distorted by having too flat or too steep gradients close to the moving front. This could cause unwanted movements of the interface. The problem becomes even worse when the distance function is advected. A solution to this issue is re-initializing the distance function in each time step (re-distancing), but this operation requires solving a new PDE. From numerical investigations, it has been observed that this operation inserts new errors in the numerical computation of the level set equation \cite{Russo2000}. This can be resolved by improving the method of reconstruction of the distance function \cite{Russo2000}.
 
 However, re-initialization results in another issue on a massively parallel implementation: as the mesh is partitioned into smaller sub-meshes, it is not feasible anymore to evaluate the distance to the interface globally on each sub-domain. As a result, the inverse process of domain decomposition should be taken to assemble the mesh again. This can be done by the restriction matrix and the partition of unity (defined in Eqs. \ref{eq:restrict} and \ref{eq:ras}), but it is rather a very inefficient procedure regarding the parallelization of the simulation and results in a long execution time in each time step.
 
-In the current study, the distance function $\phi$ was initialized only once at the beginning of the simulation. The re-initialization process was unnecessary in this case because according to Eq. \ref{eq:lsm_final}, the distance function is advected only in the regions where there is a gradient of the concentration of Mg ions, which means that advection is applied only on the regions close to the interface in the medium. This prevented the whole distance function of being distorted, and as a result, it was not required to re-initialize it in each time step. This also removed the need for inverting the decomposition process.
+In the current study, the distance function $\phi$ was initialized only once at the beginning of the simulation. The re-initialization process was unnecessary in this case because according to Eq. \ref{eq:lsm_final_parallel}, the distance function is advected only in the regions where there is a gradient of the concentration of Mg ions, which means that advection is applied only on the regions close to the interface in the medium. This prevented the whole distance function of being distorted, and as a result, it was not required to re-initialize it in each time step. This also removed the need for inverting the decomposition process.
 
 \subsection{Simulation setup}
 
 In order to verify the performance of the developed model, a degradation experiment was reconstructed in-silico, in which the degradation of a block of Mg (with the size of $13mm \times 13mm \times 4 mm$) was investigated in a simulated body fluid solution. All the experimental parameter data (used to setup the simulation), as well as the degradation rates (used to calibrate and validate the numerical model) were extracted from \cite{Mei2019}.
 
-As can be seen in Eqs. \ref{eq:oxidation_react} and \ref{eq:reduction_react}, each mole removed from the Mg block corresponds to one mole of the produced hydrogen. As a result, instead of a direct measurement of mass loss, one can collect and measure the amount of produced hydrogen to monitor the degradation rate. This is a common way of reporting degradation in this type of studies \cite{Abidin2013}. In order to get this quantity out of the developed model, we used the level set model output. The total mass loss of Mg at each desired time can be calculated based on the movement of the corrosion front:
+As can be seen in Eqs. \ref{eq:oxidation_react_parallel} and \ref{eq:reduction_react_parallel}, each mole removed from the Mg block corresponds to one mole of the produced hydrogen. As a result, instead of a direct measurement of mass loss, one can collect and measure the amount of produced hydrogen to monitor the degradation rate. This is a common way of reporting degradation in this type of studies \cite{Abidin2013}. In order to get this quantity out of the developed model, we used the level set model output. The total mass loss of Mg at each desired time can be calculated based on the movement of the corrosion front:
 
-\begin{equation} \label{eq:mass_loss}
+\begin{equation} \label{eq:mass_loss_parallel}
 \mathrm{Mg}_{\mathrm{lost}}=\int_{\Omega_{+}(t)} \mathrm{Mg}_{\mathrm{solid}} \mathrm{d} V-\int_{\Omega_{+}(0)} \mathrm{Mg}_{\mathrm{solid}} \mathrm{d} V
 \end{equation}
 where $\Omega_{+}(t)=\{\mathbf{x}: \phi(\mathbf{x}, t) \geq 0\}$. It is worth noting that this integration should be performed by ignoring the ghost elements generated in the mesh partitioning process, otherwise the calculated material loss will be higher than the real value. Then, the amount of formed hydrogen gas can be calculated based on the ideal gas law:
 
-\begin{equation} \label{eq:evolv_hydr}
+\begin{equation} \label{eq:evolv_hydr_parallel}
 H_{f}=\frac{\mathrm{Mg}_{\mathrm{lost}}}{\mathrm{Mg}_{\mathrm{mol}}} \frac{R T}{P A}
 \end{equation}
 in which $R$ is the universal gas constant, $P$ is the pressure, $T$ is the solution temperature, $A$ is the exposed corrosion surface area (which can be computed using the level set function), and $\mathrm{Mg}_{\mathrm{mol}}$ is the molar mass of Mg. Plotting a comparison of the predicted and experimentally obtained values of hydrogen can show the overall validity of the  mathematical model because both the diffusion-reaction equations and the level set equation contribute to the prediction made by the computational model.
 
-The geometry of the simulation experiment is depicted in Fig. \ref{fig:simulation_setup}. Based on this geometry, an Eulerian computational mesh was constructed by generating tetrahedral elements on the whole domain, including the Mg block and the medium. This resulted in $\num{830808}$ elements with a total of $\num{143719}$ DOFs for each PDE (Eqs. \ref{eq:pde_mg}, \ref{eq:pde_film}, and \ref{eq:lsm_final}), which indicates the size of matrix $A$ in Eq. \ref{eq:system_a}. Model parameters and material properties were obtained from \cite{Bajger2016}. The diffusion coefficient of Mg was calculated using an inverse problem setup in which a Bayesian optimization process \cite{Mockus1989} was used to run the simulation code multiple times and minimize the difference of the model output and the experimental data reported by  \cite{Mei2019}. A time step convergence study was performed to measure the sensitivity of the model to the time stepping parameter, and based on the results, the time step value was set to 0.025 hours.
+The geometry of the simulation experiment is depicted in Fig. \ref{fig:simulation_setup_parallel}. Based on this geometry, an Eulerian computational mesh was constructed by generating tetrahedral elements on the whole domain, including the Mg block and the medium. This resulted in $\num{830808}$ elements with a total of $\num{143719}$ DOFs for each PDE (Eqs. \ref{eq:pde_mg_parallel}, \ref{eq:pde_film_parallel}, and \ref{eq:lsm_final_parallel}), which indicates the size of matrix $A$ in Eq. \ref{eq:system_a}. Model parameters and material properties were obtained from \cite{Bajger2016}. The diffusion coefficient of Mg was calculated using an inverse problem setup in which a Bayesian optimization process \cite{Mockus1989} was used to run the simulation code multiple times and minimize the difference of the model output and the experimental data reported by  \cite{Mei2019}. A time step convergence study was performed to measure the sensitivity of the model to the time stepping parameter, and based on the results, the time step value was set to 0.025 hours.
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{simulation_setup.jpg}
-\caption[Simulation setup for evaluating parallel performance]{Representation of the experimental set-up simulated  to perform numerical validation of the developed model and evaluate parallel performance. a) A cuboid of Mg (with the size of $13mm \times 13mm \times 4 mm$) is floating inside a simulated body fluid solution to investigate the degradation process, b) a cross-section of the computational mesh, refined on the metal-medium interface to increase the interface capturing accuracy.} \label{fig:simulation_setup}
+\caption[Simulation setup for evaluating parallel performance]{Representation of the experimental set-up simulated  to perform numerical validation of the developed model and evaluate parallel performance. a) A cuboid of Mg (with the size of $13mm \times 13mm \times 4 mm$) is floating inside a simulated body fluid solution to investigate the degradation process, b) a cross-section of the computational mesh, refined on the metal-medium interface to increase the interface capturing accuracy.} \label{fig:simulation_setup_parallel}
 \end{figure}
 
 
@@ -389,9 +389,9 @@ Simulations were conducted on the VSC (Flemish Supercomputer Center) supercomput
 
 \subsection{Numerical simulation results}
 
-The performed numerical simulation produces the output of three main quantities: the concentration of the Mg ions in the medium (as the solution of Eq. \ref{eq:pde_mg}), the concentration of the protective film (as the solution of Eq. \ref{eq:pde_film}), and the level set function values at each element (as the solution of Eq. \ref{eq:lsm_final}). In addition to this, a quantitative prediction of the mass loss is also generated according to Eqs. \ref{eq:mass_loss} and \ref{eq:evolv_hydr}.
+The performed numerical simulation produces the output of three main quantities: the concentration of the Mg ions in the medium (as the solution of Eq. \ref{eq:pde_mg_parallel}), the concentration of the protective film (as the solution of Eq. \ref{eq:pde_film_parallel}), and the level set function values at each element (as the solution of Eq. \ref{eq:lsm_final_parallel}). In addition to this, a quantitative prediction of the mass loss is also generated according to Eqs. \ref{eq:mass_loss_parallel} and \ref{eq:evolv_hydr_parallel}.
 
-In order to have quantitative predictions, the coefficients of Eqs. \ref{eq:pde_mg} and \ref{eq:pde_film} (diffusion rates and reaction rates) should be calibrated using an inverse problem. Fig. \ref{fig:numerical_results} shows the results produced by the computational model after this parameter estimation stage. A narrow layer of the protective film is formed on the surface of the Mg block, and the volume of produced hydrogen gas is compared with values obtained from experiments. Additionally, by plotting the zero iso-contour of the level set function, we can obtain the shape of the material block as it degrades during the degradation process (i.e. tracking the moving corrosion front). This is depicted by the grey surface in Fig. \ref{fig:numerical_results}.
+In order to have quantitative predictions, the coefficients of Eqs. \ref{eq:pde_mg_parallel} and \ref{eq:pde_film_parallel} (diffusion rates and reaction rates) should be calibrated using an inverse problem. Fig. \ref{fig:numerical_results} shows the results produced by the computational model after this parameter estimation stage. A narrow layer of the protective film is formed on the surface of the Mg block, and the volume of produced hydrogen gas is compared with values obtained from experiments. Additionally, by plotting the zero iso-contour of the level set function, we can obtain the shape of the material block as it degrades during the degradation process (i.e. tracking the moving corrosion front). This is depicted by the grey surface in Fig. \ref{fig:numerical_results}.
 
 \begin{figure}[h]
 \centering
@@ -495,7 +495,7 @@ block Jacobi, and Algebraic Multigrid (AMG), and Generalized Minimal Residual Me
 \centering
 \medskip
 \includegraphics[width=\textwidth]{compare.jpg}
-\caption[Performance test result for various preconditioners and solvers]{Performance test result for various combinations of preconditioners and solvers. Results are broken down into contributions  for each PDE, which are plotted  cumulatively and separately in the left and right plots, respectively.} \label{fig:strong_scaling_results}
+\caption[Performance test result for various preconditioners and solvers]{Performance test result for various combinations of preconditioners and solvers. Results are broken down into contributions  for each PDE, which are plotted  cumulatively and separately in the left and right plots, respectively.} \label{fig:compare_precond}
 \end{figure}
 
 \begin{table}[h]
@@ -513,7 +513,7 @@ block Jacobi, and Algebraic Multigrid (AMG), and Generalized Minimal Residual Me
 \multicolumn{2}{c}{Total time (s)}                                                                               & 7.6 & 9.0 & 6.8 & 8.9 & 9.0 & 9.8  & 7.6 & 7.8 \\
 \bottomrule
 \end{tabular}
-\label{tab:strong_scaling_results}
+\label{tab:compare_precond}
 \end{table}
 
 \end{subappendices}
