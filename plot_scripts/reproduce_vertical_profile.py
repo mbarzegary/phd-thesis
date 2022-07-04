@@ -10,11 +10,11 @@ x_uhp_rt, y_uhp_rt = load_from_file("UHPMg-HBSS-RT-profile.txt", "\t")
 x_uhp_37, y_uhp_37 = load_from_file("UHPMg-HBSS-37-profile.txt", "\t")
 
 plot_fig(ax[0], y_cp_rt, x_cp_rt, 's', 'blue', 'RT')
-plot_fig(ax[0], y_cp_37, x_cp_37, 'o', 'red', r'37 $^{\circ}$ C')
+plot_fig(ax[0], y_cp_37, x_cp_37, 'o', 'red', r'37 $^{\circ}$C')
 ax[0].set_title("CPMg")
 
-plot_fig(ax[1], y_cp_rt, x_cp_rt, 's', 'blue', 'RT')
-plot_fig(ax[1], y_cp_37, x_cp_37, 'o', 'red', r'37 $^{\circ}$ C')
+plot_fig(ax[1], y_uhp_rt, x_uhp_rt, 's', 'blue', 'RT')
+plot_fig(ax[1], y_uhp_37, x_uhp_37, 'o', 'red', r'37$^{\circ}$C')
 ax[1].set_title("UHPMg")
 
 for axes in ax.flat:

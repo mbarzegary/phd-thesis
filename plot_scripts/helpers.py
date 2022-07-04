@@ -12,16 +12,17 @@ def load_from_file(filename, delimiter):
     data = np.loadtxt(open(f"data/{filename}", "rb"), delimiter=delimiter, skiprows=0)
     return data[:,0], data[:,1]
 
-def plot_fig(ax, x, y, marker, color, label=''):
+def plot_fig(ax, x, y, marker, color, label='', alpha=1, edgecolor='black', markersize=8):
     ax.plot(
         x, y,   # data
         marker=marker,     # marker style
-        markersize=8,   # marker size
+        markersize=markersize,   # marker size
         markerfacecolor=color,   # marker facecolor
-        markeredgecolor='black',  # marker edgecolor
+        markeredgecolor=edgecolor,  # marker edgecolor
         markeredgewidth=2,       # marker edge width
-        linestyle='--',            # line style
+        linestyle='-',            # line style
         color=color,     # line color
         linewidth=3,      # line width
-        label=label      # dataset label
+        label=label,      # dataset label
+        alpha=alpha       # transparency
     )
