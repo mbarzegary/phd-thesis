@@ -8,8 +8,8 @@ rc('font',**{'family':'sans-serif','sans-serif':['DejaVu Sans'],'size':12})
 rc('mathtext',**{'default':'regular'})
 rc('axes',**{'titlesize': 15})
 
-def load_from_file(filename, delimiter):
-    data = np.loadtxt(open(f"data/{filename}", "rb"), delimiter=delimiter, skiprows=0)
+def load_from_file(filename, delimiter, skiprows=0):
+    data = np.loadtxt(open(f"data/{filename}", "rb"), delimiter=delimiter, skiprows=skiprows)
     return data[:,0], data[:,1]
 
 def plot_fig(ax, x, y, marker, color, label='', alpha=1, edgecolor='black', markersize=8):
