@@ -2,95 +2,105 @@
 \chapter{Tissue growth modeling}\label{ch:tissue}
 
 
+\section{Introduction}
+
+Numerical tracking of interface movement has been used for certain modeling applications in science and engineering for multi-material and multiphase problems such as solidification, melting, corrosion, and grain growth to name a few \cite{Sun2007}. The most popular Eulerian methodologies in this regard are the level-set \cite{Osher1988,Andrew2000,RonaldFedkiw2002}, volume-of-fluid (VOF) \cite{Rider1998}, and phase-field methods \cite{Boettinger2002,Bellemans2017}. 
+
+
+The basic idea of the level-set method is to employ the Hamilton-Jacobi (HJ) algorithm for solving the general interface advection equation. The independent variable in the level-set method is a signed distance function, called the level-set function $\psi$ \cite{RonaldFedkiw2002}. The level-set function should be re-initialized as the interface evolves, which is the reason behind an inadvertent mass loss, one of the most prominent shortcomings of the level-set method. Although the VOF method is not vulnerable to the mass loss issue, calculating the interface curvature is difficult from the volume fraction \cite{Sun2007}. 
+
+To overcome these challenges, diffuse interface methods \cite{} have gained attentions in recent decades, among which the phase-field method has shown potential for solving complex moving interface problems. Contrary to the level-est method, in diffuse interface methods, the interface is considered as a smooth transition between phases, which usually has a finite width. In the phase-field method, a non-conserved (or conserved) order parameter $\phi$ is defined such that $\phi=1$ in one bulk phase and $\phi=-1$ in the other. Then, the smooth transition between these two phases ($-1<\phi<1$) is marked as the interface. One of the advantages of the phase-field method is that the derived equation can be solved over the entire domain of desired without considering the location of the interface. Moreover, although the curvature and interface normal vectors are not formulated explicitly, the phase-field method is suitable for problems in which the evolution of the interface depends on the local curvature or a field acting normal to the interface \cite{Sun2007}. The phase-field method keeps a constant thickness for the smooth transition region normal to the interface, and as a result, no re-initialization as for the level-set method is needed.
+
+
+
+The phase-field method has been already proved to be an efficient interface tracking technique for various problems in micro/meso scales such as solidification \cite{Karma1998,Boettinger2002}, microstructural evolution \cite{Chen2002}, grain growth \cite{Chen1994}, crack propagation \cite{Henry2004,Spatschek2011}, electromigration \cite{Bhate2000}, and extractive metallurgy \cite{Bellemans2017}. However, it has been used recently for dealing with problems described in macro level, such as corrosion \cite{Mai2016,Lin2019,Imanian2018,Lin2020,Ansari2018,Tsuyuki2018,Chadwick2018} and cell/tissue growth \cite{Jeong2017,Lee2019}. In this work, a phase-field model of the tissue growth process was developed to describe the  cell growth behavior on 3D surfaces as a moving-boundary problem. Additionally, a similar model was developed based on the level-set method to compare the performance and results of both interface tracking methods. Both models were implemented using the finite element method. 
+
+
 \section{Deriving the model}
 
-General interface advection equation
+In this section, the derivation of the phase-field and level-set equations from the general advection equation is demonstrated. This shows the similarities and differences of these interface tracking techniques for moving boundary problems.
+
+\subsection{General equation of interface motion}
+
+The general interface advection equation for an Eulerian description of interface movement can be written as \cite{Sun2007}:
 
 \begin{equation} \label{eq:general_advec}
 \frac{\partial \phi}{\partial t}+\boldsymbol{u} \cdot \nabla \phi=0
 \end{equation}
-
-$\boldsymbol{u}$ can be divided into normal and external velocity components:
-
+where $\phi$ is the phase field and $\boldsymbol{u}$ is the interface velocity. The velocity $\boldsymbol{u}$ can be divided into normal ($u_{\mathrm{n}}$) and external velocity components ($\boldsymbol{u}_{\mathrm{e}}$):
 \begin{equation} \label{eq:two_comp_advect}
 \boldsymbol{u}=u_{\mathrm{n}} \boldsymbol{n}+\boldsymbol{u}_{\mathrm{e}}
 \end{equation}
-in which $\boldsymbol{n}=\nabla \phi /|\nabla \phi| $. So, Eq. \ref{eq:general_advec} can be rewritten as:
-
+in which $\boldsymbol{n}=\nabla \phi /|\nabla \phi|$ is the unit vector normal to the interface. So, Eq. \ref{eq:general_advec} can be rewritten as:
 \begin{equation}
 \frac{\partial \phi}{\partial t}+u_{\mathrm{n}}|\nabla \phi|+\boldsymbol{u}_{\mathrm{e}} \cdot \nabla \phi=0
 \end{equation}
 
-The normal velocity can be decomposed into more components to take into account the effect of interface curvature ($\kappa$):
-
+The normal velocity can be decomposed into more components to take into account the effect of interface curvature ($\kappa$) such that the terms are independent and proportional to the curvature, respectively:
 \begin{equation}
 u_{\mathrm{n}} = a - b \kappa
 \end{equation}
-
-So, Eq. \ref{eq:two_comp_advect} can be written as:
-
+where the coefficients $a$ and $b$ have units of $\mathrm{m}/\mathrm{s}$ and $\mathrm{m}^2/\mathrm{s}$. Substituting this into Eq. \ref{eq:two_comp_advect}  yields to the final form of the interface motion equation:
 \begin{equation} \label{eq:advect_kappa}
 \frac{\partial \phi}{\partial t}+a|\nabla \phi|+\boldsymbol{u}_{\mathrm{e}} \cdot \nabla \phi=b \kappa|\nabla \phi|
 \end{equation}
 
-The curvature is a function of the phase field variable:
 
+\subsection{Phase-field formulation}
+
+To further proceed with the phase-field formulation, a proper kernel should be selected for the phase field variable, which can be done based on Beckermann et al. \cite{Beckermann1999}:
+\begin{equation} \label{eq:kernel}
+\phi=-\tanh \left(\frac{n}{\sqrt{2} W}\right)
+\end{equation}
+in which $W$ is the thickness of the transition profile ($\phi$ varies from $-0.9$ to $+0.9$ in a narrow layer with the width of $3 \sqrt{2} W$), and $n$ is the coordinate normal to the interface. The curvature can be written as a function of the phase field variable:
 \begin{equation}  \label{eq:curvature}
 \kappa=\nabla \cdot \boldsymbol{n}=\nabla \cdot\left(\frac{\nabla \phi}{|\nabla \phi|}\right)=\frac{1}{|\nabla \phi|}\left[\nabla^{2} \phi-\frac{(\nabla \phi \cdot \nabla)|\nabla \phi|}{|\nabla \phi|}\right]
 \end{equation}
 
-To further proceed with the formulation, a proper kernel should be selected for the phase field variable:
-
-\begin{equation} \label{eq:kernel}
-\phi=-\tanh \left(\frac{n}{\sqrt{2} W}\right)
-\end{equation}
-
-in which $W$ is the width of the transition profile ($\phi$ changes from $-1$ to $+1$ in a narrow layer with the width of $3 \sqrt{2} W$). Using the defined kernel, the terms in Eq. \ref{eq:curvature} can be expressed as:
-
+Using the defined kernel, the terms in Eq. \ref{eq:curvature} can be expressed as:
 \begin{equation} \label{eq:normal_terms}
 |\nabla \phi|=-\frac{\partial \phi}{\partial n}=\frac{1-\phi^{2}}{\sqrt{2} W} \quad \text { and } \quad \frac{(\nabla \phi \cdot \nabla)|\nabla \phi|}{|\nabla \phi|}=\frac{\partial^{2} \phi}{\partial n^{2}}=-\frac{\phi\left(1-\phi^{2}\right)}{W^{2}}
 \end{equation}
 
 Substituting Eq. \ref{eq:normal_terms} into Eq. \ref{eq:curvature} yields to the following definition of interface curvature: 
-
 \begin{equation}
 \kappa=\frac{1}{|\nabla \phi|}\left[\nabla^{2} \phi+\frac{\phi\left(1-\phi^{2}\right)}{W^{2}}\right]
 \end{equation}
 which subsequently changes Eq. \ref{eq:advect_kappa} into:
-
 \begin{equation} \label{eq:phase_field_semifnal}
 \frac{\partial \phi}{\partial t}+a|\nabla \phi|+\boldsymbol{u}_{\mathrm{e}} \cdot \nabla \phi=b\left[\nabla^{2} \phi+\frac{\phi\left(1-\phi^{2}\right)}{W^{2}}\right]
 \end{equation}
-which is the the derived form of phase-field equation for tracking of an evolving interface. The $|\nabla \phi|$ term in Eq. \ref{eq:phase_field_semifnal} can be replaced by its definition in Eq. \ref{eq:normal_terms} to form another version of the equation:
+
+Eq. \ref{eq:phase_field_semifnal} is the the derived form of phase-field equation for tracking of an evolving interface, containing terms corresponding for normal interface motion, advection by an external field, and curvature-driven movement. The $|\nabla \phi|$ term in Eq. \ref{eq:phase_field_semifnal} can be replaced by its definition in Eq. \ref{eq:normal_terms} to form another version of the equation:
 
 \begin{equation} \label{eq:phase_field_final}
 \frac{\partial \phi}{\partial t}+a \frac{1-\phi^{2}}{\sqrt{2} W}+\boldsymbol{u}_{\mathrm{e}} \cdot \nabla \phi=b\left[\nabla^{2} \phi+\frac{\phi\left(1-\phi^{2}\right)}{W^{2}}\right]
 \end{equation}
+which is an easier version to be implemented using numerical methods. The unique term on the right-hand side of Eq. \ref{eq:phase_field_final} is a characteristic of the phase-field method.
+
+\subsection{Level-set formulation}
 
 From the mathematical perspective, the level set equation has a direct connection to the phase-field equation and can be derived by replacing the phase field variable by a sign distance function. To this end, Eq. \ref{eq:advect_kappa} can be rewritten to be a level set equation:
 \begin{equation} \label{eq:ls_general}
 \frac{\partial \psi}{\partial t}+a|\nabla \psi|+\boldsymbol{u}_{\mathrm{e}} \cdot \nabla \psi=b \kappa|\nabla \psi|,
 \end{equation}
-with $\psi$ being a sign distance function to the interface, which has a value of zero on the interface.
+with $\psi$ being a sign distance function that descibes the distance of each point of the computational domain to the interface. This implies that the zero iso-contour of the level-set function defines the interface.
 
 \section{Dimensionless forms for various cases}
 
 \subsection{Stationary interface}
 
-For a stationary interface, there is no interface motion ($a=0$ and $\boldsymbol{u}_{\mathrm{e}}=0$), so for a 1-D case, Eq. \ref{eq:phase_field_final} can be simplified as:
-
+A stationary interface, where there is no interface motion ($a=0$ and $\boldsymbol{u}_{\mathrm{e}}=0$), is a primary problem to examine the formulation and select proper grid spacing parameters. For a 1-D case, Eq. \ref{eq:phase_field_final} can be simplified as:
 \begin{equation} \label{eq:stationary_general}
 \frac{\partial \phi}{\partial t}=b\left(\frac{\partial^{2} \phi}{\partial x^{2}}+\frac{\phi\left(1-\phi^{2}\right)}{w^{2}}\right)
 \end{equation}
 
-To scale this equation, we define the following dimensionless variables:
-
+To scale this equation, the following dimensionless variables can be defined:
 \begin{equation} \label{eq:dimenless_variables}
 x^\prime = \frac{x}{x_c} \quad \text{and} \quad t^\prime = \frac{t}{t_c}
 \end{equation}
 
 So, Eq. \ref{eq:stationary_general} can be rewritten using these new variables:
-
 \begin{equation} 
 \frac{1}{t_{c}} \frac{\partial \phi}{\partial t^{\prime}}=\frac{b}{x_{c}^{2}} \frac{\partial^{2} \phi}{\partial x^{2}}+\frac{b}{w^{2}} f(\phi)
 \end{equation}
@@ -101,41 +111,38 @@ Defining $x_c = w$ and $t_c=w^2/b$ leads to the following dimensionless form of 
 \frac{\partial \phi}{\partial t^{\prime}}=\frac{\partial^{2} \phi}{\partial x^{\prime 2}}+\phi\left(1-\phi^{2}\right)
 \end{equation}
 
-Numerical results for Eq. \ref{eq:stationary_dimenless} is depicted in Fig.  \ref{fig:fig:pf_ls}, and the phase field profile is compared with the level set distance function profile. An appropriate value for grid spacing and the layer width should be selected such that $0.25 w < \Delta x^\prime < 0.5 w $. Additionally, the selected value of $w$ should satisfy $w < R/4.2$, in which $R$ is the local radius of curvature.
+Numerical results for Eq. \ref{eq:stationary_dimenless} is depicted in Fig.  \ref{fig:fig:pf_ls}, and the phase field profile is compared with the level set distance function profile. An appropriate value for grid spacing and the layer width should be selected such that $0.25 w < \Delta x^\prime < 0.5 w $. Additionally, the selected value of $w$ should satisfy $w < R/4.2$, in which $R$ is the local radius of curvature \cite{Sun2007}.
 
 \begin{figure}
+\medskip
 \centering
-\includegraphics[width=9cm]{pf_ls.jpg}
-\caption{\small Comparison of phase field variable and level set function on the interface of a stationary interface with step function like initial condition}
+\includegraphics[width=0.7\textwidth]{pf_ls.jpg}
+\caption[Comparison of phase field variable and level set function]{Comparison of phase field variable and level set function on the interface of a stationary interface with step function like initial condition \cite{Sun2007}}
 \label{fig:fig:pf_ls}
 \end{figure}
 
 
 \subsection{Evolution under constant normal speed}
 
-For an interface with constant velocity, the Eq. \ref{eq:phase_field_final} can be simplified according to the condition of $a=\text{const.}$, $\boldsymbol{u}_{\mathrm{e}}=0$, and $b=0$ ($b$ exists in the equation as a numerical parameter for smoothing the interface):
-
+For a problem in which the interface moves with constant velocity exclusively, Eq. \ref{eq:phase_field_final} can be simplified according to the condition of $a=\text{const.}$, $\boldsymbol{u}_{\mathrm{e}}=0$, and $b=0$ ($b$ exists in the equation as a numerical parameter for smoothing the interface and relaxation behavior of the phase-field profile):
 \begin{equation}
 \phi_{t}+a \frac{1-\phi^{2}}{\sqrt{2} w}=b \phi_{xx} + b\frac{f(\phi)}{w^{2}}
 \end{equation}
 
-Defining Eq. \ref{eq:dimenless_variables} variables yields to:
-
+Defining dimensionless variables according to Eq. \ref{eq:dimenless_variables} yields to:
 \begin{equation}
 \frac{1}{t_c}\phi_{t^{\prime}}+\frac{a}{w} \frac{1-\phi^{2}}{\sqrt{2}}=\frac{b}{w^2} \phi_{x^{\prime}x^{\prime}} + \frac{b}{w^{2}}f(\phi)
 \end{equation}
-and by further reordering:
-
+which can be reordered to:
 \begin{equation}
 \phi_{t^{\prime}}+\frac{1-\phi^{2}}{\sqrt{2}}=b^{\prime}\left( \phi_{x^{\prime}x^{\prime}} + f(\phi)\right)
 \end{equation}
-with $b^{\prime}=b/aw$. For a stable numerical implementation, $\Delta t^{\prime}/\Delta x^{\prime} < 0.1$ and $b^{\prime} < 1.2$ should be met roughly.
+with $b^{\prime}=b/aw$. For a stable numerical implementation, $\Delta t^{\prime}/\Delta x^{\prime} < 0.1$ and $b^{\prime} < 1.2$ should met roughly \cite{Sun2007}.
 
 
 \subsection{Curvature-driven interface evolution}
 
-A dimensionless form of Eq. \ref{eq:phase_field_final} can be derived using a similar method for the stationary interface for a multidimensional case with $u_{\mathrm{n}}=-b\kappa$, $a=0$, and $\boldsymbol{u}_{\mathrm{e}}=0$:
-
+A curvature-driven motion, which is desired for the current study, is straightforward to formulate using the phase-field method. In this specific case, $b$ is not a numerical parameter anymore. A dimensionless form of Eq. \ref{eq:phase_field_final} can be derived using a similar method for the stationary interface for a multidimensional case with $u_{\mathrm{n}}=-b\kappa$, $a=0$, and $\boldsymbol{u}_{\mathrm{e}}=0$:
 \begin{equation} \label{eq:pf_curvature}
 \frac{\partial \phi}{\partial t^{\prime}}=\nabla^{\prime 2} \phi+\phi\left(1-\phi^{2}\right)
 \end{equation}
@@ -143,7 +150,7 @@ in which $t^{\prime}$ and $\nabla^{\prime}$ are defined similar to Eq. \ref{eq:d
 
 \section{Numerical implementation}
 
-Numerical solution of the phase-field equation involves dealing with the non-linearity of the equation. Additionally, in the case of dimensional form (Eq. \ref{eq:phase_field_final}), small coefficients of the state variable in the PDE leads to numerical difficulties. As a result, numerical implementation of the phase-field equation, especially for the spectral methods such as finite element method, is still an active field of research. 
+Numerical solution of the phase-field equation involves dealing with the non-linearity of the equation. Additionally, in the case of dimensional form (Eq. \ref{eq:phase_field_final}), small coefficients of the state variable in the PDE leads to numerical difficulties. As a result, numerical implementation of the phase-field equation, especially for the spectral methods such as finite element method, is still tricky and an active field of research \cite{Shen2010,Abboud2019}. 
 
 In the finite element method, the solution of a PDE is calculated based on a sum of a set of certain basis functions, which are commonly piecewise polynomial functions that are non-zero only on a small element. For doing this, the PDE is first written in a weak formulation, and then the weak form is projected on a discretized space (a set of elements) to be written as the summation of the basis functions. 
 
