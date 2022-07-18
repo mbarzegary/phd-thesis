@@ -10,7 +10,11 @@ rc('axes',**{'titlesize': 15})
 
 def load_from_file(filename, delimiter, skiprows=0):
     data = np.loadtxt(open(f"data/{filename}", "rb"), delimiter=delimiter, skiprows=skiprows)
-    return data[:,0], data[:,1]
+    return data[:,0], data[:,1],
+
+def load_from_file_long(filename, delimiter, skiprows=0):
+    data = np.loadtxt(open(f"data/{filename}", "rb"), delimiter=delimiter, skiprows=skiprows)
+    return data
 
 def plot_fig(ax, x, y, marker, color, label='', alpha=1, edgecolor='black', markersize=8):
     ax.plot(
@@ -21,8 +25,8 @@ def plot_fig(ax, x, y, marker, color, label='', alpha=1, edgecolor='black', mark
         markeredgecolor=edgecolor,  # marker edgecolor
         markeredgewidth=2,       # marker edge width
         linestyle='-',            # line style
-        color=color,     # line color
+        # color=color,     # line color
         linewidth=3,      # line width
         label=label,      # dataset label
         alpha=alpha       # transparency
-    )
+    )    

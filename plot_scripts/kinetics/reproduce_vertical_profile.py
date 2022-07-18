@@ -2,7 +2,7 @@ from helpers import *
 
 # fig = plt.figure(figsize=(10,6))
 # ax = fig.add_axes([0.1,0.1,0.5,0.8])
-fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(10,6))
+fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(10,6))
 
 x_cp_rt, y_cp_rt = load_from_file("CPMg-HBSS-RT-profile.txt", "\t")
 x_cp_37, y_cp_37 = load_from_file("CPMg-HBSS-37-profile.txt", "\t")
