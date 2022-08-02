@@ -101,7 +101,7 @@ Eqs. \ref{eq:fluid_ns_weak} and \ref{eq:fluid_ns_weak_pressure} are so called we
 
 \subsection{Stokes equations}
 
-For viscous flow, where the Reynolds number is less than 1 ($Re = {|{\bf U}|L \over \nu}$, with $L$ and $\bf U$ being the representative length and velocity of the domain), the convective term of the Navier-Stokes equations can be neglected, simplifying Eq. \ref{eq:fluid_ns} to:
+For viscous flow, where the Reynolds number is less than 1 ($Re = {|{\bf U}|L \over \nu}$, with $L$ and $\bf U$ being the representative length and velocity of the domain), the convection term of the Navier-Stokes equations can be neglected, simplifying Eq. \ref{eq:fluid_ns} to:
 \begin{equation} \label{eq:fluid_stokes}
 \left\{ {\begin{array}{*{20}{l}}
 \displaystyle  {\alpha \mathbf{u} - \nu\Delta \mathbf{u} + \nabla p = f\quad \text{in}\;\Omega ,} \\ 
@@ -134,6 +134,48 @@ in which
 \begin{equation}
 (\mathbf{f}, \mathbf{v})=\sum_{i=1}^{d} \int_{\Omega} f_{i} v_{i} d \omega.
 \end{equation}
+
+
+\subsection{Implementation}
+
+Numerical implementation of the Stokes (Eq. \ref{eq:fluid_stokes}) and Navier-Stokes (Eq. \ref{eq:fluid_stokes}) equations can be tricky due to presence of certain sources of instability, which highly depends on the type of studied fluid regime. Various numerical models have presented for dealing with these equations, some of which are commonly used in CFD applications, such as the Newton-Raphson approximation of Navier-Stokes equtaions and the Chorin's projection method. 
+
+In order to increase the stability and avoid some problems on the mathematical analysis of the numerical models (V-ellipticity
+property), a pseudo-compressibility assumption can be added to the continuity equation. The pseudo-compressible approximation appears as the pressure term $\varepsilon p$ with $\varepsilon$ being a very small coefficient, resulting to the following equation as the final form of the Navier-Stokes equations we consider in this study:
+
+\begin{equation}  \label{eq:fluid_ns_pseudo}
+\left\{ {\begin{array}{*{20}{l}}
+\displaystyle  {\frac{{\partial {\mathbf{u}}}}{{\partial t}} - \nu\Delta{\mathbf{u}} + \left( {{\mathbf{u}} \cdot \nabla } \right) {\mathbf{u}} + \nabla p = {\mathbf{f}},} \\ 
+ \displaystyle {\nabla\cdot{\mathbf{u}} + \varepsilon p = 0.} 
+\end{array}} \right.
+\end{equation}
+
+Similarly, the Stokes equation can be written as:
+\begin{equation} \label{eq:fluid_stokes_pseudo}
+\left\{ {\begin{array}{*{20}{l}}
+\displaystyle  {\alpha \mathbf{u} - \nu\Delta \mathbf{u} + \nabla p = f,} \\ 
+\displaystyle  {\nabla\cdot\mathbf{u} + \varepsilon p = 0.}
+\end{array}} \right.
+\end{equation}
+
+Another challenging part is to approximate the convection terms in the equations. One of the best approaches to do so is to take advantage of the method of characteristics, in which the characteristics curves of a PDE are used to convert it to an ODE, resulting to a simpler solution. By using the method of characteristics for the convection term and a backward Euler discretization for the temporal term, the weak form of the Navier-Stokes and continuity equations (Eq. \ref{eq:fluid_ns_weak} and \ref{eq:fluid_ns_weak_pressure}) can be rewritten as:
+\begin{equation} \label{eq:fluid_ns_weak_implement}
+\begin{aligned}
+&\int_{\Omega} \frac{\mathbf{u}^{n+1}-\mathbf{u}^{n} \circ X^{n}}{\Delta t} \cdot \mathbf{v} d \omega+\nu \int_{\Omega} \nabla \mathbf{u}^{n+1} \cdot \nabla \mathbf{v} d \omega-\int_{\Omega} p^{n+1} \nabla \cdot \mathbf{v} d \omega=\int_{\Omega} \boldsymbol{f} \cdot \mathbf{v} d\omega \\
+&\int_{\Omega} \nabla \cdot \mathbf{u}^{n+1} q d \omega+\varepsilon \int_{\Omega} p^{n+1} q d \omega=0
+\end{aligned}
+\end{equation}
+in which $(\mathbf{u}^{n+1},p^{n+1})$ are unknowns to be computed from the known state $\mathbf{u}^{n}$ coming from the previous time step or the initial condition. In Eq. \ref{eq:fluid_ns_weak_implement}, the term $\mathbf{u}^{n+1}-\mathbf{u}^{n} \circ X^{n}$ is corresponding to the convection term being approximated using the method of characteristics.
+
+The weak form of the Stokes equations stays almost the same as Eq. \ref{eq:fluid_stokes_weak} (because it doesn't contain transient and convection terms) but needs a slight modification to add the pseudo-compressible terms from Eq. \ref{eq:fluid_stokes_pseudo}:
+\begin{equation} \label{eq:fluid_stokes_weak_implement}
+\begin{array}{*{20}{l}}
+\displaystyle  {\int\limits_\Omega  {(\alpha {\mathbf{u}}.{\mathbf{v}} + \nu\nabla {\mathbf{u}}.\nabla {\mathbf{v}})\,} d\omega  - \int\limits_\Omega  {p\nabla\cdot{\mathbf{v}}\;d\omega  = } \int\limits_\Omega  {{\mathbf{f}}.{\mathbf{v}}\;d\omega,} } \\ 
+\displaystyle  {\int\limits_\Omega  {q\nabla\cdot{\mathbf{u}}\;d\omega +\varepsilon \int_{\Omega} p q d \omega  = 0}.} 
+\end{array}
+\end{equation}
+
+Eqs. \ref{eq:fluid_ns_weak_implement} and \ref{eq:fluid_stokes_weak_implement} can be easily implemented in FreeFEM thanks to the built-in support of the method of characteristics via the \verb|convect| function. The model is implemented using P1 elements for the pressure and P2 elements for the velocity state variables.
 
 
 
