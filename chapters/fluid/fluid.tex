@@ -8,7 +8,7 @@
 
 \subsection{Navier-Stokes equations}
 
-In its general form, the Navier-Stokes equations describing the flow of an incompressible fluid with constant density $\rho$ in the domain $\Omega \subset \mathbb{R}^{d}$ (with $d$ being the dimension so 2 or 3) can be written as:
+In its general form, the Navier-Stokes equations describing the flow of an incompressible fluid with constant density $\rho$ in the domain $\Omega \subset \mathbb{R}^{d}$ (with $d$ being the dimension so 2 or 3) can be written as \cite{Chung2014}:
 \begin{equation} \label{eq:fluid_ns_general}
 \left\{ {\begin{array}{*{20}{l}}
 \displaystyle  {\frac{{\partial {\mathbf{u}}}}{{\partial t}} - {\nabla\cdot}[\nu(\nabla {\mathbf{u}} + \nabla {{\mathbf{u}}^T})] + ({\mathbf{u}}.\nabla ){\mathbf{u}} + \nabla {\mathbf{p}} = {\mathbf{f}},\quad x \in \Omega ,t > 0,} \\ 
@@ -16,7 +16,7 @@ In its general form, the Navier-Stokes equations describing the flow of an incom
 \end{array}} \right.
 \end{equation}
 in which $\mathbf{u}$ is the fluid velocity, $\mathbf{p}$ is the pressure (which is actually pressure divided by the density), $\nu = \frac{\mu}{\rho}$ is the kinematic viscosity (with $\mu$ being the dynamic viscosity), and 
-$\mathbf{f}$ is a force term. The equations are that of conservation of linear momentum and conservation of mass (also called continuity equation), respectively. When $\nu$ is constant, the diffusion term in Eq. \ref{eq:fluid_ns_general} can be simplified as:
+$\mathbf{f}$ is a force term. The equations are that of conservation of linear momentum and conservation of mass (also called continuity equation), respectively. When $\nu$ is constant, the diffusion term in Eq. \ref{eq:fluid_ns_general} can be simplified as \cite{Quarteroni2014}:
 \begin{equation}
 \text{div} [\nu(\nabla {\bf u}+\nabla {\bf u}^{T})] =\nu (\Delta {\bf u} + \nabla \text{div} {\bf u})=\nu \Delta {\bf u},
 \end{equation}
@@ -101,7 +101,7 @@ Eqs. \ref{eq:fluid_ns_weak} and \ref{eq:fluid_ns_weak_pressure} are so called we
 
 \subsection{Stokes equations}
 
-For viscous flow, where the Reynolds number is less than 1 ($Re = {|{\bf U}|L \over \nu}$, with $L$ and $\bf U$ being the representative length and velocity of the domain), the convection term of the Navier-Stokes equations can be neglected, simplifying Eq. \ref{eq:fluid_ns} to:
+For viscous flow, where the Reynolds number is less than 1 ($Re = {|{\bf U}|L \over \nu}$, with $L$ and $\bf U$ being the representative length and velocity of the domain), the convection term of the Navier-Stokes equations can be neglected, simplifying Eq. \ref{eq:fluid_ns} to \cite{Quarteroni2014}:
 \begin{equation} \label{eq:fluid_stokes}
 \left\{ {\begin{array}{*{20}{l}}
 \displaystyle  {\alpha \mathbf{u} - \nu\Delta \mathbf{u} + \nabla p = f\quad \text{in}\;\Omega ,} \\ 
@@ -138,11 +138,10 @@ in which
 
 \subsection{Implementation}
 
-Numerical implementation of the Stokes (Eq. \ref{eq:fluid_stokes}) and Navier-Stokes (Eq. \ref{eq:fluid_stokes}) equations can be tricky due to presence of certain sources of instability, which highly depends on the type of studied fluid regime. Various numerical models have presented for dealing with these equations, some of which are commonly used in CFD applications, such as the Newton-Raphson approximation of Navier-Stokes equtaions and the Chorin's projection method. 
+Numerical implementation of the Stokes (Eq. \ref{eq:fluid_stokes}) and Navier-Stokes (Eq. \ref{eq:fluid_stokes}) equations can be tricky due to presence of certain sources of instability, which highly depends on the type of studied fluid regime \cite{Girault1979, Elman2014}. Various numerical models have presented for dealing with these equations, some of which are commonly used in CFD applications, such as the Newton-Raphson approximation of Navier-Stokes equtaions and the Chorin's projection method. 
 
 In order to increase the stability and avoid some problems on the mathematical analysis of the numerical models (V-ellipticity
-property), a pseudo-compressibility assumption can be added to the continuity equation. The pseudo-compressible approximation appears as the pressure term $\varepsilon p$ with $\varepsilon$ being a very small coefficient, resulting to the following equation as the final form of the Navier-Stokes equations we consider in this study:
-
+property), a pseudo-compressibility assumption can be added to the continuity equation. The pseudo-compressible approximation appears as a pressure term $\varepsilon p$ with $\varepsilon$ being a very small coefficient, resulting to the following equation as the final form of the Navier-Stokes equations we consider in this study \cite{devuyst2013}:
 \begin{equation}  \label{eq:fluid_ns_pseudo}
 \left\{ {\begin{array}{*{20}{l}}
 \displaystyle  {\frac{{\partial {\mathbf{u}}}}{{\partial t}} - \nu\Delta{\mathbf{u}} + \left( {{\mathbf{u}} \cdot \nabla } \right) {\mathbf{u}} + \nabla p = {\mathbf{f}},} \\ 
@@ -174,6 +173,30 @@ The weak form of the Stokes equations stays almost the same as Eq. \ref{eq:fluid
 \displaystyle  {\int\limits_\Omega  {q\nabla\cdot{\mathbf{u}}\;d\omega +\varepsilon \int_{\Omega} p q d \omega  = 0}.} 
 \end{array}
 \end{equation}
+
+\subsection{Considering the degrading object}
+
+In biodegradation simulations, a degrading object exists in the fluid domain, through which the flow should not pass because it is a solid part. One common approach to handle this situation is to remove the solid part from the fluid flow mesh, but since the part shrinks over time, this is not a feasible and efficient approach, needing tremendous mesh recreation and removal during simulation. As a result, in the current study, presence of the solid body as a barrier is taken into account by adding a Darcy term for the permeability to the Navier-Stokes and Stokes and equations. A penalization technique is then employed to implement it in the weak formulation. To couple the fluid flow model with the biodegradation model, a convection term is added to the ions transport equations, causing the ions be advected by the fluid velocity field.
+
+Adding the Darcy  term to Eq. \ref{eq:fluid_stokes} and considering no other acting force yields to:
+\begin{equation} \label{eq:fluid_stokes_permeab}
+- \nu\Delta \mathbf{u} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0,
+\end{equation}
+where $K$ is the permeability function. The Darcy term vanishes in regions with high permeability, i.e. inside the fluid domain, resembling the Stokes equation, but when $K$ is very small, i.e. inside the solid part, it dominates the flow and acts like a barrier. To avoid numerical perturbation for switching between these 2 regions, a heaviside function is defined to update $K$ \cite{Guyot2016}:
+\begin{equation}
+H(\phi)=\left\{\begin{array}{l}
+0, \quad \phi<-\varepsilon \\
+\frac{1}{2}+\frac{\phi}{2 \varepsilon}+\frac{1}{2 \pi} \sin \left(\frac{\pi \phi}{\varepsilon}\right), \quad-\varepsilon<\phi<\varepsilon \\
+1, \quad \phi>-\varepsilon
+\end{array}\right.
+\end{equation}
+in which $\phi$ is the level-set signed distance function used to separate the solid and solution parts (Eqs. \ref{eq:lsm_full} and \ref{eq:lsm_simplified}), and $\varepsilon$ is set to 1.5h, with h being the minimum mesh element size. Then, $K$ can be accordingly updated to have smooth transition between regions with big difference in permeability:
+\begin{equation}
+K(\boldsymbol{x})=10^{30}(1-H)+K_{0} H
+\end{equation}
+where $K_{0}$ is the permeability of metals in fluid regions ($\sim10^{-6}$ H/m).
+
+
 
 Eqs. \ref{eq:fluid_ns_weak_implement} and \ref{eq:fluid_stokes_weak_implement} can be easily implemented in FreeFEM thanks to the built-in support of the method of characteristics via the \verb|convect| function. The model is implemented using P1 elements for the pressure and P2 elements for the velocity state variables.
 
