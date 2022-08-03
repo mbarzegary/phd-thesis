@@ -89,6 +89,60 @@ In fact, the similarity in corrosion behavior of various Mg alloys in SBF soluti
 
 \section{Methods}
 
+\begin{equation} \label{eq:kinetics_oxidation_react1}
+\mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O} \stackrel{k_{0}}{\rightarrow} \mathrm{Mg}^{2+}+\mathrm{H}_{2}+2 \mathrm{OH}^{-} 
+\end{equation}
+\begin{equation} \label{eq:kinetics_oxidation_react2}
+\mathrm{Mg}^{2+}+2 \mathrm{OH}^{-} \stackrel{k_{1}}{\rightarrow} \mathrm{Mg}(\mathrm{OH})_{2}+\mathrm{H}_{2}
+\end{equation}
+\begin{equation} \label{eq:kinetics_break_react}
+\mathrm{Mg}(\mathrm{OH})_{2}+2 \mathrm{Cl}^{-} \stackrel{k_{2}}{\rightarrow} \mathrm{Mg}^{2+}+2 \mathrm{Cl}^{-}+2 \mathrm{OH}^{-}
+\end{equation}
+\begin{equation} \label{eq:kinetics_break_react_mgo}
+\mathrm{MgO}+ \mathrm{Cl}^{-} + \mathrm{H}_{2} \mathrm{O} \stackrel{k_{2}}{\rightarrow} \mathrm{Mg}^{2+}+ \mathrm{Cl}^{-}+ 2\mathrm{OH}^{-}
+\end{equation}
+
+\begin{equation} \label{eq:kinetics_state_vars}
+\begin{aligned}
+&C_{\mathrm{Mg}} = C_{\mathrm{Mg}}(\mathbf{x},t), \quad C_{\mathrm{Mg}_\mathrm{[s]}} = C_{\mathrm{Mg}_\mathrm{[s]}}(\mathbf{x},t), \quad C_{\mathrm{Film}} = C_{\mathrm{Film}}(\mathbf{x},t)  \\
+&C_{\mathrm{Cl}} = C_{\mathrm{Cl}}(\mathbf{x},t), \quad C_{\mathrm{OH}} = C_{\mathrm{OH}}(\mathbf{x},t) \quad \mathbf{x} \in \Omega \subset \mathbb{R}^{3}
+\end{aligned},
+\end{equation}
+
+
+\begin{equation} \label{eq:kinetics_pde_mg_solid}
+\frac{\partial C_{\mathrm{Mg}_\mathrm{[s]}}}{\partial t}=-k_{0}C_{\mathrm{Mg}_\mathrm{[s]}}
+\end{equation}
+\begin{equation} \label{eq:kinetics_pde_mg}
+\frac{\partial C_{\mathrm{Mg}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{Mg}}^{e}  \nabla C_{\mathrm{Mg}} \right)-\nabla \cdot \left({\mathbf u} C_{\mathrm{Mg}} \right)+k_{0}C_{\mathrm{Mg}_\mathrm{[s]}}-k_{1}\alpha C_{\mathrm{Mg}}C_{\mathrm{OH}}^2 +k_{2} C_{\mathrm{Film}} {C_{\mathrm{Cl}}}^{2}
+\end{equation}
+\begin{equation} \label{eq:kinetics_pde_film}
+\frac{\partial C_\mathrm{Film}}{\partial t}=k_{1}\alpha C_{\mathrm{Mg}}C_{\mathrm{OH}}^2 -k_{2} C_{\mathrm{Film}} {C_{\mathrm{Cl}}}^{2}
+\end{equation}
+\begin{equation} \label{eq:kinetics_pde_cl}
+\frac{\partial C_{\mathrm{Cl}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{Cl}}^{e}  \nabla C_{\mathrm{Cl}} \right)-\nabla \cdot \left({\mathbf u} C_{\mathrm{Cl}} \right)
+\end{equation}
+\begin{equation} \label{eq:kinetics_pde_oh}
+\frac{\partial C_{\mathrm{OH}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{OH}}^{e}  \nabla C_{\mathrm{OH}} \right)-\nabla \cdot \left({\mathbf u} C_{\mathrm{OH}} \right)+k_{0}C_{\mathrm{Mg}_\mathrm{[s]}}-k_{1}\alpha C_{\mathrm{Mg}}C_{\mathrm{OH}}^2 +k_{2} C_{\mathrm{Film}} {C_{\mathrm{Cl}}}^{2}
+\end{equation}
+where $\alpha$ is defined as:
+\begin{equation} \label{eq:kinetics_film_alpha}
+\alpha=\left(1-\beta \frac{C_{\mathrm{Film}}}{[\mathrm{Film}]_{\max }}\right),
+\end{equation}
+in which the protective film maximum concentration is calculated using its porosity ($\epsilon$) \cite{Bajger2016}:
+\begin{equation} \label{eq:kinetics_film_max}
+[\mathrm{Film}]_{\max }=\rho_{\mathrm{Mg}(\mathrm{OH})_{2}} \times(1-\epsilon).
+\end{equation}
+
+In Eqs. \ref{eq:kinetics_pde_mg}, \ref{eq:kinetics_pde_cl}, and \ref{eq:kinetics_pde_oh}, $\mathbf{u}$ is the velocity field from the surrounding fluid flow governed by the Stokes equation:
+\begin{equation} \label{eq:kinetics_stokes}
+\left\{ {\begin{array}{*{20}{l}}
+\displaystyle  {- \nu\Delta \mathbf{u} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0} \\ 
+\displaystyle  {\nabla\cdot\mathbf{u} + \varepsilon p = 0.}
+\end{array}} \right.
+\end{equation}
+in which $\mathbf{u}$ is the fluid velocity, $\mathbf{p}$ is the pressure (which is actually pressure divided by the density), $\nu = \frac{\mu}{\rho}$ is the kinematic viscosity (with $\mu$ being the dynamic viscosity), and $K$ is the permeability function.
+
 \begin{figure}[h]
 \centering
 \medskip
