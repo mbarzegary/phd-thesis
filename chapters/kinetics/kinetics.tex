@@ -57,32 +57,51 @@ In fact, the similarity in corrosion behavior of various Mg alloys in SBF soluti
 
 \section{Results}
 
+\subsection{Thermodynamics-based simulation}
+
+Inputting the experimental conditions in the Hydra-Medusa software, including the initial composition and the contributing chemical components, results in a huge and complex output containing all the possible occurring chemical reactions. Out of this output, relevant reactions for the current biodegradation systems were filtered out, and the filtered reactions were converted to desired concentration units. Fig. \ref{fig:kinetics_medusa_profiles} depicts the output of this process separately for simulations performed at $25^{\circ}C$ (RT) and $37^{\circ}C$, showing how the concentration of relevant components vary with changing the environment pH. The solubility products of these simulations were taken from Table \ref{tab:kinetics_reactions}, and equilibrium concentrations were set to be equal to the composition of the electrolyte, listed in Table  \ref{tab:kinetics_electrolyte_composition}. 
+
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{medusa_profiles.png}
-\caption[Hydra-Medusa software output for given experiment conditions]{Selected components from the Hydra-Medusa software output for given experiment conditions} \label{fig:kinetics_medusa_profiles}
+\caption[Hydra-Medusa software output for given experimental conditions]{Selected relevant components from the Hydra-Medusa software output for given experimental conditions, showing how the concentration of various components vary with changing local pH} \label{fig:kinetics_medusa_profiles}
 \end{figure}
+
+\subsection{Biodegradation simulations}
+
+Fig. \ref{fig:kinetics_local_ph_visual} shows a visualization of the local pH profiles from the top and side views for simulations performed at  $25^{\circ}C$ (RT) and $37^{\circ}C$ after 12 hours. These profiles are comparable with the local pH distribution measured in the experiments as shown in Fig. \ref{fig:kinetics_local_ph_experimental}. In these figures, the flow is from left to right, advecting the released ions in the flow direction. 
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{local_ph_visual.jpg}
-\caption[Simulation results for local pH predictions]{Simulation results for local pH predictions} \label{fig:kinetics_local_ph_visual}
+\caption[Simulation results for local pH predictions]{Simulation results for local pH predictions, depicting the local pH in a) top view from a horizontal cross section, b) side view from a vertical cross section, and c) perspective view with both the top and side cross sections, for simulations performed at $25^{\circ}C$ (RT) and $37^{\circ}C$.} \label{fig:kinetics_local_ph_visual}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \medskip
-\includegraphics[width=\textwidth]{vertical_profile.png}
-\caption[Comparing computational and experimental vertical pH profile]{Comparing computational and experimental vertical pH profile} \label{fig:kinetics_vertical_profile}
+\includegraphics[width=\textwidth]{local_ph_experimental.jpg}
+\caption[Experimental results for distribution of local pH above the sample]{Experimental results for distribution of local pH above the surface of the sample, measured after 12 hours of degradation.} \label{fig:kinetics_local_ph_experimental}
 \end{figure}
+
+Quantitative profiles provide a more accurate comparison between the computational predictions and experimentally-obtained values. The horizontal profiles, also called linescans, are depicted in Fig. \ref{kinetics_vertical_profile}, in which the local pH changes are plotted across a horizontal line $50 \mu\mathrm{m}$ above the surface of the sample for experiments using CP and UHP Mg and the computational model. The data is recorded after 12 hours of immersion, which was also the final time of the simulations.
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{line_scans.png}
-\caption[Comparing computational and experimental horizontal line scans for  local pH]{Comparing computational and experimental horizontal line scans for  local pH} \label{fig:kinetics_line_scans}
+\caption[Comparing computational and experimental for horizontal line scans of local pH]{Comparing computational predictions and experimentally-obtained  horizontal line scans of local pH changes, measured $50 \mu\mathrm{m}$ above the surface of the sample after 12 hours of degradation.} \label{fig:kinetics_line_scans}
+\end{figure}
+
+Similarly, Fig. \ref{fig:kinetics_vertical_profile} demonstrates the vertical pH profile after 12 hours of degradation, where the local pH is measured over a distance of $0.5 \mathrm{mm}$ vertically, starting from $50 \mu\mathrm{m}$ above the sample.
+
+\begin{figure}[h]
+\centering
+\medskip
+\includegraphics[width=\textwidth]{vertical_profile.png}
+\caption[Comparing computational and experimental vertical pH profiles]{Comparing computational and experimental results for the local pH profiles, measured over a vertical line above the center of the sample after 12 hours of immersion.} \label{fig:kinetics_vertical_profile}
 \end{figure}
 
 \section{Discussion}
@@ -162,7 +181,7 @@ $\mathrm{HCO}^{3-}(aq) \rightarrow \mathrm{CO}_{3}^{2-}(aq)+H^{+}(aq)$ & 10.33 &
 $\mathrm{HPO}_{4}^{2-}(aq) \rightarrow \mathrm{PO}_{4}^{3-}(a q)+H^{+}(aq)$ & 12.35 & 12.32 \\
 \hline
 \end{tabular}
-\label{tab:composition}
+\label{tab:kinetics_reactions}
 \end{table}
 
 
@@ -186,7 +205,7 @@ $\mathrm{D}-\mathrm{Glucose}$ & 5.56 \\
 \hline
 
 \end{tabular}
-\label{tab:composition}
+\label{tab:kinetics_electrolyte_composition}
 \end{table}
 
 
@@ -199,7 +218,7 @@ $\mathrm{D}-\mathrm{Glucose}$ & 5.56 \\
 \hline { CP-Mg } & 0.03420 & 0.0001 & 0.00237 & 0.00402 & 0.00037 & <0.0002  \\
 { UHP-Mg } & 0.0012 & <0.0001 & 0.00037 & 0.00291 & <0.0001 & <0.0002 
 \end{tabular}
-\label{tab:parameters}
+\label{tab:kinetics_alloys_composition}
 \end{table}
 
 
