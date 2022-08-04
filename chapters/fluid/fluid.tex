@@ -174,6 +174,8 @@ The weak form of the Stokes equations stays almost the same as Eq. \ref{eq:fluid
 \end{array}
 \end{equation}
 
+Eqs. \ref{eq:fluid_ns_weak_implement} and \ref{eq:fluid_stokes_weak_implement} can be easily implemented in FreeFEM thanks to the built-in support of the method of characteristics via the \verb|convect| function. The model is implemented using P1 elements for the pressure and P2 elements for the velocity state variables.
+
 \subsection{Considering the degrading object}
 
 In biodegradation simulations, a degrading object exists in the fluid domain, through which the flow should not pass because it is a solid part. One common approach to handle this situation is to remove the solid part from the fluid flow mesh, but since the part shrinks over time, this is not a feasible and efficient approach, needing tremendous mesh recreation and removal during simulation. As a result, in the current study, presence of the solid body as a barrier is taken into account by adding a Darcy term for the permeability to the Navier-Stokes and Stokes and equations. A penalization technique is then employed to implement it in the weak formulation. To couple the fluid flow model with the biodegradation model, a convection term is added to the ions transport equations, causing the ions be advected by the fluid velocity field.
@@ -194,13 +196,14 @@ in which $\phi$ is the level-set signed distance function used to separate the s
 \begin{equation}
 K(\boldsymbol{x})=10^{30}(1-H)+K_{0} H
 \end{equation}
-where $K_{0}$ is the permeability of metals in fluid regions ($\sim10^{-6}$ H/m).
+where $K_{0}$ is the permeability of metals in fluid regions ($\sim10^{-6}$ H/m). Similar to Eq. \ref{eq:fluid_stokes_permeab} the effect of the solid part can be added to the Navier-Stokes equation (Eq. \ref{eq:fluid_ns}) by the Darcy term, leading to the following equation: 
+\begin{equation}  \label{eq:fluid_ns_permeab}
+\frac{{\partial {\mathbf{u}}}}{{\partial t}} - \nu\Delta{\mathbf{u}} + \left( {{\mathbf{u}} \cdot \nabla } \right) {\mathbf{u}} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0.
+\end{equation}
 
+\subsection{Simulation setup}
 
-
-Eqs. \ref{eq:fluid_ns_weak_implement} and \ref{eq:fluid_stokes_weak_implement} can be easily implemented in FreeFEM thanks to the built-in support of the method of characteristics via the \verb|convect| function. The model is implemented using P1 elements for the pressure and P2 elements for the velocity state variables.
-
-
+\subsubsection{Test case to compare with OpenFOAM}
 
 \begin{figure}[h]
 \centering
@@ -209,54 +212,69 @@ Eqs. \ref{eq:fluid_ns_weak_implement} and \ref{eq:fluid_stokes_weak_implement} c
 \caption[Fluid flow model construction for comparison with experimental setup]{Fluid flow model construction for comparison with experimental setup} \label{fig:fluid_setup}
 \end{figure}
 
+\subsubsection{Test case to check coupling with degradation model}
+
+
+\section{Results and discussion}
+
+To verify the robustness of the model predictions, the results of the CFD code was compared both quantitatively and qualitatively with an identical  OpenFOAM model. The qualitative comparison is made via the streamlines, showing how the flow develops via drawing the trajectory lines of the fluid velocity field inside the domain of desired, which is the chamber in this case. Figs. \ref{fig:fluid_streamlines_side} and \ref{fig:fluid_streamlines_top} demonstrate such comparison between the developed model and OpenFOAM. Fig. \ref{fig:fluid_streamlines_side} shows the streamlines for both model from a side view, in which the flow enters the chamber from the left inlet pipe and leaves it from the top right outlet. The qualitative comparison shows a good agreement between the predictions of the models. 
+
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{streamlines_side.png}
-\caption[Comparing streamline results of developed CFD code and OpenFOAM - side view]{Comparing streamline results of developed CFD code and OpenFOAM - side view} \label{fig:fluid_streamlines_side}
+\caption[Comparing streamline results of developed CFD code and OpenFOAM - side view]{Comparing the results of the developed CFD model (top) with OpenFOAM (bottom) via plotting the streamlines of the fluid velocity field, depicted from the  side view. The colors on the trajectory lines show the magnitude of the velocity vector.} \label{fig:fluid_streamlines_side}
 \end{figure}
 
+Similarly, Fig. \ref{fig:fluid_streamlines_top} depicts a comparison but from the top view, showing the good agreement between the predictions, although the OpenFOAM model (bottom) shows a slightly better performance on the boundaries.
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{streamlines_top.png}
-\caption[Comparing streamline results of developed CFD code and OpenFOAM - top view]{Comparing streamline results of developed CFD code and OpenFOAM - top view} \label{fig:fluid_streamlines_top}
+\caption[Comparing streamline results of developed CFD code and OpenFOAM - top view]{Streamlines of the fluid velocity field plotted from a top view to compare the output of the developed CFD model (top) and OpenFOAM (bottom)  with colors showing the magnitude of the velocity vector at each point.} \label{fig:fluid_streamlines_top}
 \end{figure}
 
+Moreover, quantitative comparison is possible by comparing the numerical values predicted by the models in various regions of the domain of desired, including the regions close to the boundaries. Fig. \ref{fig:fluid_flow_chamber} shows the comparison of the fluid velocity field visualization between the developed CFD code and OpenFOAM on a cross section in the center of the chamber, demonstrating that both models produce exactly the same results quantitatively. 
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{flow_chamber.png}
-\caption[Comparing flow field results of developed CFD code and OpenFOAM]{Comparing streamline results of developed CFD code and OpenFOAM} \label{fig:fluid_flow_chamber}
+\caption[Comparing flow field results of developed CFD code and OpenFOAM]{Comparison between the fluid velocity field predicted by the developed CFD code (top) and OpenFOAM (bottom), depicted on a vertical cross section in the center of the chamber. Fluid enters the chamber from left and leaves it from right. The colors show the magnitude of the velocity vector at each point.} \label{fig:fluid_flow_chamber}
 \end{figure}
 
+A closer look at the center of Fig. \ref{fig:fluid_flow_chamber} is depicted in Fig. \ref{fig:fluid_flow_chamber_zoom}, where color bar range is adapted to contain only the visible values. This close comparison also confirms the good agreement of the results between the CFD model and OpenFOAM. The employed mesh is relatively coarse in the center (regions far from the inlet and outlet), the effect of which can be seen as not smooth velocity profiles in Fig. \ref{fig:fluid_flow_chamber_zoom}. Still, both models handle this coarse mesh effect similarly.
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{flow_chamber_zoom.png}
-\caption[Comparing flow field results of developed CFD code and OpenFOAM - zoomed view]{Comparing streamline results of developed CFD code and OpenFOAM - zoomed view} \label{fig:fluid_flow_chamber_zoom}
+\caption[Comparing flow field results of developed CFD code and OpenFOAM - zoomed view]{A closer look at the fluid velocity field for results predicted by the developed CFD code (top) and OpenFOAM (bottom) with colors showing the magnitude of the velocity vector at each point.} \label{fig:fluid_flow_chamber_zoom}
 \end{figure}
+
+Fig. \ref{fig:fluid_flow_degrading} shows the result of a proof-of-concept simulation in which the biodegradation model \cite{Barzegari2021} is coupled with the fluid flow model. This was done by solving Eq. \ref{eq:fluid_ns_permeab} (or Eq. \ref{eq:fluid_stokes_permeab} for simpler cases) and adding a convection term to the equations of the biodegradation model to include the bidirectional effect of fluid flow on the degrading object. This effect can be seen in Fig. \ref{fig:fluid_flow_degrading} with the released ions being advected to the right (the direction of the fluid flow) and the degrading object being slightly more degraded on the left.
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{flow_degrading.jpg}
-\caption[Biodegradation simulation results in the presence of fluid flow]{Biodegradation simulation results in the presence of fluid flow} \label{fig:fluid_flow_degrading}
+\caption[Biodegradation simulation results in the presence of fluid flow]{Biodegradation simulation results in the presence of fluid flow over time, showing the bidirection effect of fluid flow. The flow gets detoured due to presence of an obstacle, and the released ions get advected to the direction of fluid flow (left to right). The colors represent the concentration of Mg ions as they gets released to the surrounding environment and subsequently gets diffused/advected. The gray surface shows the zero iso-contour of the used level-set function to track the interface of the degrading object, demonstrating the change of morphology of the solid part.} \label{fig:fluid_flow_degrading}
 \end{figure}
+
+Fig. \ref{fig:fluid_flow_degrading_streamline} intended to demonstrate the effect of the degrading object on the fluid velocity field, depicted as streamlines passing over the solid part. As can be seen in the figure, the fluid velocity field evolves over time, demonstrating the response of the fluid flow, obtained from solving the Navier-Stokes equations (Eq. \ref{eq:fluid_ns_permeab}), to the change of the morphology of the obstacle. 
 
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{flow_degrading_streamline.jpg}
-\caption[Fluid flow streamlines in the presence of a degrading object]{Fluid flow streamlines in the presence of a degrading object} \label{fig:fluid_flow_degrading_streamline}
+\caption[Fluid flow streamlines in the presence of a degrading object]{Visualization the evolution of the fluid velocity field depicted by streamlines passing over a degrading object. Colors show the magnitude of the velocity field projected on the streamlines.} \label{fig:fluid_flow_degrading_streamline}
 \end{figure}
 
-
-
+% adding parallelization details section to the methods
+% adding number of cores used to simulate fluid flow
+% discussing the preconditioners and parallel solutions
 
 
 
