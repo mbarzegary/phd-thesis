@@ -45,7 +45,7 @@ P O_{4}^{3-}(a q)+H^{+}(a q)\rightarrow \mathrm{HPO}_{4}^{2-}(a q)
 \end{equation}
 
 Then, the aforementioned protection layer is formed on the corroded surface as a hydroxyapatite-like precipitation according the following reaction \cite{Atrens2015,Song2009,Silva2018,Jiang2019}:
-\begin{equation}
+\begin{equation} \label{eq:kinetics_hydrox_react}
 \begin{aligned}
 m \mathrm{Mg}^{2+}+n \mathrm{Ca}^{2+}&+x \mathrm{H}_{2} \mathrm{PO}_{4}^{-} / \mathrm{HPO}_{4}^{2-}+y \mathrm{HCO}_{3}^{-}+z \mathrm{OH}^{-}\\
 & \rightarrow \mathrm{Mg}_{m} \mathrm{Ca}_{n}\left(\mathrm{PO}_{4}\right)_{x}\left(\mathrm{CO}_{3}\right)_{y}\left(\mathrm{OH}^{-}\right)_{z}
@@ -106,84 +106,13 @@ Similarly, Fig. \ref{fig:kinetics_vertical_profile} demonstrates the vertical pH
 
 \section{Discussion}
 
+Dummy text for discussion.
+
 \section{Methods}
 
-\begin{equation} \label{eq:kinetics_oxidation_react1}
-\mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O} \stackrel{k_{0}}{\rightarrow} \mathrm{Mg}^{2+}+\mathrm{H}_{2}+2 \mathrm{OH}^{-} 
-\end{equation}
-\begin{equation} \label{eq:kinetics_oxidation_react2}
-\mathrm{Mg}^{2+}+2 \mathrm{OH}^{-} \stackrel{k_{1}}{\rightarrow} \mathrm{Mg}(\mathrm{OH})_{2}+\mathrm{H}_{2}
-\end{equation}
-\begin{equation} \label{eq:kinetics_break_react}
-\mathrm{Mg}(\mathrm{OH})_{2}+2 \mathrm{Cl}^{-} \stackrel{k_{2}}{\rightarrow} \mathrm{Mg}^{2+}+2 \mathrm{Cl}^{-}+2 \mathrm{OH}^{-}
-\end{equation}
-\begin{equation} \label{eq:kinetics_break_react_mgo}
-\mathrm{MgO}+ \mathrm{Cl}^{-} + \mathrm{H}_{2} \mathrm{O} \stackrel{k_{2}}{\rightarrow} \mathrm{Mg}^{2+}+ \mathrm{Cl}^{-}+ 2\mathrm{OH}^{-}
-\end{equation}
+\subsection{Experimental setup}
 
-\begin{equation} \label{eq:kinetics_state_vars}
-\begin{aligned}
-&C_{\mathrm{Mg}} = C_{\mathrm{Mg}}(\mathbf{x},t), \quad C_{\mathrm{Mg}_\mathrm{[s]}} = C_{\mathrm{Mg}_\mathrm{[s]}}(\mathbf{x},t), \quad C_{\mathrm{Film}} = C_{\mathrm{Film}}(\mathbf{x},t)  \\
-&C_{\mathrm{Cl}} = C_{\mathrm{Cl}}(\mathbf{x},t), \quad C_{\mathrm{OH}} = C_{\mathrm{OH}}(\mathbf{x},t) \quad \mathbf{x} \in \Omega \subset \mathbb{R}^{3}
-\end{aligned},
-\end{equation}
-
-
-\begin{equation} \label{eq:kinetics_pde_mg_solid}
-\frac{\partial C_{\mathrm{Mg}_\mathrm{[s]}}}{\partial t}=-k_{0}C_{\mathrm{Mg}_\mathrm{[s]}}
-\end{equation}
-\begin{equation} \label{eq:kinetics_pde_mg}
-\frac{\partial C_{\mathrm{Mg}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{Mg}}^{e}  \nabla C_{\mathrm{Mg}} \right)-\nabla \cdot \left({\mathbf u} C_{\mathrm{Mg}} \right)+k_{0}C_{\mathrm{Mg}_\mathrm{[s]}}-k_{1}\alpha C_{\mathrm{Mg}}C_{\mathrm{OH}}^2 +k_{2} C_{\mathrm{Film}} {C_{\mathrm{Cl}}}^{2}
-\end{equation}
-\begin{equation} \label{eq:kinetics_pde_film}
-\frac{\partial C_\mathrm{Film}}{\partial t}=k_{1}\alpha C_{\mathrm{Mg}}C_{\mathrm{OH}}^2 -k_{2} C_{\mathrm{Film}} {C_{\mathrm{Cl}}}^{2}
-\end{equation}
-\begin{equation} \label{eq:kinetics_pde_cl}
-\frac{\partial C_{\mathrm{Cl}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{Cl}}^{e}  \nabla C_{\mathrm{Cl}} \right)-\nabla \cdot \left({\mathbf u} C_{\mathrm{Cl}} \right)
-\end{equation}
-\begin{equation} \label{eq:kinetics_pde_oh}
-\frac{\partial C_{\mathrm{OH}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{OH}}^{e}  \nabla C_{\mathrm{OH}} \right)-\nabla \cdot \left({\mathbf u} C_{\mathrm{OH}} \right)+k_{0}C_{\mathrm{Mg}_\mathrm{[s]}}-k_{1}\alpha C_{\mathrm{Mg}}C_{\mathrm{OH}}^2 +k_{2} C_{\mathrm{Film}} {C_{\mathrm{Cl}}}^{2}
-\end{equation}
-where $\alpha$ is defined as:
-\begin{equation} \label{eq:kinetics_film_alpha}
-\alpha=\left(1-\beta \frac{C_{\mathrm{Film}}}{[\mathrm{Film}]_{\max }}\right),
-\end{equation}
-in which the protective film maximum concentration is calculated using its porosity ($\epsilon$) \cite{Bajger2016}:
-\begin{equation} \label{eq:kinetics_film_max}
-[\mathrm{Film}]_{\max }=\rho_{\mathrm{Mg}(\mathrm{OH})_{2}} \times(1-\epsilon).
-\end{equation}
-
-In Eqs. \ref{eq:kinetics_pde_mg}, \ref{eq:kinetics_pde_cl}, and \ref{eq:kinetics_pde_oh}, $\mathbf{u}$ is the velocity field from the surrounding fluid flow governed by the Stokes equation:
-\begin{equation} \label{eq:kinetics_stokes}
-\left\{ {\begin{array}{*{20}{l}}
-\displaystyle  {- \nu\Delta \mathbf{u} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0} \\ 
-\displaystyle  {\nabla\cdot\mathbf{u} + \varepsilon p = 0.}
-\end{array}} \right.
-\end{equation}
-in which $\mathbf{u}$ is the fluid velocity, $\mathbf{p}$ is the pressure (which is actually pressure divided by the density), $\nu = \frac{\mu}{\rho}$ is the kinematic viscosity (with $\mu$ being the dynamic viscosity), and $K$ is the permeability function.
-
-
-\begin{table}[h]
-\caption[Solubility products of related chemical reactions ]{Solubility products of related chemical reactions at $25^{\circ}C$ (RT) and $37^{\circ}C$}
-\medskip
-\centering
-\begin{tabular}{ccc}
-\hline
-A & 0.85 wt. \% NaCl & SBF \\ \hline
-$\mathrm{Ca}_{5}\left(\mathrm{PO}_{4}\right)_{3} \mathrm{OH}  \rightarrow 5 \mathrm{Ca}^{2+}+3 \mathrm{PO}_{4}^{3-}+\mathrm{OH}^{-}$ & 54.46 & 58.77 \\
-$\mathrm{Mg}(\mathrm{OH})_{2}  \rightarrow \mathrm{Mg}^{2}+2 \mathrm{OH}^{-}$ & 11.25 & 11.25 \\
-$\mathrm{Ca}(\mathrm{OH})_{2} \rightarrow \mathrm{Ca}^{2+}+2 \mathrm{OH}^{-}$ & 5.20 & 5.38 \\
-$\mathrm{MgCO}_{3} \rightarrow \mathrm{Mg}^{2+}+\mathrm{CO}_{3}^{2-}$ & 8.03 & 5.51 \\
-$\mathrm{CaCO}_{3}  \rightarrow \mathrm{Ca}^{2+}+\mathrm{CO}_{3}^{2-}$ & 8.48 & 8.44 \\
-$\mathrm{Mg}_{3}\left(\mathrm{PO}_{4}\right)_{2}  \rightarrow 3 \mathrm{Mg}^{2+}+2 \mathrm{PO}_{4}^{3-}$ & 23.28 & 27.62 \\
-$\mathrm{H}_{2} \mathrm{O}(\mathrm{l})  \rightarrow \mathrm{H}^{+}(aq)+\mathrm{OH}^{-}(a q)$ & 14.00 & 13.61 \\
-$\mathrm{HCO}^{3-}(aq) \rightarrow \mathrm{CO}_{3}^{2-}(aq)+H^{+}(aq)$ & 10.33 & 10.24 \\
-$\mathrm{HPO}_{4}^{2-}(aq) \rightarrow \mathrm{PO}_{4}^{3-}(a q)+H^{+}(aq)$ & 12.35 & 12.32 \\
-\hline
-\end{tabular}
-\label{tab:kinetics_reactions}
-\end{table}
-
+Dummy text for experimental setup.
 
 \begin{table}[h]
 \caption[Chemical composition of the HBSS electrolyte]{Chemical composition of the HBSS electrolytes used to perform corrosion tests for local pH measurements.}
@@ -222,14 +151,126 @@ $\mathrm{D}-\mathrm{Glucose}$ & 5.56 \\
 \end{table}
 
 
-
-
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=0.9\textwidth]{setup.jpg}
 \caption[Experimental setup for validating the coupled biodegradation model]{Experimental setup for validating the coupled biodegradation model} \label{fig:kinetics_setup}
 \end{figure}
+
+\subsection{Computational model construction}
+
+The computational model in the current study comprises of 3 coupled components:
+\begin{enumerate}
+\item
+An extended version of the mechanistic biodegradation model based on our previous work \cite{Barzegari2021} to obtain Mg and hydroxide ions distributions and initial formation of the protective layer based on the simplification assumptions.
+\item
+A thermodynamics-based simulation to estimate the concentration of various components of the electrolyte in regions close to the surface of the sample based on the calculated pH of component 1.
+\item
+A module to link the above 2 components and calculate the hydroxyapatite-like precipitation concentration, in which pH data were transfer from component 1 to component 2 for each node of the computational mesh to calculate the concentration of ions depending on the computed local pH and transfer back the calculated precipitation concentration to component 1.
+\end{enumerate}
+
+The computational model of the biodegradation was developed by deriving a set of reaction-diffusion-advection equations from the chemistry of the corrosion of Mg in hydrodynamics conditions. The following basic reactions are captured by this model, extended by splitting into more equations in comparison to our previous contribution \cite{Barzegari2021}:\begin{equation} \label{eq:kinetics_oxidation_react1}
+\mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O} \stackrel{k_{0}}{\rightarrow} \mathrm{Mg}^{2+}+\mathrm{H}_{2}+2 \mathrm{OH}^{-} 
+\end{equation}
+\begin{equation} \label{eq:kinetics_oxidation_react2}
+\mathrm{Mg}^{2+}+2 \mathrm{OH}^{-} \stackrel{k_{1}}{\rightarrow} \mathrm{Mg}(\mathrm{OH})_{2}+\mathrm{H}_{2}
+\end{equation}
+\begin{equation} \label{eq:kinetics_break_react}
+\mathrm{Mg}(\mathrm{OH})_{2}+2 \mathrm{Cl}^{-} \stackrel{k_{2}}{\rightarrow} \mathrm{Mg}^{2+}+2 \mathrm{Cl}^{-}+2 \mathrm{OH}^{-}
+\end{equation}
+\begin{equation} \label{eq:kinetics_break_react_mgo}
+\mathrm{MgO}+ \mathrm{Cl}^{-} + \mathrm{H}_{2} \mathrm{O} \stackrel{k_{2}}{\rightarrow} \mathrm{Mg}^{2+}+ \mathrm{Cl}^{-}+ 2\mathrm{OH}^{-}
+\end{equation}
+
+The following state variables hold the concentration of various basic ions involved in reactions described by Eqs. \ref{eq:kinetics_oxidation_react1}, \ref{eq:kinetics_oxidation_react2}, \ref{eq:kinetics_break_react}, and \ref{eq:kinetics_break_react_mgo}:
+\begin{equation} \label{eq:kinetics_state_vars_film}
+\begin{aligned}
+&C_{\mathrm{Mg}} = C_{\mathrm{Mg}}(\mathbf{x},t), \quad C_{\mathrm{Mg}_\mathrm{[s]}} = C_{\mathrm{Mg}_\mathrm{[s]}}(\mathbf{x},t), \quad C_{\mathrm{Mg}(\mathrm{OH})_{2}} = C_{\mathrm{Mg}(\mathrm{OH})_{2}}(\mathbf{x},t)  \\
+&C_{\mathrm{Cl}} = C_{\mathrm{Cl}}(\mathbf{x},t), \quad C_{\mathrm{OH}} = C_{\mathrm{OH}}(\mathbf{x},t) \quad \mathbf{x} \in \Omega \subset \mathbb{R}^{3}
+\end{aligned},
+\end{equation}
+
+Additionally, 2 more state variable are needed to couple the models, in which the calculated concentration of the hydroxyapatite-like precipitation as well as the cumulative layer concentration are held:
+\begin{equation} \label{eq:kinetics_state_vars}
+C_{\mathrm{Hydrox}} = C_{\mathrm{Hydrox}}(\mathbf{x},t), \quad C_{\mathrm{Film}} = C_{\mathrm{Film}}(\mathbf{x},t) \quad \mathbf{x} \in \Omega \subset \mathbb{R}^{3},
+\end{equation}
+where the total film concentration can be calculated as:
+\begin{equation} \label{eq:kinetics_film_cumulative}
+C_{\mathrm{Film}} = C_{\mathrm{Hydrox}} + C_{\mathrm{\mathrm{Mg}(\mathrm{OH})_{2}}}.
+\end{equation}
+
+With the above state variables defined, the basic biodegradation model can be constructed by deriving the following PDEs:
+\begin{equation} \label{eq:kinetics_pde_mg_solid}
+\frac{\partial C_{\mathrm{Mg}_\mathrm{[s]}}}{\partial t}=-k_{0}C_{\mathrm{Mg}_\mathrm{[s]}}
+\end{equation}
+\begin{equation} \label{eq:kinetics_pde_mg}
+\frac{\partial C_{\mathrm{Mg}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{Mg}}^{e}  \nabla C_{\mathrm{Mg}} \right)-\nabla \cdot \left({\mathbf u} C_{\mathrm{Mg}} \right)+k_{0}C_{\mathrm{Mg}_\mathrm{[s]}}-k_{1}\alpha C_{\mathrm{Mg}}C_{\mathrm{OH}}^2 +k_{2} C_{\mathrm{Film}} {C_{\mathrm{Cl}}}^{2}
+\end{equation}
+\begin{equation} \label{eq:kinetics_pde_film}
+\frac{\partial C_{\mathrm{Mg}(\mathrm{OH})_{2}}}{\partial t}=k_{1}\alpha C_{\mathrm{Mg}}C_{\mathrm{OH}}^2 -k_{2} C_{\mathrm{Film}} {C_{\mathrm{Cl}}}^{2}
+\end{equation}
+\begin{equation} \label{eq:kinetics_pde_cl}
+\frac{\partial C_{\mathrm{Cl}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{Cl}}^{e}  \nabla C_{\mathrm{Cl}} \right)-\nabla \cdot \left({\mathbf u} C_{\mathrm{Cl}} \right)
+\end{equation}
+\begin{equation} \label{eq:kinetics_pde_oh}
+\frac{\partial C_{\mathrm{OH}}}{\partial t}=\nabla \cdot \left(D_{\mathrm{OH}}^{e}  \nabla C_{\mathrm{OH}} \right)-\nabla \cdot \left({\mathbf u} C_{\mathrm{OH}} \right)+k_{0}C_{\mathrm{Mg}_\mathrm{[s]}}-k_{1}\alpha C_{\mathrm{Mg}}C_{\mathrm{OH}}^2 +k_{2} C_{\mathrm{Film}} {C_{\mathrm{Cl}}}^{2}
+\end{equation}
+where $\alpha$ is defined as:
+\begin{equation} \label{eq:kinetics_film_alpha}
+\alpha=\left(1-\beta \frac{C_{\mathrm{Film}}}{[\mathrm{Film}]_{\max }}\right),
+\end{equation}
+in which the protective film maximum concentration is calculated using its porosity ($\epsilon$) \cite{Bajger2016}:
+\begin{equation} \label{eq:kinetics_film_max}
+[\mathrm{Film}]_{\max }=\rho_{\mathrm{Film}} \times(1-\epsilon).
+\end{equation}
+
+In Eqs. \ref{eq:kinetics_pde_mg}, \ref{eq:kinetics_pde_cl}, and \ref{eq:kinetics_pde_oh}, $\mathbf{u}$ is the velocity field from the surrounding fluid flow governed by the Stokes equation:
+\begin{equation} \label{eq:kinetics_stokes}
+\left\{ {\begin{array}{*{20}{l}}
+\displaystyle  {- \nu\Delta \mathbf{u} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0} \\ 
+\displaystyle  {\nabla\cdot\mathbf{u} + \varepsilon p = 0.}
+\end{array}} \right.
+\end{equation}
+in which $\mathbf{u}$ is the fluid velocity, $\mathbf{p}$ is the pressure (which is actually pressure divided by the density), $\nu = \frac{\mu}{\rho}$ is the kinematic viscosity (with $\mu$ being the dynamic viscosity), and $K$ is the permeability function.
+
+The local pH can be calculated using the simulated concentration of hydroxide (Eq. \ref{eq:kinetics_pde_oh}):
+\begin{equation} \label{eq:kinetics_ph}
+\mathrm{pH} = 14 + \log_{10}\left(C_{\mathrm{OH}} / \mathrm{MW}_{\mathrm{OH}} \times 10^6\right),
+\end{equation}
+with $\mathrm{MW}_{\mathrm{OH}}=17.01$ being the molecular weight of the hydroxide ions.
+
+The concentration of the hydroxyapatite-like precipitation ($C_{\mathrm{Hydrox}}$ in Eqs. \ref{eq:kinetics_state_vars_film} and \ref{eq:kinetics_film_cumulative}) is calculated using the thermodynamics-based simulations (module 2) based on calculated local pH (Eq. \ref{eq:kinetics_ph}) for each node of the domain of desired. After solving the derived equations in each time step, the linking module passes the obtained local pH to the thermodynamics module to calculate the individual concentration of involved chemical components. Then, the individual concentrations are converted to the concentration of the hydroxyapatite-like precipitation by taking into account the stoichiometry of the formation reaction (Eq. \ref{eq:kinetics_hydrox_react}), leading to calculation of $C_{\mathrm{Hydrox}}$ for each node. After this, the total concentration of the film can be calculated according to Eq. \ref{eq:kinetics_film_cumulative} by passing back the calculated value to module 1. 
+
+The thermodynamics-based simulations were conducted using the Hydra-Medusa code \cite{Ingri1967, Warnqvist1971, Eriksson1979}, in which the input data of chemical equilibrium constants, solubility products, temperature, and involved chemical components are used to generate a set of equilibrium diagrams correlating pH to concentration or fraction of desired components. The experimental conditions, including the initial composition of the electrolyte (Table \ref{tab:kinetics_electrolyte_composition}) and evaluated temperatures ($25^{\circ}C$ and $37^{\circ}C$), were given as input, and contributing components and solubility products were selected according to Table \ref{tab:kinetics_reactions}.
+
+
+\begin{table}[h]
+\caption[Solubility products of related chemical reactions]{Solubility products of related chemical reactions at $25^{\circ}C$ (RT) and $37^{\circ}C$ \cite{Wang2022}}
+\medskip
+\centering
+\begin{tabular}{ccc}
+\hline
+Chemical reaction & $pK_{sp} 25^{\circ}C$ & $pK_{sp} 37^{\circ}C$ \\ \hline
+$\mathrm{Ca}_{5}\left(\mathrm{PO}_{4}\right)_{3} \mathrm{OH}  \rightarrow 5 \mathrm{Ca}^{2+}+3 \mathrm{PO}_{4}^{3-}+\mathrm{OH}^{-}$ & 54.46 & 58.77 \\
+$\mathrm{Mg}(\mathrm{OH})_{2}  \rightarrow \mathrm{Mg}^{2}+2 \mathrm{OH}^{-}$ & 11.25 & 11.25 \\
+$\mathrm{Ca}(\mathrm{OH})_{2} \rightarrow \mathrm{Ca}^{2+}+2 \mathrm{OH}^{-}$ & 5.20 & 5.38 \\
+$\mathrm{MgCO}_{3} \rightarrow \mathrm{Mg}^{2+}+\mathrm{CO}_{3}^{2-}$ & 8.03 & 5.51 \\
+$\mathrm{CaCO}_{3}  \rightarrow \mathrm{Ca}^{2+}+\mathrm{CO}_{3}^{2-}$ & 8.48 & 8.44 \\
+$\mathrm{Mg}_{3}\left(\mathrm{PO}_{4}\right)_{2}  \rightarrow 3 \mathrm{Mg}^{2+}+2 \mathrm{PO}_{4}^{3-}$ & 23.28 & 27.62 \\
+$\mathrm{H}_{2} \mathrm{O}(\mathrm{l})  \rightarrow \mathrm{H}^{+}(aq)+\mathrm{OH}^{-}(a q)$ & 14.00 & 13.61 \\
+$\mathrm{HCO}^{3-}(aq) \rightarrow \mathrm{CO}_{3}^{2-}(aq)+H^{+}(aq)$ & 10.33 & 10.24 \\
+$\mathrm{HPO}_{4}^{2-}(aq) \rightarrow \mathrm{PO}_{4}^{3-}(a q)+H^{+}(aq)$ & 12.35 & 12.32 \\
+\hline
+\end{tabular}
+\label{tab:kinetics_reactions}
+\end{table}
+
+The derived PDEs for the mechanistic model (Eqs. \ref{eq:kinetics_pde_mg}, \ref{eq:kinetics_pde_film}, \ref{eq:kinetics_pde_cl}, and \ref{eq:kinetics_pde_oh}) were solved using a standard first-order finite element scheme. The open-source PDE solver FreeFEM \cite{Hecht2012} was used to implement the finite element model, resulting in a linear system of equations. The obtained equations were solved in parallel using efficient preconditioners and iterative solvers available in the open-source high-performance computing (HPC) toolkit PETSc \cite{petsc}. The HYPRE BoomerAMG \cite{Falgout2002} and FieldSplit preconditioners were applied to the reaction-diffusion PDEs and the Stokes equations, respectively, and the GMRES solver \cite{Saad1986} was used to solve the linear systems. Moreover, the computational mesh was partitioned and distributed among available computing resources using the HPDDM preconditioner \cite{Jolivet2013}. Additionally, a level-set based approach was employed to track the change of morphology of the degrading part and apply appropriate boundary conditions for the PDEs via the penalization method defined on top of the solution of the level-set equation. The details of this implementation are presented in our previous works \cite{Barzegari2021, Barzegari2022}. Since Eq. \ref{eq:kinetics_pde_oh} is non-linear PDE, a Picard-relaxation approach was considered to linearize this equation. 
+
+\subsection{Simulation setup}
+
+%%The computational mesh was generated using a set of first-order tetrahedral elements and was adaptively refined on the metal-solution interface to increase the numerical accuracy of the simulation of the level set equation (Eq. \ref{eq:lsm_final}). The Netgen mesh engine \cite{Schoeberl1997} in the SALOME platform \cite{Ribes2007} was used to generate the mesh.
 
 
 \begin{figure}[h]
@@ -239,6 +280,15 @@ $\mathrm{D}-\mathrm{Glucose}$ & 5.56 \\
 \caption[Computational model setup for local pH simulations]{Computational model setup for local pH simulations} \label{fig:kinetics_model_setup}
 \end{figure}
 
+The values of model parameters were set based on our previous work \cite{Barzegari2021}, but the following assumptions were also applied for selecting proper parameters of the coupled computational model:
+\begin{enumerate}
+\item
+Diffusion rate of hydroxide ions is 5-10 times more than the rate of Mg ions, so $D_{\mathrm{OH}}$ was set as $D_{\mathrm{OH}} = 7.5 D_{\mathrm{Mg}}$ \cite{Gonzalez2021}.
+\item
+The hydroxyapatite-like precipitation doesn't forms immediately at the beginning and emerges later \cite{Gonzalez2021,Wang2022}. In the current model, it sets to start forming after the first hour of simulation time.
+\item
+The magnesium hydroxide layer is ticker at $37^{\circ}C$ \cite{Wang2022}, so the film elimination parameter ($k_2$) was set to be 50 times less in this temperature than the room temperate.
+\end{enumerate}
 
 
 \section{Data Availability}
