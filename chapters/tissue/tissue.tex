@@ -1,6 +1,11 @@
 % !TeX root = ../../thesis.tex
 \chapter{Tissue growth modeling}\label{ch:tissue}
 
+\begin{shaded}
+This chapter contains partial results from previously published content in \textit{Advanced Functional Materials}:\\
+D. Van, B. Liang, S. Anania, M. Barzegari, B. Verlée, G. Nolens, J. Pirson, L. Geris, F. Lambert, ``3D-Printed Synthetic Hydroxyapatite Scaffold With In Silico Optimized Macrostructure Enhances Bone Formation In Vivo,'' \textit{Advanced Functional Materials}, vol. 32, p. 2105002, 2022.
+\end{shaded}
+
 
 \section{Introduction}
 
@@ -9,7 +14,7 @@ Numerical tracking of interface movement has been used for certain modeling appl
 
 The basic idea of the level-set method is to employ the Hamilton-Jacobi (HJ) algorithm for solving the general interface advection equation. The independent variable in the level-set method is a signed distance function, called the level-set function $\psi$ \cite{RonaldFedkiw2002}. The level-set function should be re-initialized as the interface evolves, which is the reason behind an inadvertent mass loss, one of the most prominent shortcomings of the level-set method. Although the VOF method is not vulnerable to the mass loss issue, calculating the interface curvature is difficult from the volume fraction \cite{Sun2007}. 
 
-To overcome these challenges, diffuse interface methods \cite{} have gained attentions in recent decades, among which the phase-field method has shown potential for solving complex moving interface problems. Contrary to the level-est method, in diffuse interface methods, the interface is considered as a smooth transition between phases, which usually has a finite width. In the phase-field method, a non-conserved (or conserved) order parameter $\phi$ is defined such that $\phi=1$ in one bulk phase and $\phi=-1$ in the other. Then, the smooth transition between these two phases ($-1<\phi<1$) is marked as the interface. One of the advantages of the phase-field method is that the derived equation can be solved over the entire domain of desired without considering the location of the interface. Moreover, although the curvature and interface normal vectors are not formulated explicitly, the phase-field method is suitable for problems in which the evolution of the interface depends on the local curvature or a field acting normal to the interface \cite{Sun2007}. The phase-field method keeps a constant thickness for the smooth transition region normal to the interface, and as a result, no re-initialization as for the level-set method is needed.
+To overcome these challenges, diffuse interface methods \cite{Anderson1998} have gained attentions in recent decades, among which the phase-field method has shown potential for solving complex moving interface problems. Contrary to the level-est method, in diffuse interface methods, the interface is considered as a smooth transition between phases, which usually has a finite width. In the phase-field method, a non-conserved (or conserved) order parameter $\phi$ is defined such that $\phi=1$ in one bulk phase and $\phi=-1$ in the other. Then, the smooth transition between these two phases ($-1<\phi<1$) is marked as the interface. One of the advantages of the phase-field method is that the derived equation can be solved over the entire domain of desired without considering the location of the interface. Moreover, although the curvature and interface normal vectors are not formulated explicitly, the phase-field method is suitable for problems in which the evolution of the interface depends on the local curvature or a field acting normal to the interface \cite{Sun2007}. The phase-field method keeps a constant thickness for the smooth transition region normal to the interface, and as a result, no re-initialization as for the level-set method is needed.
 
 
 
@@ -148,56 +153,35 @@ A curvature-driven motion, which is desired for the current study, is straightfo
 \end{equation}
 in which $t^{\prime}$ and $\nabla^{\prime}$ are defined similar to Eq. \ref{eq:dimenless_variables} as $t^{\prime}=t/(w^2/b)$ and $\nabla^{\prime}=\nabla/w$, respectively.
 
-\section{Numerical implementation}
-
-Numerical solution of the phase-field equation involves dealing with the non-linearity of the equation. Additionally, in the case of dimensional form (Eq. \ref{eq:phase_field_final}), small coefficients of the state variable in the PDE leads to numerical difficulties. As a result, numerical implementation of the phase-field equation, especially for the spectral methods such as finite element method, is still tricky and an active field of research \cite{Shen2010,Abboud2019}. 
-
-In the finite element method, the solution of a PDE is calculated based on a sum of a set of certain basis functions, which are commonly piecewise polynomial functions that are non-zero only on a small element. For doing this, the PDE is first written in a weak formulation, and then the weak form is projected on a discretized space (a set of elements) to be written as the summation of the basis functions. 
-
-In this section, the numerical solution of the stationary form (Eq. \ref{eq:stationary_general}) and its corresponding considerations are elaborated as an example of employing the finite element formulation for simulating the phase-field equation. So, by assuming $b=1$ and $f(\phi)=\phi\left(1-\phi^{2}\right)$, the problem can be summarized as:
-\begin{equation} \label{eq:fe_problem}
-\left\{\begin{array}{ll}
-\frac{\partial \phi}{\partial t}-\Delta \phi+\frac{1}{w^{2}} f(\phi)=0, & (x, t) \in \Omega \times(0, T] \\
-\left.\frac{\partial \phi}{\partial n} \right|_{\partial \Omega}=0 \\
-\left.u\right|_{t=0}=u_{0}
-\end{array}\right.
-\end{equation}
-which demonstrates the PDE, the boundary condition, and the initial condition of the phase field variable where $\Omega$ is the domain of interest, $\partial \Omega$ is its boundary, and $T$ is the final time. Deriving the weak formulation of Eq. \ref{eq:fe_problem} is relatively straightforward as it can be seen as a time-dependent diffusion-reaction PDE, but the difficulty arises for choosing the numerical stability scheme for discretizing the temporal derivative and dealing with the non-linearity of $f(\phi)$ while normally the $\frac{1}{w^{2}}$ coefficient is a small number.
-
-Incorporating a first-order semi-explicit scheme for Eq. \ref{eq:fe_problem} yields to:
-\begin{equation} \label{eq:semi-implicit}
-\frac{1}{\Delta t}\left(\phi^{n+1}-\phi^{n}, v\right)+\left(\nabla \phi^{n+1}, \nabla v\right)+\frac{1}{w^{2}}\left(f\left(\phi^{n}\right), v\right)=0, \quad \forall v \in H^{1}(\Omega)
-\end{equation}
-where $\Delta t$ is the time step, $(\cdot,\cdot)$ denotes the inner product, and $H^{1}(\Omega)$ is the Sobolev space of the domain $\Omega$, which is a space of functions whose derivatives are square-integrable functions in $\Omega$. The main issue with this discretization scheme is its restrictive time step condition which should satisfy:
-\begin{equation}
-\Delta t < \frac{2w^2}{L}
-\end{equation}
-where $L$ is a limit related to the non-linear part:
-\begin{equation}
-\max \left|f^{\prime}(\phi)\right| \leq L
-\end{equation}
-Obviously, as $\Delta t \sim w^2$, a very small time step is required to achieve stability in this scheme. 
-
-Taking advantage of a fully implicit scheme improves the stability as it will be unconditionally stable, but it results to an equation that is difficult to implement as it needs solving a fixed point problem at each step. For example, a modified second-order implicit Crank-Nicolson scheme for Eq. \ref{eq:fe_problem} can be written as:
-\begin{equation}
-\left(\frac{\phi^{n+1}-\phi^{n}}{\Delta t}, v\right)+\left(\nabla \frac{\phi^{n+1}+\phi^{n}}{2}, \nabla v\right)+\frac{1}{w^{2}}\left(\tilde{f}\left(\phi^{n+1}, \phi^{n}\right), v\right)=0, \quad \forall v \in H^{1}
-\end{equation}
-where:
-\begin{equation}
-\tilde{f}(u, v)=\left\{\begin{array}{ll}
-\frac{F(u)-F(v)}{u-v} & \text { if } u \neq v \\
-f(u) & \text { if } u=v
-\end{array}\right.
-\end{equation}
-in which $F$ is the potential term ($f(\phi)=F^{\prime}(\phi)$).
-
-An alternative can be deriving a stabilized semi-implicit scheme by adding a stabilization term to Eq. \ref{eq:semi-implicit}. A first-order version of such a scheme can be written as:
-\begin{equation}
-\left(\frac{1}{\Delta t}+\frac{S}{w^{2}}\right)\left(\phi^{n+1}-\phi^{n}, v\right)+\left(\nabla \phi^{n+1}, \nabla v\right)+\frac{1}{w^{2}}\left(f\left(\phi^{n}\right), v\right)=0, \quad \forall v \in H^{1}(\Omega)
-\end{equation}
-which is unconditionally stable for every $S \geq \frac{L}{2}$.
-
 \section{Adapting the formulation for  curvature-driven tissue growth}
+
+Neotissue growth in porous scaffolds has been shown to be depending on the local mean curvature of the interface between the scaffold and the neotissue \cite{Bidan2012, Bidan2012a, Rumpler2008}. Due to intrinsic support of interface curvature in phase-field and level-set methods, an \textit{in silico} model of curvature-based tissue growth can be implemented using these principles. The growth induced changes in the neotissue topology during the culture process can be seen as a moving interface between two different domains \cite{Rumpler2008}. In this study, one domain represents the neotissue volume  ($\Omega_{\text{nt}}$), and the other one is the void ($\Omega_{\text{v}}$), which are separated by an interface ($\Gamma$) as can be see in Fig. \ref{fig:growth_domain}.
+
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=0.5\textwidth]{growth_domain.jpg}
+\caption[Schematic representation of the phase-field and level-set models for tissue growth]{Schematic representation of the phase-field and level-set models for tissue growth}
+\label{fig:growth_domain}
+\end{figure}
+
+The interface $\omega$ evolves over time and fill the void space, which has a faster growth in regions with higher curvature. Based on this definition, the phase-field function can be defined as follows to separate these domains:
+\begin{equation} \label{eq:pf_domains}
+\left\{\begin{array}{ll}
+\phi = 1 & \text{ in } \Omega_{\text{nt}} \\
+\phi = -1 & \text{ in } \Omega_{\text{v}} \\
+-1 < \phi < 1 & \text{ in } \Gamma
+\end{array}\right.
+\end{equation}
+
+Similarly, a level-set function ca be defined such that it separates the neotissue and void domains:
+\begin{equation} \label{eq:ls_domains}
+\left\{\begin{array}{ll}
+\psi > 0 & \text{ in } \Omega_{\text{nt}} \\
+\psi < 0 & \text{ in } \Omega_{\text{v}} \\
+\psi = 0 & \text{ in } \Gamma
+\end{array}\right.
+\end{equation}
 
 In order to adapt Eq. \ref{eq:pf_curvature} for the curvature-driven process of neo-tissue growth, one can consider the following equation:
 \begin{equation} \label{eq:pf_tissue}
@@ -216,15 +200,99 @@ in which the convection velocity field can be defined as:
 0 & \text { if } \kappa \leq 0
 \end{array}\right.
 \end{equation}
-with $\kappa$ being calculated similar to Eq. \ref{eq:curvature} for a distance function $\psi$. In practical implementations, the distance function is not differentiable at every location of the domain due to discontinuities in the gradients, so one can consider taking advantage of artificial diffusion terms to overcome this issue, leading to the following equations for the normal vector and curvature calculation:
+with $\kappa$ being calculated similar to Eq. \ref{eq:curvature} for a distance function $\psi$, implying that neotissue grows faster where the curvature is higher and does not grow if the curvature is negative or equal to zero \cite{Bidan2012}. The negative sign in Eq. \ref{eq:ls_veloc} is due to to our definition of $\psi$, where the normal $n_\Gamma$  points toward neotissue, so growth has to be towards the opposite of the gradient of the level-set function ($ \nabla \psi$).
+
+\section{Numerical implementation}
+
+\subsection{Phase-field model}
+
+Numerical solution of the phase-field equation involves dealing with the non-linearity of the equation. Additionally, in the case of dimensional form (Eq. \ref{eq:phase_field_final}), small coefficients of the state variable in the PDE leads to numerical difficulties. As a result, numerical implementation of the phase-field equation, especially for the spectral methods such as the finite element method, is still tricky and an active field of research \cite{Shen2010,Abboud2019}. 
+
+In the finite element method, the solution of a PDE is calculated based on a sum of a set of certain basis functions, which are commonly piecewise polynomial functions that are non-zero only on a small element. For doing this, the PDE is first written in a weak formulation, and then the weak form is projected on a discretized space (a set of elements) to be written as the summation of the basis functions. 
+
+In this section, the numerical solution of the stationary form (Eq. \ref{eq:stationary_general}) and its corresponding considerations are elaborated as an example of employing the finite element formulation for simulating the phase-field equation. So, by assuming $b=1$ and $f(\phi)=\phi\left(1-\phi^{2}\right)$, the problem can be summarized as:
+\begin{equation} \label{eq:fe_problem}
+\left\{\begin{array}{ll}
+\frac{\partial \phi}{\partial t}-\Delta \phi+\frac{1}{w^{2}} f(\phi)=0, & (x, t) \in \Omega \times(0, T] \\
+\left.\frac{\partial \phi}{\partial n} \right|_{\partial \Omega}=0 \\
+\left.u\right|_{t=0}=u_{0}
+\end{array}\right.
+\end{equation}
+which demonstrates the PDE, the boundary condition, and the initial condition of the phase field variable where $\Omega$ is the domain of interest, $\partial \Omega$ is its boundary, and $T$ is the final time. Deriving the weak formulation of Eq. \ref{eq:fe_problem} is relatively straightforward as it can be seen as a time-dependent diffusion-reaction PDE, but the difficulty arises for choosing the numerical stability scheme for discretizing the temporal derivative and dealing with the non-linearity of $f(\phi)$ when normally the $\frac{1}{w^{2}}$ coefficient is a small number.
+
+Incorporating a first-order semi-explicit scheme for Eq. \ref{eq:fe_problem} yields to \cite{Abboud2019}:
+\begin{equation} \label{eq:semi-implicit}
+\frac{1}{\Delta t}\left(\phi^{n+1}-\phi^{n}, v\right)+\left(\nabla \phi^{n+1}, \nabla v\right)+\frac{1}{w^{2}}\left(f\left(\phi^{n}\right), v\right)=0, \quad \forall v \in H^{1}(\Omega)
+\end{equation}
+where $\Delta t$ is the time step, $(\cdot,\cdot)$ denotes the inner product, and $H^{1}(\Omega)$ is the Sobolev space of the domain $\Omega$, which is a space of functions whose derivatives are square-integrable functions in $\Omega$. The main issue with this discretization scheme is its restrictive time step condition which should satisfy \cite{Shen2010}:
+\begin{equation}
+\Delta t < \frac{2w^2}{L}
+\end{equation}
+where $L$ is a limit related to the non-linear part:
+\begin{equation}
+\max \left|f^{\prime}(\phi)\right| \leq L
+\end{equation}
+Obviously, since $\Delta t \sim w^2$, a very small time step is required to achieve stability in this scheme. 
+
+Taking advantage of a fully implicit scheme improves the stability because it will be unconditionally stable, but it results in an equation that is difficult to implement as it needs solving a fixed point problem at each step. For example, a modified second-order implicit Crank-Nicolson scheme for Eq. \ref{eq:fe_problem} can be written as \cite{Abboud2019,Elliott1989}:
+\begin{equation}
+\left(\frac{\phi^{n+1}-\phi^{n}}{\Delta t}, v\right)+\left(\nabla \frac{\phi^{n+1}+\phi^{n}}{2}, \nabla v\right)+\frac{1}{w^{2}}\left(\tilde{f}\left(\phi^{n+1}, \phi^{n}\right), v\right)=0, \quad \forall v \in H^{1}
+\end{equation}
+where:
+\begin{equation}
+\tilde{f}(u, v)=\left\{\begin{array}{ll}
+\frac{F(u)-F(v)}{u-v} & \text { if } u \neq v \\
+f(u) & \text { if } u=v
+\end{array}\right.
+\end{equation}
+in which $F$ is the potential term ($f(\phi)=F^{\prime}(\phi)$).
+
+An alternative can be deriving a stabilized semi-implicit scheme by adding a stabilization term to Eq. \ref{eq:semi-implicit}. A first-order version of such a scheme can be written as:
+\begin{equation}
+\left(\frac{1}{\Delta t}+\frac{S}{w^{2}}\right)\left(\phi^{n+1}-\phi^{n}, v\right)+\left(\nabla \phi^{n+1}, \nabla v\right)+\frac{1}{w^{2}}\left(f\left(\phi^{n}\right), v\right)=0, \quad \forall v \in H^{1}(\Omega)
+\end{equation}
+which is unconditionally stable for any $S \geq \frac{L}{2}$ \cite{Shen2010}.
+
+
+\subsection{Level-set model}
+
+The derived level-set PDE (Eq. \ref{eq:ls_advect}) is an advection equation, which can be implemented numerically using the finite element method, in which the temporal term is discretized by the backward Euler method, and the advection term can be treated with the method of characteristics. 
+
+A key parameter of the developed model is the local growth velocity of the neotissue. In the current implementation, this space dependent velocity was only depending on the local mean curvature of the interface as has been shown in \cite{Bidan2012a,Guyot2014}. In order to match the growth velocity to experimental data, a coefficient can be added to the derived interface convection velocity (Eq. \ref{eq:ls_veloc}):
+\begin{equation} \label{eq:ls_veloc2}
+\boldsymbol{u}=\left\{\begin{array}{ll}
+-\kappa A \boldsymbol{n} & \text { if } \kappa>0 \\
+0 & \text { if } \kappa \leq 0
+\end{array}\right.
+\end{equation}
+
+The model calibration performed in Guyot et al. \cite{Guyot2014} was for titanium scaffolds culture in a bioreactor setting, estimating parameter $A$ to be $4\times10^{-14} \text{m}^2/\text{s}$, obtained using trial and error from the experimental data on low flow rate tests \cite{Papantoniou2014}.
+More dedicated calibration experiments are being performed on prismatic structures, demonstrating a considerably slower growth on the CaP scaffolds, nevertheless confirming the curvature-based nature of tissue growth.
+
+In practical implementations, the distance function is not differentiable at every location of the domain due to discontinuities in the gradients, so one can consider taking advantage of artificial diffusion terms to overcome this issue, leading to the following equations for the normal vector and curvature calculation:
 \begin{equation}
 \boldsymbol{n}=\frac{\nabla \varphi}{|\nabla \varphi|}+\varepsilon \Delta \boldsymbol{n}
 \end{equation}
 \begin{equation}
 \kappa=\nabla \cdot \boldsymbol{n}+\varepsilon \Delta \kappa
 \end{equation}
-in which $\epsilon$ denotes the numerical diffusion coefficient.
+in which $\varepsilon$ denotes the numerical diffusion coefficient.
 
+
+\subsection{Parallel computing}
+
+
+\section{Simultaion setup}
+
+%The initial configuration of the distance function φ corresponds to a homogenous single cell layer over the scaffold struts with a thickness equal to 20 µm (Darling and Guilak 2008). 
+
+%Neotissue growth was then simulated for a variety of lattice-based structures as well as structures from the triply periodic minimal surface (TPMS) family and compared in a qualitative way. A full quantitative prediction is not possible due to the absence of relevant validation experiments, which explains why comparisons between geometries are made over non-dimensional time.
+
+
+\section{Results and Discussion}
+
+
+\section{Challenges in coupling tissue growth and biodegradation models}
 
 \begin{subappendices}
 
