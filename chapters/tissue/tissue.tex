@@ -155,7 +155,7 @@ in which $t^{\prime}$ and $\nabla^{\prime}$ are defined similar to Eq. \ref{eq:d
 
 \section{Adapting the formulation for  curvature-driven tissue growth}
 
-Neotissue growth in porous scaffolds has been shown to be depending on the local mean curvature of the interface between the scaffold and the neotissue \cite{Bidan2012, Bidan2012a, Rumpler2008}. Due to intrinsic support of interface curvature in phase-field and level-set methods, an \textit{in silico} model of curvature-based tissue growth can be implemented using these principles. The growth induced changes in the neotissue topology during the culture process can be seen as a moving interface between two different domains \cite{Rumpler2008}. In this study, one domain represents the neotissue volume  ($\Omega_{\text{nt}}$), and the other one is the void ($\Omega_{\text{v}}$), which are separated by an interface ($\Gamma$) as can be see in Fig. \ref{fig:growth_domain}.
+Neotissue growth in porous scaffolds has been shown to be depending on the local mean curvature of the interface between the scaffold and the neotissue \cite{Bidan2012, Bidan2012a, Rumpler2008}. Due to intrinsic support of interface curvature in phase-field and level-set methods, an \textit{in silico} model of curvature-based tissue growth can be efficiently implemented using these principles. The growth induced changes in the neotissue topology during the culture process can be seen as a moving interface between two different domains \cite{Rumpler2008}. In this study, one domain represents the neotissue volume  ($\Omega_{\text{nt}}$), and the other one is the void ($\Omega_{\text{v}}$), which are separated by an interface ($\Gamma$) as can be see in Fig. \ref{fig:growth_domain}.
 
 \begin{figure}
 \medskip
@@ -279,24 +279,116 @@ In practical implementations, the distance function is not differentiable at eve
 in which $\varepsilon$ denotes the numerical diffusion coefficient.
 
 
-\subsection{Parallel computing}
-
-
 \section{Simultaion setup}
 
 %The initial configuration of the distance function φ corresponds to a homogenous single cell layer over the scaffold struts with a thickness equal to 20 µm (Darling and Guilak 2008). 
 
 %Neotissue growth was then simulated for a variety of lattice-based structures as well as structures from the triply periodic minimal surface (TPMS) family and compared in a qualitative way. A full quantitative prediction is not possible due to the absence of relevant validation experiments, which explains why comparisons between geometries are made over non-dimensional time.
 
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=0.6\textwidth]{domain_geometry.jpg}
+\caption[Schematic representation of the simulation domains]{Schematic representation of the simulation domains}
+\label{fig:tissue_domain_geometry}
+\end{figure}
+
+%FreeFEM
+%Parallel computing
+
 
 \section{Results and Discussion}
 
 
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=\textwidth]{pf_square.jpg}
+\caption[Simulation result of the phase-field model for tissue growth in the square domain]{Simulation result of the phase-field model for tissue growth in the square domain}
+\label{fig:tissue_pf_square}
+\end{figure}
+
+
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=\textwidth]{pf_circle.jpg}
+\caption[Simulation result of the phase-field model for tissue growth in the semi-circle domain]{Simulation result of the phase-field model for tissue growth in the semi-circle domain}
+\label{fig:tissue_pf_circle}
+\end{figure}
+
+
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=\textwidth]{pf_circle_field.jpg}
+\caption[Visualization of the evolution of phase-field variable in the semi-circle domain]{Visualization of the evolution of phase-field variable in the semi-circle domain}
+\label{fig:tissue_pf_circle_field}
+\end{figure}
+
+
+
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=0.7\textwidth]{pf_3d.jpg}
+\caption[Simulation result of the phase-field model for tissue growth in the 3D square domain]{Simulation result of the phase-field model for tissue growth in the 3D square domain}
+\label{fig:tissue_pf_3d}
+\end{figure}
+
+
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=0.7\textwidth]{ls_square.jpg}
+\caption[Simulation result of the level-set model for tissue growth in the square domain]{Simulation result of the level-set model for tissue growth in the square domain}
+\label{fig:tissue_ls_square}
+\end{figure}
+
+
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=\textwidth]{ls_circle.jpg}
+\caption[Simulation result of the level-set model for tissue growth in the semi-circle domain]{Simulation result of the level-set model for tissue growth in the semi-circle domain}
+\label{fig:tissue_ls_circle}
+\end{figure}
+
+
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=\textwidth]{ls_tpms.jpg}
+\caption[Simulation results of the level-set model for neotissue formation on TPMS scaffolds]{Neotissue formation quantified in absolute volume (A) and filling percentage (B) for cylindrical test samples (diameter 6 mm, height 6 mm). The different combinations are indicated in the legend by 2 numbers, the first of which refers to pore size (7: 700 $\mu$m, 10: 1 mm, 13: 1.3 mm) and the second refers to wall thickness (2: 200 $\mu$m; 5: 500 $\mu$m; 8: 800 $\mu$m;). (C) Side view and cross-sectional view of neotissue growth in gyroid (7-2) scaffold for different levels of filling, starting with initial condition at t=0 (top). Scale bars: 6 mm}
+\label{fig:tissue_ls_tpms}
+\end{figure}
+
+
+
 \section{Challenges in coupling tissue growth and biodegradation models}
+
+
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=\textwidth]{coupling_challenge.jpg}
+\caption[Schematic presentation of coupled tissue growth and biodegradation models]{Schematic presentation of coupled tissue growth and biodegradation models}
+\label{fig:tissue_coupling_challenge}
+\end{figure}
+
 
 \begin{subappendices}
 
 \section{Implementing the phase-field model using physics-informed neural networks}
+
+
+\begin{figure}
+\medskip
+\centering
+\includegraphics[width=\textwidth]{pinn_result.jpg}
+\caption[Simulation result of the PINN model for the square domain]{Simulation result of the PINN model for the square domain}
+\label{fig:tissue_pinn_result}
+\end{figure}
 
 
 
