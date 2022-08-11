@@ -205,6 +205,8 @@ where $K_{0}$ is the permeability of metals in fluid regions ($\sim10^{-6}$ H/m)
 
 \subsubsection{Test case to compare with OpenFOAM}
 
+In order to perform verification on the developed CFD model, a 3D case of flow inside a chamber was constructed to compare the simulation results with a well-established and known CFD solver. For this reason, OpenFOAM open-source solver was used, which has been extensively used for fluid dynamics simulations over the last decades \cite{Weller1998}. The Simulation was carried out using the simpleFOAM solver, which uses the SIMPLE (Semi-Implicit Method for Pressure Linked Equations) algorithm for coupling and solving the Navier-Stokes equations.
+
 \begin{figure}[h]
 \centering
 \medskip
@@ -212,12 +214,34 @@ where $K_{0}$ is the permeability of metals in fluid regions ($\sim10^{-6}$ H/m)
 \caption[Fluid flow model construction for comparison with experimental setup]{Fluid flow model construction for comparison with experimental setup} \label{fig:fluid_setup}
 \end{figure}
 
+The geometry was chosen based on the performed experiments for biodegradation in hydrodynamics condition. The experimental setup is depicted in Fig. \ref{fig:fluid_setup}-A, where the constructed CAD geometry is shown in Fig. \ref{fig:fluid_setup}-B. The computational mesh, comprising of linear tetrahedral elements, was generated using Netgen \cite{Schoeberl1997} in the SALOME platform \cite{Ribes2007}. The final mesh used in both FreeFEM and OpenFOAM models is shown in Fig. \ref{fig:fluid_setup}-C, containing \num{100888} elements.
+
+The fluid flow direction is from left to right, meaning that the inlet was set on the vertical face of the small pipe on the bottom left side of the chamber, and outlet was set similarly on the upper right pipe. The rest of the boundaries were set to no slip boundary condition. Zero pressure boundary condition was set on the outlet. The inlet velocity was set to be $1.0 mm/s$, and the parameter $\nu$ was set to be $0.85 mm^2/s$. 
+
 \subsubsection{Test case to check coupling with degradation model}
 
+In addition to the test case for verification of the developed CFD code, 2 more cases was constructed to evaluate the performance of the model in presence of a barrier, i.e. the degrading object in the coupled biodegradation model. To this end, after coupling the models, a simple 3D geometry of a cylinder with an embedded sphere as the degrading object inside. The simulation parameters were set similar to the verification case. The inlet and outlet were assigned to the bases of the cylinder, and the altitude was assigned with the wall boundary condition. Fig. \ref{fig:fluid_coupled_setup} shows a schematic of the computational setup for this test case as well as a vertical cut of the generated computational mesh containing \num{640249} elements. The mesh was refined on the interface of the degrading object to increase the numerical accuracy of the biodegradation model.
+
+
+\begin{figure}[h]
+\centering
+\medskip
+\includegraphics[width=\textwidth]{coupled_setup.jpg}
+\caption[Model construction for checking the coupling of the fluid flow and biodegradation models]{Model construction for checking the coupling of the fluid flow and biodegradation models: a) schematic representation of the domain b) the generated computational mesh.} \label{fig:fluid_coupled_setup}
+\end{figure}
+
+Additionally, a simple 2D representation of the full chamber model (Fig. \ref{fig:fluid_setup}) was constructed to test the effect of the fluid flow on the degradation behavior of the metallic parts. In this model, a high inlet velocity and a high diffusion coefficient was used to have an exaggerated degradation, showing how the fluid flow would affect the change of morphology of the object. The degrading metallic part was selected to be a small rectangle on the bottom of the chamber. The domain setup is depicted schematically in Fig. \ref{fig:fluid_chamber_degrade_setup}. The computational mesh was generated using the SALOME platform and contained \num{24946} elements.
+
+\begin{figure}[h]
+\centering
+\medskip
+\includegraphics[width=0.8\textwidth]{chamber_degrade_setup.jpg}
+\caption[Schematic view of the model for checking the effect of fluid flow on biodegradation behavior]{Schematic view of the model used for checking the effect of the fluid flow on biodegradation behavior.} \label{fig:fluid_chamber_degrade_setup}
+\end{figure}
 
 \section{Results and discussion}
 
-To verify the robustness of the model predictions, the results of the CFD code was compared both quantitatively and qualitatively with an identical  OpenFOAM model. The qualitative comparison is made via the streamlines, showing how the flow develops via drawing the trajectory lines of the fluid velocity field inside the domain of desired, which is the chamber in this case. Figs. \ref{fig:fluid_streamlines_side} and \ref{fig:fluid_streamlines_top} demonstrate such comparison between the developed model and OpenFOAM. Fig. \ref{fig:fluid_streamlines_side} shows the streamlines for both model from a side view, in which the flow enters the chamber from the left inlet pipe and leaves it from the top right outlet. The qualitative comparison shows a good agreement between the predictions of the models. 
+To verify the robustness of the model predictions, the results of the CFD code was compared both quantitatively and qualitatively with an identical  OpenFOAM model. The qualitative comparison is made via the streamlines, showing how the flow develops by plotting the trajectory lines of the fluid velocity field inside the domain of desired, which is the chamber in this case. Figs. \ref{fig:fluid_streamlines_side} and \ref{fig:fluid_streamlines_top} demonstrate such comparison between the developed model and OpenFOAM. Fig. \ref{fig:fluid_streamlines_side} shows the streamlines for both model from a side view, in which the flow enters the chamber from the left inlet pipe and leaves it from the top right outlet. The qualitative comparison shows a good agreement between the predictions of the models. 
 
 \begin{figure}[h]
 \centering
@@ -269,7 +293,18 @@ Fig. \ref{fig:fluid_flow_degrading_streamline} intended to demonstrate the effec
 \centering
 \medskip
 \includegraphics[width=\textwidth]{flow_degrading_streamline.jpg}
-\caption[Fluid flow streamlines in the presence of a degrading object]{Visualization the evolution of the fluid velocity field depicted by streamlines passing over a degrading object. Colors show the magnitude of the velocity field projected on the streamlines.} \label{fig:fluid_flow_degrading_streamline}
+\caption[Fluid flow streamlines in the presence of a degrading object]{Visualization of the evolution of the fluid velocity field depicted by streamlines passing over a degrading object. Colors show the magnitude of the velocity field projected on the streamlines.} \label{fig:fluid_flow_degrading_streamline}
+\end{figure}
+
+
+Fig. \ref{fig:fluid_degradation_chamber} shows the results of the second test case for the coupled biodegradation model, in which the release of metallic ions is depicted over time along with the change of the morphology of the degrading object. The released metallic ions get convected in the direction of the flow field inside the chamber, obtained by solving the Navier-Stokes equations.
+
+
+\begin{figure}[h]
+\centering
+\medskip
+\includegraphics[width=\textwidth]{degradation_chamber.jpg}
+\caption[Visualization of the biodegradation inside the chamber in presence of fluid flow]{Visualization of the results of the biodegrdation of an object inside the chamber in hydrodynamics conditions. Colors show the concentration of released metal ions getting convected in the direction of fluid flow. The light gray part shows the degrading object.} \label{fig:fluid_degradation_chamber}
 \end{figure}
 
 % adding parallelization details section to the methods
