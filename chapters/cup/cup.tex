@@ -8,6 +8,11 @@ M. Barzegari, F. Perez-Boerema, G. Zavodszky, and L. Geris, ``High-performance c
 
 \section{Introduction}
 
+
+%From a biodegradation perspective, biomaterials can be classified into two categories: bio-inert and biodegradable. Although bio-inert biomaterials show a great performance especially in fixation applications, they bring an important problem into the play: they remain in the body forever or require additional surgery to remove them. Biodegradable materials do not have this problem, and in case of metallic biomaterials, they also provide a dynamic (i.e. time-varying) mechanical stability profile, but taking advantage of them requires tuning the degradation parameters and material release rate.
+
+%Developing a quantitative mathematical model of the degradation process is a proper solution to this issue by allowing researchers to study the biodegradation behavior of any desired implant in-silico (in the computer) prior to conducting any in-vitro or in-vivo experiments. Developed mathematical models can be simulated using efficient numerical schemes such as the finite element method. The primary challenge here will be achieving a high accuracy at the interface between the implant and surrounding tissue in the body as the interface plays an important role in the degradation phenomena. Increased accuracy means increased computational cost and resources (especially time), but high-performance computing (HPC) techniques can be used to overcome this challenge.
+
 Before we can take advantage of the interesting properties of metallic biodegradable implants, their biodegradation behavior needs to be evaluated and tuned for the target application. One example from orthopedics is tuning the degradation rate of implants to match the rate of bone formation. \textit{In silico} models can be beneficial in this regard as they can replace resource-consuming \textit{in vitro} or \textit{in vivo }experiments otherwise required. As a case study, in this work, we have developed a computational biodegradation model of a stiffness-optimized patient-specific porous acetabular implant.
 
 
@@ -20,23 +25,41 @@ Before we can take advantage of the interesting properties of metallic biodegrad
 
 \section{Materials and Methods}
 
-The computational model of the biodegradation process was constructed based on a mechanistic diffusion-reaction model that models the oxidation-reduction reactions occurring during the biodegradation process of metallic materials in simulated body fluid. The finite element method was used to solve the computational model \cite{Barzegari2021}. For building the lattice structure, the in-house developed open-source tool ASLI \cite{Perez-Boerema2022} was used to create a triply periodic minimal surface based infill for the acetabular implant based on the output of a patient-specific topology optimization. The resulting surface mesh, consisting of \num{5347924} faces, was subsequently converted to a volume mesh and embedded in a cubic container that was to act as the environment during the biodegradation simulations. The mesh was refined on the implant/environment interface to increase the numerical accuracy of the model, leading to a final mesh with \num{45870053} elements.
+\subsection{Topology optimization model}
+
+For building the lattice structure, the in-house developed open-source tool ASLI \cite{Perez-Boerema2022} was used to create a triply periodic minimal surface based infill for the acetabular implant based on the output of a patient-specific topology optimization.
+
+\subsection{Biodegradation model}
+
+
+
+
+In this study, we developed a quantitative mathematical model to predict the biodegradation of magnesium-based implants. Magnesium (Mg) has been selected to start with due to its acceptable mechanical properties, biocompatibility, and contribution in osteoinductivity \cite{Agarwal2016}. The developed model captures the release of Mg ions, the formation of a protective film,  the dissolution of this film due to the presence of various ions in the surrounding environment, and change of pH. This was accomplished by deriving a system of nonlinear time-dependent reaction-diffusion partial differential equations (PDEs) from the underlying oxidation-reduction reactions occurring during the biodegradation process of metallic materials in simulated body fluid. The level-set formalism was employed to track the movement of the biodegradation front between the implant and its surroundings. The equations were solved implicitly using the finite element method for spatial terms (with a 1st order Lagrange polynomial as the shape function) and backward-Euler finite difference method for temporal terms on an Eulerian mesh, implemented in the open-source PDE solver FreeFEM\cite{Hecht2012}. The details of this model can be found in our previous contribution \cite{Barzegari2021}. 
+
+In order to build the computational model, the resulting surface mesh of the topology optimization routine, consisting of \num{5347924} faces, was converted to a volume mesh and embedded in a cubic container that was to act as the environment during the biodegradation simulations. The conversion of the surface mesh was done using GMSH \cite{Geuzaine2009}, and the embedding process was carried out using the internal mesh engine of FreeFEM, called BAMG. The mesh was refined on the implant-environment interface to increase the numerical accuracy of the interface tracking model, leading to a final mesh with \num{45870053} elements. The mesh refinement process was handled using Mmg \cite{Dapogny2014} (and ParMmg \cite{balarac:hal-03344779}). Fig. \ref{fig:cup_model} shows the embedded cup model and a cross section of the final generated mesh, which was refined on the metal-solution interface.
+
+
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{model.jpg}
-\caption[Computational biodegradation model for the porous acetabular implant]{The computational model of the optimized acetabular implant embedded inside a cubic container.} \label{fig:cup_model}
+\caption[Computational biodegradation model for the porous acetabular implant]{a) The computational biodegradation model for the porous acetabular implant: a)the optimized acetabular implant embedded inside a cubic container, b) a cross section of the generated mesh with the surface of the implant visualized as the light gray surface.} \label{fig:cup_model}
 \end{figure}
 
-For dealing with a problem of this size and making the model capable of being scaled in large-scale computing systems, the model was implemented making use of the high-performance computing (HPC) techniques available in the FreeFEM language v4.10 and PETSc toolkit v3.16.1 \cite{Barzegari2022}. The simulation was carried out using 2,000 CPU cores with 16.5 TB of available memory. The results, with a total size of 148 GB, were visualized using a parallel ParaView server v5.9.1 running on 128 CPU cores. To obtain the scaling behavior of the model in an HPC environment scaling tests were performed by varying the number of employed CPU cores from 60 to \num{9000}.
+For dealing with a problem of this size and making the model capable of being scaled in large-scale computing systems, the model was implemented making use of the high-performance computing (HPC) techniques available in the FreeFEM language v4.10 and PETSc toolkit v3.16.1 \cite{petsc}. In this implementation, METIS and ParMETIS graph partitioners \cite{METIS1998} were used to decompose the mesh into various partitions, and then the partitioned mesh was distributed among available computing resources using the HPDDM preconditioner \cite{Jolivet2013}. Fig. \ref{fig:cup_decomposition} shows the decomposition of the computational mesh. Moreover, HYPRE BoomerAMG \cite{Falgout2002} preconditioner and GMRES iterative solver \cite{Saad1986} were used to solve the linear systems of equations obtained from applying the finite element discretization on the model. More details of the implementation can be found in \cite{Barzegari2022}.
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{decomposition.jpg}
-\caption[Mesh decomposition of the acetabular implant model]{Mesh decomposition of the computational biodegradation model to be distributed to available computing nodes.} \label{fig:cup_decomposition}
+\caption[Mesh decomposition of the acetabular implant model]{Mesh decomposition of the computational biodegradation model to be distributed to available computing nodes, a) top view, b) perspective side view. } \label{fig:cup_decomposition}
 \end{figure}
+
+The simulation was carried out using 2,000 CPU cores with 16.5 TB of available memory on Dutch national supercomputer, Snellius. The simulation results, comprising of \num{95000} files with a total size of 148 GB, were visualized using a parallel client-server remote rendering approach in ParaView server v5.9.1 running on 128 CPU cores on the ARCHER2 supercomputer. 
+
+In order to obtain the scaling behavior of the model in an HPC environment, strong and weak scaling tests were performed in the Snellius supercomputer. For the weak scaling test, in addition to the mesh with \num{45870053} elements, two more mesh files consisting of less elements were generated using the aforementioned procedure for embedding and refining the mesh. These models had \num{15989521} and \num{29035491}, respectively, to which the number of employed CPU cores were adjusted accordingly. The strong scaling test was carried out for all the three model sizes by varying the number of employed CPU cores from 60 to \num{9000}. 
+
 
 \section{Results and Discussion}
 
@@ -102,7 +125,18 @@ UK supercomputer - ARCHER2
 
 \section{Challenges in scaling the computational model to thousands of CPU cores}
 
-
+%Building with different MPI implementations
+%Inter-node communication
+%Running parallel FF
+%Mesh generation (parallel, sequential)
+%Converting surface mesh to volume
+%Scaling issues
+%Memory issues
+%Node types
+%Visualization, GPU nodes
+%Partitioning (METIS, ParMETIS)
+%Storage
+%Solving NS equation
 
 \end{subappendices}
 
