@@ -174,11 +174,34 @@ The weak form of the Stokes equations stays almost the same as Eq. \ref{eq:fluid
 \end{array}
 \end{equation}
 
-Eqs. \ref{eq:fluid_ns_weak_implement} and \ref{eq:fluid_stokes_weak_implement} can be easily implemented in FreeFEM thanks to the built-in support of the method of characteristics via the \verb|convect| function. The model is implemented using P1 elements for the pressure and P2 elements for the velocity state variables.
+The model was implemented in the open-source PDE solver FreeFEM \cite{Hecht2012} using P1 elements for the pressure and P2 elements for the velocity state variables. Eqs. \ref{eq:fluid_ns_weak_implement} and \ref{eq:fluid_stokes_weak_implement} can be easily implemented in FreeFEM thanks to the built-in support of the method of characteristics via the \verb|convect| function. 
+
+
+\subsection{Preconditioning and parallelizing the computation}
+
+The solution of the Stokes and Navier-Stokes equations using the finite element method in 3D is a computational intensive process, and as a result, taking advantage of high-performance techniques to reduce the simulation time becomes crucial in real-world applications. Preconditioning the system and parallelizing the simulation by partitioning the mesh and distributing the partitions among available computing nodes in a parallel computing setup is a great solution to this challenge.
+
+In this implementation, the METIS \cite{METIS1998} graph partitioner and HPDDM package \cite{Jolivet2013} were used to partition the computational mesh and distribute the load over the available resources. For preconditioning and improving the solution time of the derived equations, various preconditioners and iterative or direct solvers available in the PETSc toolkit \cite{petsc} were tested to find the most suitable combination.
+
+While exact factorization preconditioners (such as LU) are easy to implement and use for fluid flow applications, they show a bad memory scaling profiles in large scale problems, meaning that the memory usage increases exponentially with the problem size. A better solution for this class of problems is to take advantage of FieldSplit preconditioners in the PETSc toolkit, which allows solving the derived linear system of equations using block matrices technique. In this technique, the matrices are divided into smaller blocks, and separate preconditioners or solvers can be assigned to each block (each field). These blocks arise naturally from the underlying physics or numerical discretization of the problem, such as the velocity and pressure in fluid flow applications. 
+
+For matrices with arbitrary number of blocks, three different ``block'' algorithms are available in the PETSc toolkit: block Jacobi (\verb|additive|), block Gauss-Seidel (\verb|multiplicative|), and symmetric block Gauss-Seidel \\ (\verb|symmetric_multiplicative|), which can be set by passing the desired one to the \verb|pc_fieldsplit_type| flag. For two by two blocks, like the one in fluid flow problems with velocity and pressure as the blocks, another family of solvers based on Schur complements can be used. 
+
+In the current study, the FieldSplit preconditioner with Schur complement approximation was used on two blocks for velocity and pressure. A GMRES KSP type \cite{Saad1986} was employed to solve the preconditioned system with an iterative solver. An Algebraic Multigrid (AMG) preconditioner \cite{mccormick1987} was used for the velocity block, and a Jacobi preconditioner was assigned to the pressure block. The result of this configuration, as well as request for appropriate monitoring tools, can be written as:
+\begin{verbatim}
+-ksp_monitor -ksp_converged_reason -ksp_type fgmres 
+-pc_type fieldsplit -pc_fieldsplit_type schur 
+-pc_fieldsplit_schur_fact_type full
+-fieldsplit_velocity_pc_type gamg 
+-fieldsplit_velocity_ksp_type preonly 
+-fieldsplit_pressure_pc_type jacobi 
+-fieldsplit_pressure_ksp_max_it 5 \end{verbatim}
+to pass to PETSc while solving the equations.
+
 
 \subsection{Considering the degrading object}
 
-In biodegradation simulations, a degrading object exists in the fluid domain, through which the flow should not pass because it is a solid part. One common approach to handle this situation is to remove the solid part from the fluid flow mesh, but since the part shrinks over time, this is not a feasible and efficient approach, needing tremendous mesh recreation and removal during simulation. As a result, in the current study, presence of the solid body as a barrier is taken into account by adding a Darcy term for the permeability to the Navier-Stokes and Stokes and equations. A penalization technique is then employed to implement it in the weak formulation. To couple the fluid flow model with the biodegradation model, a convection term is added to the ions transport equations, causing the ions be advected by the fluid velocity field.
+In biodegradation simulations, a degrading object exists in the fluid domain, through which the flow should not pass because it is a solid part. One common approach to handle this situation is to remove the solid part from the fluid flow mesh, but since the part shrinks over time, this is not a feasible and efficient approach, needing tremendous mesh recreation and removal during simulation. As a result, in the current study, presence of the solid body as a barrier is taken into account by adding a Darcy term for the permeability to the Navier-Stokes and Stokes equations. A penalization technique is then employed to implement it in the weak formulation. To couple the fluid flow model with the biodegradation model, a convection term is added to the ions transport equations, causing the ions be advected by the fluid velocity field.
 
 Adding the Darcy  term to Eq. \ref{eq:fluid_stokes} and considering no other acting force yields to:
 \begin{equation} \label{eq:fluid_stokes_permeab}
