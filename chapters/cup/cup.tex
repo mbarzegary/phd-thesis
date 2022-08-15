@@ -34,7 +34,7 @@ For building the lattice structure, the in-house developed open-source tool ASLI
 
 
 
-In this study, we developed a quantitative mathematical model to predict the biodegradation of magnesium-based implants. Magnesium (Mg) has been selected to start with due to its acceptable mechanical properties, biocompatibility, and contribution in osteoinductivity \cite{Agarwal2016}. The developed model captures the release of Mg ions, the formation of a protective film,  the dissolution of this film due to the presence of various ions in the surrounding environment, and change of pH. This was accomplished by deriving a system of nonlinear time-dependent reaction-diffusion partial differential equations (PDEs) from the underlying oxidation-reduction reactions occurring during the biodegradation process of metallic materials in simulated body fluid. The level-set formalism was employed to track the movement of the biodegradation front between the implant and its surroundings. The equations were solved implicitly using the finite element method for spatial terms (with a 1st order Lagrange polynomial as the shape function) and backward-Euler finite difference method for temporal terms on an Eulerian mesh, implemented in the open-source PDE solver FreeFEM\cite{Hecht2012}. The details of this model can be found in our previous contribution \cite{Barzegari2021}. 
+In this study, we developed a quantitative mathematical model to predict the biodegradation of magnesium-based implants. Magnesium (Mg) has been selected to start with due to its acceptable mechanical properties, biocompatibility, and contribution in osteoinductivity \cite{Agarwal2016}. The developed model captures the release of Mg ions, the formation of a protective film,  the dissolution of this film due to the presence of various ions in the surrounding environment, and change of pH. This was accomplished by deriving a system of nonlinear time-dependent reaction-diffusion partial differential equations (PDEs) from the underlying oxidation-reduction reactions occurring during the biodegradation process of metallic materials in simulated body fluid. The level-set formalism was employed to track the movement of the biodegradation front between the implant and its surroundings. The equations were solved implicitly using the finite element method for spatial terms (with a 1st order Lagrange polynomial as the shape function) and backward-Euler finite difference method for temporal terms on an Eulerian mesh, implemented in the open-source PDE solver FreeFEM\cite{Hecht2012}. The details of this model can be found in our previous contribution \cite{Barzegari2021}. Two separate simulations were performed using two different diffusion coefficients as calibrated in our previous work to model the degradation behavior in non-buffered and buffered solutions.
 
 In order to build the computational model, the resulting surface mesh of the topology optimization routine, consisting of \num{5347924} faces, was converted to a volume mesh and embedded in a cubic container that was to act as the environment during the biodegradation simulations. The conversion of the surface mesh was done using GMSH \cite{Geuzaine2009}, and the embedding process was carried out using the internal mesh engine of FreeFEM, called BAMG. The mesh was refined on the implant-environment interface to increase the numerical accuracy of the interface tracking model, leading to a final mesh with \num{45870053} elements. The mesh refinement process was handled using Mmg \cite{Dapogny2014} (and ParMmg \cite{balarac:hal-03344779}). Fig. \ref{fig:cup_model} shows the embedded cup model and a cross section of the final generated mesh, which was refined on the metal-solution interface.
 
@@ -63,7 +63,9 @@ In order to obtain the scaling behavior of the model in an HPC environment, stro
 
 \section{Results and Discussion}
 
-The generated lattice structure of the implant, infilled by skeletal-gyroid unit cell type, is depicted in Fig. 1A. Biodegradation results show that the acetabular implant degrades faster in the region with higher porosity, i.e. the region with more exposed surface area to the environment (Fig. 1B). Loss of material over time was found to be in line with the values obtained in our previous study \cite{Barzegari2021}, showing that scaling the model in an HPC environment does not affect the quantitative predictions made by the model.  The scaling tests show that the optimal size for the distributed computing environment is \num{5000} CPU cores, above which no significant improvement in the execution time was observed.
+\subsection{Topology optimization of the acetabular implant}
+
+The generated lattice structure of the implant, infilled by skeletal-gyroid unit cell type, is depicted in Fig. \ref{fig:cup_optimization}. The volume fraction is varied during the topology optimization process to match the stiffness distribution required to maximize the tissue growth. 
 
 \begin{figure}[h]
 \centering
@@ -72,6 +74,10 @@ The generated lattice structure of the implant, infilled by skeletal-gyroid unit
 \caption[Infilled acetabular implant]{Acetabular implant infilled by varying volume fraction to match a desired stiffness distribution.} \label{fig:cup_optimization}
 \end{figure}
 
+\subsection{Biodegradation of the infilled implant}
+
+Fig. \ref{fig:cup_degradation_rate} shows the mass loss during the biodegradation for simulations performed in buffered (low degradation rate) and non-buffered (high degradation) solutions. The mass loss is one of commonly-used indicators for the degradation rate, demonstrating that the biodegradation rate is much higher in the non-buffered solution. Loss of material over time was found to be in line with the values obtained in our previous study \cite{Barzegari2021}, showing that scaling the model in an HPC environment does not affect the quantitative predictions made by the model.
+
 \begin{figure}[h]
 \centering
 \medskip
@@ -79,33 +85,43 @@ The generated lattice structure of the implant, infilled by skeletal-gyroid unit
 \caption[Biodegradation rate for the acetabular implant]{Rate of mass loss during the biodegradation of the porous acetabular implant in saline and buffered solutions.} \label{fig:cup_degradation_rate}
 \end{figure}
 
+From a qualitative point of view, visualizing the biodegradation results, depicted in Fig. \ref{fig:cup_degradation_visual} over time, shows that the acetabular implant degrades faster in the regions with higher porosity, i.e. the region with more exposed surface area to the environment. These regions have lower stiffness, which resulted in high porosity by being filled with TPMS unit cells having low volume fraction.
+
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{degradation_visual.jpg}
-\caption[Visualization of the change of morphology of the acetabular implant]{Visualization of the change of morphology of the acetabular implant.} \label{fig:cup_degradation_visual}
+\caption[Visualization of the change of morphology of the acetabular implant]{Visualization of the change of morphology of the acetabular implant over time.} \label{fig:cup_degradation_visual}
 \end{figure}
+
+Fig. \ref{fig:cup_degradation_visual_close} demonstrate a similar visualization but on a zoomed view to the surface of the implant being plotted along with a cross section of the medium showing the concentration of release Mg ions. 
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{degradation_visual_close.jpg}
-\caption[Visualization of the change of morphology of the acetabular implant]{Visualization of the change of morphology of the acetabular implant - zoom view.} \label{fig:cup_degradation_visual_close}
+\caption[Visualization of the change of morphology of the acetabular implant]{A closer look at the visualization of the change of morphology of the acetabular implant over time along with a cross section of the medium showing the concentration of released Mg ions.} \label{fig:cup_degradation_visual_close}
 \end{figure}
+
+\subsection{Scaling tests on the computational models}
+
+The results of the strong scaling tests are plotted in Fig. \ref{fig:cup_strong_scaling}, which shows the solution time of individual comprising equations of the biodegradation model in a single time step versus the varying number of CPU cores. The strong scaling test shows that the optimal size for the distributed computing environment is \num{5000} CPU cores, above which no significant improvement in the execution time was observed in all the three tested problem size.
 
 \begin{figure}[h]
 \centering
 \medskip
-\includegraphics[width=\textwidth]{strong_scaling.png}
-\caption[Strong scaling of individual components of the biodegradation model]{Strong scaling of individual components of the biodegradation model.} \label{fig:cup_strong_scaling}
+\includegraphics[width=\textwidth]{strong_scaling_vertical.png}
+\caption[Strong scaling of individual components of the biodegradation model]{Strong scaling of the computational model, performed using the small, medium, and large mesh for the solution of individual comprising equations of the biodegradation model, in which the execution time is plotted versus the varying CPU cores in the logarithmic scale.} \label{fig:cup_strong_scaling}
 \end{figure}
+
+Fig. \ref{fig:cup_weak_strong} shows the results of the strong and weak scaling tests side by side. As can be seen in the weak scaling result, the model shows an ideal scaling behavior in environments with less than \num{1000} cores. With the number of CPU cores more than this, the system shows non-ideal behavior, as can be observed in strong scaling results, in which the addition of more CPU cores does not cause a linear drop in the execution time (wall time).
 
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{weak_strong.png}
-\caption[Weak and strong scaling of of the acetabular implant model]{Weak and strong scaling of of the computational biodegradation model of the acetabular implant.} \label{fig:cup_weak_strong}
+\caption[Weak and strong scaling of of the acetabular implant model]{Weak and strong scaling of of the computational biodegradation model of the acetabular implant, plotted for the total time needed to solve all the equations in a single time step.} \label{fig:cup_weak_strong}
 \end{figure}
 
 \section{Conclusions}
@@ -114,11 +130,7 @@ In this work, taking advantage of HPC techniques to simulate a large-scale 3D mo
 
 \section{Acknowledgments}
 
-Funded by Interreg VA Flanders - Netherlands, (2014TC16RFCB046, Prosperos) \& FWO-Vlaanderen (G085018N).
-
-Dutch supercomputer - Snellius
-
-UK supercomputer - ARCHER2
+This research is financially supported by the Prosperos project, funded by the Interreg VA Flanders – The Netherlands program, CCI grant no. 2014TC16RFCB046 and by the Fund for Scientific Research Flanders (FWO), grant G085018N. The results were obtained during a research visit to the Computational Science Lab at the University of Amsterdam, funded and supported by FWO long stay grant V408622N. The computational resources and services used in this work were provided by SURF (www.surf.nl) using the Dutch National Supercomputer Snellius. The visualization works used the ARCHER2 UK National Supercomputing Service (www.archer2.ac.uk).
 
 
 \begin{subappendices}
