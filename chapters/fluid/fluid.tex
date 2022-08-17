@@ -3,6 +3,13 @@
 
 \section{Introduction}
 
+Considering fluid flow in the developed biodegradation model is crucial regarding the final application of the model, that is to be coupled with cell differentiation and tissue growth models to predict the rate of neotissue formation on biodegradable implants and scaffolds. In tissue engineering, cell expansion and differentiation experiments are usually taken place inside perfusion bioreactors, meaning that the flow of a biological fluid provide sufficient nutrients needed for the growth process and removes unnecessary wastes \cite{Sikavitsas2005,Grayson2010,Sonnaert2014}. Moreover, the induced shear stress as a result of this perfusion plays a prominent role in the cell differentiation process \cite{Song2013,McCoy2012,Rauh2011,Papantoniou2013}, making the fluid flow inside the bioreactor even more important. Consequently, the effect of the fluid flow should be considered in the biodegradation model to make it possible to make predictions in a perfusion setup, which is interchangeably called hydrodynamics conditions in chemistry.
+
+Computational Fluid Dynamics (CFD) is the field of studying the dynamics of fluid flow using mathematical and computational methods \cite{H.Versteeg2007,Sharma2022}. The fluid flow is usually expressed in the form of Navier-Stokes or Stokes equations, on which appropriate numerical schemes are applied, and the derived system of equations are solved using computers, resulting in prediction of flow pattern and secondary entities like the shear stress. CFD modeling has been used in tissue engineering for studying systems dealing with fluid flow such as dynamic cell culture conditions in perfusion bioreactors \cite{Hutmacher2008, Hossain2012,Patrachari2012}. 
+
+Fluid flow by means of a hydrodynamic condition has a similar application in corrosion and biodegradation experiments \cite{Wang2014}. In a typical setup, the electrolyte moves and is refreshed over time to remove the corrosion products and provide needed mechanical stimuli if applicable. In biodegradation experiments, the fluid flow velocity and induced shear stress affect the corrosion behavior of degradable scaffolds and implants due to increased mechanical forces and mass transfer \cite{Wang2014}. Studies show that hydrodynamics conditions play a significant role in Mg degradation \cite{Levesque2008}, where the corrosion rate increases, in comparison to static conditions in immersion tests, in the presence of flowing \cite{Li2012}, rotating \cite{Jafarzadeh2009}, circulating \cite{Chen2010}, and \textit{in vivo} perfusion \cite{Witte2013}. Additionally, the fluid flow helps removing the corrosion products and avoiding their accumulation \cite{Hiromoto2008}. 
+
+In this chapter, a parallel computational model for fluid flow simulations is developed and coupled with the biodegradation model. To verify the validity of the simulation results, the model output is compared with an OpenFOAM simulation on the same geometry and setup. The models is developed by solving the derived equations, i.e. Navier-Stokes equations coupled with the Darcy effect for the degrading object, using the finite element method.
 
 \section{Methodology}
 
@@ -262,7 +269,7 @@ Additionally, a simple 2D representation of the full chamber model (Fig. \ref{fi
 \caption[Schematic view of the model for checking the effect of fluid flow on biodegradation behavior]{Schematic view of the model used for checking the effect of the fluid flow on biodegradation behavior.} \label{fig:fluid_chamber_degrade_setup}
 \end{figure}
 
-\section{Results and discussion}
+\section{Results}
 
 To verify the robustness of the model predictions, the results of the CFD code was compared both quantitatively and qualitatively with an identical  OpenFOAM model. The qualitative comparison is made via the streamlines, showing how the flow develops by plotting the trajectory lines of the fluid velocity field inside the domain of desired, which is the chamber in this case. Figs. \ref{fig:fluid_streamlines_side} and \ref{fig:fluid_streamlines_top} demonstrate such comparison between the developed model and OpenFOAM. Fig. \ref{fig:fluid_streamlines_side} shows the streamlines for both model from a side view, in which the flow enters the chamber from the left inlet pipe and leaves it from the top right outlet. The qualitative comparison shows a good agreement between the predictions of the models. 
 
@@ -330,9 +337,12 @@ Fig. \ref{fig:fluid_degradation_chamber} shows the results of the second test ca
 \caption[Visualization of the biodegradation inside the chamber in presence of fluid flow]{Visualization of the results of the biodegrdation of an object inside the chamber in hydrodynamics conditions. Colors show the concentration of released metal ions getting convected in the direction of fluid flow. The light gray part shows the degrading object.} \label{fig:fluid_degradation_chamber}
 \end{figure}
 
-% adding parallelization details section to the methods
+
+\section{Discussion}
+
+% use Wang et al. for the effect of flow on biodegradation
+
 % adding number of cores used to simulate fluid flow
-% discussing the preconditioners and parallel solutions
 
 
 
