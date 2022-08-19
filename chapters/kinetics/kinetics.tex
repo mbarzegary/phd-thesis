@@ -3,13 +3,13 @@
 
 
 \begin{shaded}
-This chapter is based on prepared manuscript to be submitted to  \textit{npj Computational Materials}:\\
-M. Barzegari, C. Wang, S.V. Lamaka, G. Zavodszky, and L. Geris, ``Interface-coupled multiphysics computational modeling of local pH changes during the biodegradation of magnesium biomaterials,'' will be submitted to \textit{npj Computational Materials}.
+This chapter is based on a manuscript prepared to be submitted:\\
+M. Barzegari, C. Wang, S.V. Lamaka, G. Zavodszky, and L. Geris, ``Interface-coupled multiphysics computational modeling of local pH changes during the biodegradation of magnesium biomaterials.''
 \end{shaded}
 
 \section{Introduction}
 
-The biodegradation behavior of Mg is investigated in corrosion tests, in which the selection of the corrosive media plays an important role since it affects the underlying chemical reactions \cite{Mei2020}. By considering the main application of the biomaterial, which can be tissue engineering scaffolds, vascular stents, or orthopedic fixation implants, the corrosive media can be selected to be a representative of the service environment. The most basic form of the medium is a saline (NaCl) solution, in which the degradation rate is the highest possible \cite{Mei2020}. More complex solutions can be used to mimic the behavior of body environment by taking into account more body fluid components, the most popular of which are the Ringer's solution, PBS (phosphate buffered saline), SBFs (simulated body fluids), HBSS (Hank's balanced salt solution), and Earle's balanced salt solution (EBSS) \cite{Mei2020}. Adding more organic components to the solution will make it ready to simulate cell culture conditions. The common media for this purpose are MEM (Minimum Essential medium) and DMEM (Dulbecco's modified Eagle's medium) \cite{Mei2020}. 
+The biodegradation behavior of Mg is investigated in corrosion tests, in which the selection of the corrosive media plays an important role since it affects the underlying chemical reactions \cite{Mei2020}. By considering the main application of the biomaterial, which can be tissue engineering scaffolds, vascular stents, or orthopedic fixation implants, the corrosive media can be selected to be a representative of the service environment. The most basic form of the medium is a saline (NaCl) solution, in which the degradation rate is the highest possible \cite{Mei2020}. More complex solutions can be used to mimic the behavior of body environment by taking into account more body fluid components, the most popular of which are the Ringer's solution, PBS (phosphate buffered saline), SBFs (simulated body fluids), HBSS (Hank's balanced salt solution), and Earle's balanced salt solution (EBSS) \cite{Mei2020}. Adding more organic components to the solution will make it ready to simulate cell culture conditions. The common media for this purpose are MEM (Minimum Essential medium) and DMEM (Dulbecco's modified Eagle's medium) \cite{Mei2020}.
 
 A wide range of various studies have already investigated the effect of different components in the aforementioned corrosive media on the degradation behavior of Mg materials \cite{Mei2019,Zeng2014,Johnston2017, Lamaka2018,Mei2019a}. A typical composition of "simulated body fluid" solutions (such as SBF, HBSS, and EBSS) is chloride, carbonate, phosphates, sulfate, and calcium. The individual effect of these components on the rate of degradation of Mg has been extensively studied, in which it has been observed that carbonate and phosphate slow down the rate while the effect of sulfate is negligible \cite{Johnston2017,Mei2019a}. The concentration of $\mathrm{HCO}_{3}^{-}$ affects the pH buffering capacity and the degradation rate of Mg simultaneously \cite{Xin2011}.
 
@@ -17,7 +17,7 @@ The effect of calcium ion is more complex because it has been found that $\mathr
 
 The major reactions occurring in simulated body fluids can be written as:
 \begin{equation}
-\mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O} \rightarrow \mathrm{Mg}(\mathrm{OH})_{2}+\mathrm{H}_{2} 
+\mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O} \rightarrow \mathrm{Mg}(\mathrm{OH})_{2}+\mathrm{H}_{2}
 \end{equation}
 \begin{equation}
 2 \mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O}+\mathrm{O}_{2} \rightarrow 2 \mathrm{Mg}(\mathrm{OH})_{2}
@@ -52,14 +52,14 @@ m \mathrm{Mg}^{2+}+n \mathrm{Ca}^{2+}&+x \mathrm{H}_{2} \mathrm{PO}_{4}^{-} / \m
 \end{aligned}
 \end{equation}
 
-In fact, the similarity in corrosion behavior of various Mg alloys in SBF solutions is because of the similar composition of this quasi-protective layer, a mechanism that doesn't occur in NaCl solution, leading to more apparent difference of degradation rate between Mg alloys. The composition of the formed hydroxyapatite-like precipitation layer is close to the ones found \textit{in vivo} \cite{Mei2020}. Additionally, local pH measurements in HBSS and SBF shows that in contrast to saline solutions, the local pH value is not alkaline \cite{Lamaka2018,Mei2021}. This has been reported for hydrodynamics situation, under which the medium composition is kept constant by replacing the consumed ions by means of fluid flow. 
+In fact, the similarity in corrosion behavior of various Mg alloys in SBF solutions is because of the similar composition of this quasi-protective layer, a mechanism that doesn't occur in NaCl solution, leading to more apparent difference of degradation rate between Mg alloys. The composition of the formed hydroxyapatite-like precipitation layer is close to the ones found \textit{in vivo} \cite{Mei2020}. Additionally, local pH measurements in HBSS and SBF shows that in contrast to saline solutions, the local pH value is not alkaline \cite{Lamaka2018,Mei2021}. This has been reported for hydrodynamics situation, under which the medium composition is kept constant by replacing the consumed ions by means of fluid flow.
 
 
 \section{Results}
 
 \subsection{Thermodynamics-based simulation}
 
-Inputting the experimental conditions in the Hydra-Medusa software, including the initial composition and the contributing chemical components, results in a huge and complex output containing all the possible occurring chemical reactions. Out of this output, relevant reactions for the current biodegradation systems were filtered out, and the filtered reactions were converted to desired concentration units. Fig. \ref{fig:kinetics_medusa_profiles} depicts the output of this process separately for simulations performed at $25^{\circ}C$ (RT) and $37^{\circ}C$, showing how the concentration of relevant components vary with changing the environment pH. The solubility products of these simulations were taken from Table \ref{tab:kinetics_reactions}, and equilibrium concentrations were set to be equal to the composition of the electrolyte, listed in Table  \ref{tab:kinetics_electrolyte_composition}. 
+Inputting the experimental conditions in the Hydra-Medusa software, including the initial composition and the contributing chemical components, results in a huge and complex output containing all the possible occurring chemical reactions. Out of this output, relevant reactions for the current biodegradation systems were filtered out, and the filtered reactions were converted to desired concentration units. Fig. \ref{fig:kinetics_medusa_profiles} depicts the output of this process separately for simulations performed at $25^{\circ}C$ (RT) and $37^{\circ}C$, showing how the concentration of relevant components vary with changing the environment pH. The solubility products of these simulations were taken from Table \ref{tab:kinetics_reactions}, and equilibrium concentrations were set to be equal to the composition of the electrolyte, listed in Table  \ref{tab:kinetics_electrolyte_composition}.
 
 \begin{figure}[h]
 \centering
@@ -70,7 +70,7 @@ Inputting the experimental conditions in the Hydra-Medusa software, including th
 
 \subsection{Biodegradation simulations}
 
-Fig. \ref{fig:kinetics_local_ph_visual} shows a visualization of the local pH profiles from the top and side views for simulations performed at  $25^{\circ}C$ (RT) and $37^{\circ}C$ after 12 hours. These profiles are comparable with the local pH distribution measured in the experiments as shown in Fig. \ref{fig:kinetics_local_ph_experimental}. In these figures, the flow is from left to right, advecting the released ions in the flow direction. 
+Fig. \ref{fig:kinetics_local_ph_visual} shows a visualization of the local pH profiles from the top and side views for simulations performed at  $25^{\circ}C$ (RT) and $37^{\circ}C$ after 12 hours. These profiles are comparable with the local pH distribution measured in the experiments as shown in Fig. \ref{fig:kinetics_local_ph_experimental}. In these figures, the flow is from left to right, advecting the released ions in the flow direction.
 
 \begin{figure}[h]
 \centering
@@ -145,7 +145,7 @@ $\mathrm{D}-\mathrm{Glucose}$ & 5.56 \\
 \begin{tabular}{lcccccc}
 \hline & {Fe} & {Si} & {Mn} & {Al} & {Cu} & {Ni} \\
 \hline { CP-Mg } & 0.03420 & 0.0001 & 0.00237 & 0.00402 & 0.00037 & <0.0002  \\
-{ UHP-Mg } & 0.0012 & <0.0001 & 0.00037 & 0.00291 & <0.0001 & <0.0002 
+{ UHP-Mg } & 0.0012 & <0.0001 & 0.00037 & 0.00291 & <0.0001 & <0.0002
 \end{tabular}
 \label{tab:kinetics_alloys_composition}
 \end{table}
@@ -171,7 +171,7 @@ A module to link the above 2 components and calculate the hydroxyapatite-like pr
 \end{enumerate}
 
 The computational model of the biodegradation was developed by deriving a set of reaction-diffusion-advection equations from the chemistry of the corrosion of Mg in hydrodynamics conditions. The following basic reactions are captured by this model, extended by splitting into more equations in comparison to our previous contribution \cite{Barzegari2021}:\begin{equation} \label{eq:kinetics_oxidation_react1}
-\mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O} \stackrel{k_{0}}{\rightarrow} \mathrm{Mg}^{2+}+\mathrm{H}_{2}+2 \mathrm{OH}^{-} 
+\mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O} \stackrel{k_{0}}{\rightarrow} \mathrm{Mg}^{2+}+\mathrm{H}_{2}+2 \mathrm{OH}^{-}
 \end{equation}
 \begin{equation} \label{eq:kinetics_oxidation_react2}
 \mathrm{Mg}^{2+}+2 \mathrm{OH}^{-} \stackrel{k_{1}}{\rightarrow} \mathrm{Mg}(\mathrm{OH})_{2}+\mathrm{H}_{2}
@@ -228,7 +228,7 @@ in which the protective film maximum concentration is calculated using its poros
 In Eqs. \ref{eq:kinetics_pde_mg}, \ref{eq:kinetics_pde_cl}, and \ref{eq:kinetics_pde_oh}, $\mathbf{u}$ is the velocity field from the surrounding fluid flow governed by the Stokes equation:
 \begin{equation} \label{eq:kinetics_stokes}
 \left\{ {\begin{array}{*{20}{l}}
-\displaystyle  {- \nu\Delta \mathbf{u} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0} \\ 
+\displaystyle  {- \nu\Delta \mathbf{u} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0} \\
 \displaystyle  {\nabla\cdot\mathbf{u} + \varepsilon p = 0.}
 \end{array}} \right.
 \end{equation}
@@ -240,7 +240,7 @@ The local pH can be calculated using the simulated concentration of hydroxide (E
 \end{equation}
 with $\mathrm{MW}_{\mathrm{OH}}=17.01$ being the molecular weight of the hydroxide ions.
 
-The concentration of the hydroxyapatite-like precipitation ($C_{\mathrm{Hydrox}}$ in Eqs. \ref{eq:kinetics_state_vars_film} and \ref{eq:kinetics_film_cumulative}) is calculated using the thermodynamics-based simulations (module 2) based on calculated local pH (Eq. \ref{eq:kinetics_ph}) for each node of the domain of desired. After solving the derived equations in each time step, the linking module passes the obtained local pH to the thermodynamics module to calculate the individual concentration of involved chemical components. Then, the individual concentrations are converted to the concentration of the hydroxyapatite-like precipitation by taking into account the stoichiometry of the formation reaction (Eq. \ref{eq:kinetics_hydrox_react}), leading to calculation of $C_{\mathrm{Hydrox}}$ for each node. After this, the total concentration of the film can be calculated according to Eq. \ref{eq:kinetics_film_cumulative} by passing back the calculated value to module 1. 
+The concentration of the hydroxyapatite-like precipitation ($C_{\mathrm{Hydrox}}$ in Eqs. \ref{eq:kinetics_state_vars_film} and \ref{eq:kinetics_film_cumulative}) is calculated using the thermodynamics-based simulations (module 2) based on calculated local pH (Eq. \ref{eq:kinetics_ph}) for each node of the domain of desired. After solving the derived equations in each time step, the linking module passes the obtained local pH to the thermodynamics module to calculate the individual concentration of involved chemical components. Then, the individual concentrations are converted to the concentration of the hydroxyapatite-like precipitation by taking into account the stoichiometry of the formation reaction (Eq. \ref{eq:kinetics_hydrox_react}), leading to calculation of $C_{\mathrm{Hydrox}}$ for each node. After this, the total concentration of the film can be calculated according to Eq. \ref{eq:kinetics_film_cumulative} by passing back the calculated value to module 1.
 
 The thermodynamics-based simulations were conducted using the Hydra-Medusa code \cite{Ingri1967, Warnqvist1971, Eriksson1979}, in which the input data of chemical equilibrium constants, solubility products, temperature, and involved chemical components are used to generate a set of equilibrium diagrams correlating pH to concentration or fraction of desired components. The experimental conditions, including the initial composition of the electrolyte (Table \ref{tab:kinetics_electrolyte_composition}) and evaluated temperatures ($25^{\circ}C$ and $37^{\circ}C$), were given as input, and contributing components and solubility products were selected according to Table \ref{tab:kinetics_reactions}.
 
@@ -266,7 +266,7 @@ $\mathrm{HPO}_{4}^{2-}(aq) \rightarrow \mathrm{PO}_{4}^{3-}(a q)+H^{+}(aq)$ & 12
 \label{tab:kinetics_reactions}
 \end{table}
 
-The derived PDEs for the mechanistic model (Eqs. \ref{eq:kinetics_pde_mg}, \ref{eq:kinetics_pde_film}, \ref{eq:kinetics_pde_cl}, and \ref{eq:kinetics_pde_oh}) were solved using a standard first-order finite element scheme. The open-source PDE solver FreeFEM \cite{Hecht2012} was used to implement the finite element model, resulting in a linear system of equations. The obtained equations were solved in parallel using efficient preconditioners and iterative solvers available in the open-source high-performance computing (HPC) toolkit PETSc \cite{petsc}. The HYPRE BoomerAMG \cite{Falgout2002} and FieldSplit preconditioners were applied to the reaction-diffusion PDEs and the Stokes equations, respectively, and the GMRES solver \cite{Saad1986} was used to solve the linear systems. Moreover, the computational mesh was partitioned and distributed among available computing resources using the HPDDM preconditioner \cite{Jolivet2013}. Additionally, a level-set based approach was employed to track the change of morphology of the degrading part and apply appropriate boundary conditions for the PDEs via the penalization method defined on top of the solution of the level-set equation. The details of this implementation are presented in our previous works \cite{Barzegari2021, Barzegari2022}. Since Eq. \ref{eq:kinetics_pde_oh} is non-linear PDE, a Picard-relaxation approach was considered to linearize this equation. 
+The derived PDEs for the mechanistic model (Eqs. \ref{eq:kinetics_pde_mg}, \ref{eq:kinetics_pde_film}, \ref{eq:kinetics_pde_cl}, and \ref{eq:kinetics_pde_oh}) were solved using a standard first-order finite element scheme. The open-source PDE solver FreeFEM \cite{Hecht2012} was used to implement the finite element model, resulting in a linear system of equations. The obtained equations were solved in parallel using efficient preconditioners and iterative solvers available in the open-source high-performance computing (HPC) toolkit PETSc \cite{petsc}. The HYPRE BoomerAMG \cite{Falgout2002} and FieldSplit preconditioners were applied to the reaction-diffusion PDEs and the Stokes equations, respectively, and the GMRES solver \cite{Saad1986} was used to solve the linear systems. Moreover, the computational mesh was partitioned and distributed among available computing resources using the HPDDM preconditioner \cite{Jolivet2013}. Additionally, a level-set based approach was employed to track the change of morphology of the degrading part and apply appropriate boundary conditions for the PDEs via the penalization method defined on top of the solution of the level-set equation. The details of this implementation are presented in our previous works \cite{Barzegari2021, Barzegari2022}. Since Eq. \ref{eq:kinetics_pde_oh} is non-linear PDE, a Picard-relaxation approach was considered to linearize this equation.
 
 \subsection{Simulation setup}
 
@@ -307,7 +307,6 @@ The source code of the programs used in this paper is available from the authors
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Keep the following \cleardoublepage at the end of this file, 
+% Keep the following \cleardoublepage at the end of this file,
 % otherwise \includeonly includes empty pages.
 \cleardoublepage
-

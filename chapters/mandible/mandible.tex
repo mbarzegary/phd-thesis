@@ -2,8 +2,8 @@
 \chapter{Applications: Mandible plate}\label{ch:mandible}
 
 \begin{shaded}
-This chapter is based on submitted content to the \textit{Journal of the Mechanical Behavior of Biomedical Materials}:\\
-P. Ansoms, M. Barzegari, and L. Geris, ``Coupling biomechanical models of implants with biodegradation models: a case study for biodegradable mandibular bone fixation plates,'' submitted to \textit{Journal of the Mechanical Behavior of Biomedical Materials}, 2022.
+This chapter is based on a manuscript prepared to be submitted:\\
+P. Ansoms, M. Barzegari, and L. Geris, ``Coupling biomechanical models of implants with biodegradation models: a case study for biodegradable mandibular bone fixation plates.''
 \end{shaded}
 
 \section{Introduction}
@@ -19,12 +19,12 @@ The use of biodegradable metals to support tissue regeneration is mentioned in v
     \label{fig:rateofdeg}
 \end{figure}
 
-Studying the change of mechanical support of implants due to biodegradation has certain complexities. This case-study aimed to gain insight into the change in mechanical behavior of a biodegradable mandibular fixation plate. In order to do this, three different models should be combined: a biodegradation model to characterize the geometry change as a result of biodegradation, a model to characterize the loading on the jaw plate by considering the bone healing, and a model to predict the mechanical behavior of the plate. 
+Studying the change of mechanical support of implants due to biodegradation has certain complexities. This case-study aimed to gain insight into the change in mechanical behavior of a biodegradable mandibular fixation plate. In order to do this, three different models should be combined: a biodegradation model to characterize the geometry change as a result of biodegradation, a model to characterize the loading on the jaw plate by considering the bone healing, and a model to predict the mechanical behavior of the plate.
 
 % very short discussion on mandible fractures
-The mandible is the second most frequently fractured bone of the face and the tenth most frequently fractured bone of the body \cite{Bhavik}. Common causes for a mandible fracture are violence, car crashes and sports. It occurs more frequently for males than for females and most often between the ages of 16 and 30. The weakest section of the mandible is the angle because there is an abrupt change in direction between the body and ascending ramus, both in the sagittal and transverse planes, resulting in the involvement of the mandibular angle in jaw fractures in up to 28.5\% of cases \cite{Levy}. The treatment of mandible fractures is most commonly done with a mandibular fixation plate (further referred to as jaw plate) to stabilize the fracture and allow the healing process to take place. The plate is traditionally made of an inert implant material (e.g. titanium), which implies that it has minimal interaction with the surrounding tissues. Alternatively, the implant can be made from biodegradable materials to take advantage of the aforementioned benefits. 
+The mandible is the second most frequently fractured bone of the face and the tenth most frequently fractured bone of the body \cite{Bhavik}. Common causes for a mandible fracture are violence, car crashes and sports. It occurs more frequently for males than for females and most often between the ages of 16 and 30. The weakest section of the mandible is the angle because there is an abrupt change in direction between the body and ascending ramus, both in the sagittal and transverse planes, resulting in the involvement of the mandibular angle in jaw fractures in up to 28.5\% of cases \cite{Levy}. The treatment of mandible fractures is most commonly done with a mandibular fixation plate (further referred to as jaw plate) to stabilize the fracture and allow the healing process to take place. The plate is traditionally made of an inert implant material (e.g. titanium), which implies that it has minimal interaction with the surrounding tissues. Alternatively, the implant can be made from biodegradable materials to take advantage of the aforementioned benefits.
 
-The outcome of different surgeries on the mandible has been modelled by several studies \cite{Vautrin2021}. Zheng et al. were able to evaluate the impact of mandibular reconstruction surgery on the muscular functionality by developing a static FE model \cite{Zheng2019}. A topology optimization was performed by Wu et al. for a similar application, with the inclusion of a bone remodeling algorithm \cite{Wu2020}. Boccaccio et al. studied distraction osteogenesis of the mandible with a focus on tissue differentiation \cite{Boccaccio2008}. These models incorporated the tissue regeneration, but did not incorporate a biodegradable fixation system. The combination of concurrent biodegradation and bone regeneration has been developed for long bones by Mehboob et al. \cite{Mehboob2015} and by Ma et al. \cite{Ma2018}. Vautrin et al. even developed a combined biodegradation and tissue regeneration model in the context of orthognatic surgery \cite{Vautrin2021}. The bone healing algorithm was based on the model that Alierta et al. developed, but was generalized to be applicable to a larger fracture gap \cite{Alierta2013}. It modeled the growth of the contribution of cartilage and bone to the mechanical properties of each element within the fracture gap based on the principal element strains under physiological loading. The biodegradation algorithm was limited to being phenomenological to reduce the computational cost. It included only localized corrosion by incorporating a random pitting corrosion algorithm. 
+The outcome of different surgeries on the mandible has been modelled by several studies \cite{Vautrin2021}. Zheng et al. were able to evaluate the impact of mandibular reconstruction surgery on the muscular functionality by developing a static FE model \cite{Zheng2019}. A topology optimization was performed by Wu et al. for a similar application, with the inclusion of a bone remodeling algorithm \cite{Wu2020}. Boccaccio et al. studied distraction osteogenesis of the mandible with a focus on tissue differentiation \cite{Boccaccio2008}. These models incorporated the tissue regeneration, but did not incorporate a biodegradable fixation system. The combination of concurrent biodegradation and bone regeneration has been developed for long bones by Mehboob et al. \cite{Mehboob2015} and by Ma et al. \cite{Ma2018}. Vautrin et al. even developed a combined biodegradation and tissue regeneration model in the context of orthognatic surgery \cite{Vautrin2021}. The bone healing algorithm was based on the model that Alierta et al. developed, but was generalized to be applicable to a larger fracture gap \cite{Alierta2013}. It modeled the growth of the contribution of cartilage and bone to the mechanical properties of each element within the fracture gap based on the principal element strains under physiological loading. The biodegradation algorithm was limited to being phenomenological to reduce the computational cost. It included only localized corrosion by incorporating a random pitting corrosion algorithm.
 
 The present work incorporated a more detailed biodegradation algorithm based on the chemistry of biodegradation of WE43. The tissue regeneration algorithm, on the other hand, made use of beam theory which was made possible by the specific type of fixation that was considered. The case-study focuses on investigating the effect of the number of plate holes left unscrewed and the impact of biodegradation on mechanical support in this condition.
 
@@ -96,17 +96,17 @@ The material model for the simulations was based on WE43, which is a magnesium a
 
 \begin{table}[h]
 \centering
-\begin{tabular}{|l|l|l|} 
+\begin{tabular}{|l|l|l|}
 \hline
-\textbf{Parameter} & \textbf{Value} & \textbf{Units}  \\ 
+\textbf{Parameter} & \textbf{Value} & \textbf{Units}  \\
 \hline
-Density            & 1800           & kg/m$^3$        \\ 
+Density            & 1800           & kg/m$^3$        \\
 \hline
-E-modulus          & 44.2E+09       & Pa              \\ 
+E-modulus          & 44.2E+09       & Pa              \\
 \hline
-Poisson's ratio    & 0.27           & -               \\ 
+Poisson's ratio    & 0.27           & -               \\
 \hline
-Fracture strain    & 0.04           & -               \\ 
+Fracture strain    & 0.04           & -               \\
 \hline
 Yield stress       & 1.6E+08        & Pa              \\
 \hline
@@ -158,7 +158,7 @@ Sensitivity analyses were performed on various parameters of the explicit/dynami
 \small
 \begin{tabular}{|r|ccccc|}
 \hline
-\textbf{Time after im-} &  &  &  &  &  \\ 
+\textbf{Time after im-} &  &  &  &  &  \\
 \textbf{plantation{[}days{]}} & \textbf{0} & \textbf{28} & \textbf{77} & \textbf{124} & \textbf{170} \\ \hline
 \textbf{Depth{[}mm{]}}                     & 1          & 0.95        & 0.9         & 0.85         & 0.8          \\
 \textbf{H{[}mm{]}}                         & 4          & 3.95        & 3.9         & 3.85         & 3.8          \\
@@ -239,14 +239,14 @@ The simulation of 120 days of the degradation of the jaw bone plate took 18 hour
 \begin{figure}[t]
 \center \includegraphics[width=13cm]{results_degradation.jpg}
 \caption{A cross-section of the computational mesh and simulation results of the degradation model of the jaw bone plate in SBF solution as well as the mass loss graph over time. The contours display the concentration of magnesium ions on a cross-section view of the medium beside the moving surface of the bone plate at 1) 1st day (initial state), 2) 40th day, 3) 80th day, and 4) 120th day. The gray surface is the zero iso-contour of the level set function, which indicates the surface of the bone plate.} \label{fig:results_degradation}
-\end{figure} 
+\end{figure}
 
 \subsection{Sensitivity analyses}
 
 The results from the sensitivity analyses showed that the mass scaling and the use of multiple processors for computation had no impact on the force-displacement curves. The maximum degradation only caused changes in the force-displacement curve after the maximum bearable force had been reached, and hence didn't impact the maximum bearable force. The displacement at failure and the mesh size, however, did have a strong impact on the resulting force-displacement curves. The maximum bearable force was drastically increased with an increased value of the displacement at failure. Changing the mesh size led to the opposite behavior: the maximum bearable force was lower with a larger value of the mesh size. The relationship between both was identified and the misbehavior could be eliminated by adjusting the displacement at failure to the mesh size according to the following general relationship:
 
 \begin{equation}
-X_{DAF}=0.6^{log_{0.5}(X_{mesh})} 
+X_{DAF}=0.6^{log_{0.5}(X_{mesh})}
 \end{equation}
 
 \noindent $X_{DAF}$ is the factor with which the DAF value should be multiplied when the global mesh size is multiplied with $X_{mesh}$.
@@ -282,11 +282,11 @@ The force-displacement curves for the case with five screws are shown in Fig. \r
 
 \section{Discussion}
 
-In this work, a coupled mechanical-degradation model was presented to study the effect of biodegradation on the mechanical stability of implants for biodegradable mandibular plates. Three different cases were considered, in each of which a different number of implant holes were left unscrewed. One aspect of the difference between the three cases is the surface that was exposed to body fluids. The extra surfaces exposed to body fluids in the four- and two-screw cases were inside the open holes, which were critical regions. The "extra" corrosion inside the holes had an impact on the strength, as the results of Fig. \ref{fig:BPmaxforce5screws} show. The other aspect of the difference between the cases has is on the boundary conditions that represented the screws pulling on the jaw plate. The differences in the maximal force on day 0 between the three cases is a result of the boundary conditions only since there was no corrosion at this point in time and the models were identical. 
+In this work, a coupled mechanical-degradation model was presented to study the effect of biodegradation on the mechanical stability of implants for biodegradable mandibular plates. Three different cases were considered, in each of which a different number of implant holes were left unscrewed. One aspect of the difference between the three cases is the surface that was exposed to body fluids. The extra surfaces exposed to body fluids in the four- and two-screw cases were inside the open holes, which were critical regions. The "extra" corrosion inside the holes had an impact on the strength, as the results of Fig. \ref{fig:BPmaxforce5screws} show. The other aspect of the difference between the cases has is on the boundary conditions that represented the screws pulling on the jaw plate. The differences in the maximal force on day 0 between the three cases is a result of the boundary conditions only since there was no corrosion at this point in time and the models were identical.
 
 The use of a "universal" jaw plate with multiple holes allows the jaw plate to be used in various situations involving mandible fractures. Depending on the exact location of fracture lines and the presence of stronger and weaker sections of bone, the amount and placement of screws can be decided upon. The downside to this is that the differences in mechanical behavior and the change thereof as a result of corrosion between the different cases (5/4/2 screws) can lead to unexpected results if not anticipated correctly by the jaw plate designer/surgeon. A patient-specific jaw plate can be designed to meet a specific mechanical behavior. The placement of holes and the presence or absence of screws can then be a powerful tool for obtaining the desired mechanical behavior of the jaw plate.
 
-The results of the strength simulations provided useful knowledge about the limits in terms of the mechanical strength of the jaw plate and how that evolved during the biodegradation process. Matched with an accurate characterization of the loading, the point at which the jaw plate fails could be predicted. The loading on the jaw plate was derived from the maximal biting force. This has to be taken into account when interpreting the results. The jaw plate would fail if the maximal biting force would be exerted after the point at which the strength curve falls below the loading curve. In practice, the strength of the jaw plate and the way in which this evolves during the biodegradation process are influenced by a range of parameters. Most of these are fixed by the situation/patient: mandible dimensions, bone properties, fracture line geometry, etc. Others are, however, free to be chosen by the implant designer: the jaw plate material and geometry, the location, the number of screws, etc. Certain restrictions on what food may be eaten by the patient for a certain time period can be given to reduce the maximal biting force. 
+The results of the strength simulations provided useful knowledge about the limits in terms of the mechanical strength of the jaw plate and how that evolved during the biodegradation process. Matched with an accurate characterization of the loading, the point at which the jaw plate fails could be predicted. The loading on the jaw plate was derived from the maximal biting force. This has to be taken into account when interpreting the results. The jaw plate would fail if the maximal biting force would be exerted after the point at which the strength curve falls below the loading curve. In practice, the strength of the jaw plate and the way in which this evolves during the biodegradation process are influenced by a range of parameters. Most of these are fixed by the situation/patient: mandible dimensions, bone properties, fracture line geometry, etc. Others are, however, free to be chosen by the implant designer: the jaw plate material and geometry, the location, the number of screws, etc. Certain restrictions on what food may be eaten by the patient for a certain time period can be given to reduce the maximal biting force.
 
 The design of this jaw plate is a complex task that can be modified in various ways. Fig. \ref{fig:FlowChartJP} gives an overview of an automated workflow that incorporates the concepts from this study into the iterative design of the jaw plate. With the use of initial data of the mandible and the jaw plate, the mechanical behavior can be determined. Likely, the behavior of the initial design is not as desired. For that reason, the design process is based on the iterative adjustment of the parameters to ultimately obtain the desired mechanical behavior. The material of the jaw plate can be chosen to be stronger or weaker, impacting the estimation of the loading on the jaw plate and the simulation of the strength of the jaw plate. The degradation-related properties of the material impact the corrosion simulation, which in turn determines the geometry changes for the simulation of strength. The geometry of the jaw plate can have similar effects as the material, impacting both strength and degradation behavior. For example, the rate of degradation can be modulated by increasing or decreasing the surface-area-to-volume ratio of the jaw plate. A high surface-area-to-volume ratio (imagine a wide but very thin jaw plate) leads to a faster loss of material (and strength) since the area exposed to body fluids is high. The opposite is true for a low surface-area-to-volume ratio (imagine a jaw plate with a square cross-section perpendicular to the longitudinal axis). The location changes the type of loading on the jaw plate, and it is important that this loading situation is reflected in the simulation of the strength. For example, it is not useful to submit the jaw plate models to a tensile test if the jaw plate is actually experiencing a bending moment once implanted. %In the flowchart, the green box indicates the scope of the Master's Thesis on which this article is based.
 
@@ -300,7 +300,7 @@ The design of this jaw plate is a complex task that can be modified in various w
 \section{Future perspectives}
 \label{sec:future}
 
-The validity and accuracy of the curves depend on the data that is used to create them and on the degree to which the simplifications deviate from reality. The E-moduli of the bone could be obtained from dedicated experiments and plugged into the beam theory equations to more accurately define the load on the jaw plate. Alternatively, an FE model of the entire mandible with jaw plate could replace the combination of the beam theory and the FE analysis of the jaw plate separately. This would be more accurate since the loading is not approximated. Another interesting thing to take into account could be the amount of displacement before failure. The area under the force-displacement curve is an indication of energy absorption. The addition of localized corrosion to the simulations could also be interesting, since the reality of corrosion always involves a combination of localized and uniform corrosion. While the relative change in force values led to interesting conclusions, the absolute values of the results obtained in this study were not validated. Manufacturing real samples, immersing them in SBF, and objecting them to a tensile test would give \textit{in vitro}results that can be compared to the simulation predictions.  
+The validity and accuracy of the curves depend on the data that is used to create them and on the degree to which the simplifications deviate from reality. The E-moduli of the bone could be obtained from dedicated experiments and plugged into the beam theory equations to more accurately define the load on the jaw plate. Alternatively, an FE model of the entire mandible with jaw plate could replace the combination of the beam theory and the FE analysis of the jaw plate separately. This would be more accurate since the loading is not approximated. Another interesting thing to take into account could be the amount of displacement before failure. The area under the force-displacement curve is an indication of energy absorption. The addition of localized corrosion to the simulations could also be interesting, since the reality of corrosion always involves a combination of localized and uniform corrosion. While the relative change in force values led to interesting conclusions, the absolute values of the results obtained in this study were not validated. Manufacturing real samples, immersing them in SBF, and objecting them to a tensile test would give \textit{in vitro}results that can be compared to the simulation predictions.
 
 
 \section*{Acknowledgments}
@@ -309,7 +309,6 @@ This research is financially supported by the Prosperos project, funded by the I
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Keep the following \cleardoublepage at the end of this file, 
+% Keep the following \cleardoublepage at the end of this file,
 % otherwise \includeonly includes empty pages.
 \cleardoublepage
-

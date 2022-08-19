@@ -2,8 +2,8 @@
 \chapter{Applications: Acetabular cup}\label{ch:cup}
 
 \begin{shaded}
-This chapter is based on prepared manuscript to be submitted to  \textit{IEEE Computing in Science \& Engineering}:\\
-M. Barzegari, F. Perez-Boerema, G. Zavodszky, and L. Geris, ``High-performance computer simulation of biodegradation of optimized personalized implants; a case study of a patient-specific porous acetabular implant,'' will be submitted to \textit{IEEE Computing in Science \& Engineering}.
+This chapter is based on a manuscript prepared to be submitted:\\
+M. Barzegari, F. Perez-Boerema, G. Zavodszky, and L. Geris, ``High-performance computer simulation of biodegradation of optimized personalized implants; a case study of a patient-specific porous acetabular implant.''
 \end{shaded}
 
 \section{Introduction}
@@ -57,16 +57,16 @@ For dealing with a problem of this size and making the model capable of being sc
 \caption[Mesh decomposition of the acetabular implant model]{Mesh decomposition of the computational biodegradation model to be distributed to available computing nodes, a) top view, b) perspective side view. } \label{fig:cup_decomposition}
 \end{figure}
 
-The simulation was carried out using 2,000 CPU cores with 16.5 TB of available memory on Dutch national supercomputer, Snellius. The simulation results, comprising of \num{95000} files with a total size of 148 GB, were visualized using a parallel client-server remote rendering approach in ParaView server v5.9.1 running on 128 CPU cores on the ARCHER2 supercomputer. 
+The simulation was carried out using 2,000 CPU cores with 16.5 TB of available memory on Dutch national supercomputer, Snellius. The simulation results, comprising of \num{95000} files with a total size of 148 GB, were visualized using a parallel client-server remote rendering approach in ParaView server v5.9.1 running on 128 CPU cores on the ARCHER2 supercomputer.
 
-In order to obtain the scaling behavior of the model in an HPC environment, strong and weak scaling tests were performed in the Snellius supercomputer. For the weak scaling test, in addition to the mesh with \num{45870053} elements, two more mesh files consisting of less elements were generated using the aforementioned procedure for embedding and refining the mesh. These models had \num{15989521} and \num{29035491}, respectively, to which the number of employed CPU cores were adjusted accordingly. The strong scaling test was carried out for all the three model sizes by varying the number of employed CPU cores from 60 to \num{9000}. 
+In order to obtain the scaling behavior of the model in an HPC environment, strong and weak scaling tests were performed in the Snellius supercomputer. For the weak scaling test, in addition to the mesh with \num{45870053} elements, two more mesh files consisting of less elements were generated using the aforementioned procedure for embedding and refining the mesh. These models had \num{15989521} and \num{29035491}, respectively, to which the number of employed CPU cores were adjusted accordingly. The strong scaling test was carried out for all the three model sizes by varying the number of employed CPU cores from 60 to \num{9000}.
 
 
 \section{Results and Discussion}
 
 \subsection{Topology optimization of the acetabular implant}
 
-The generated lattice structure of the implant, infilled by skeletal-gyroid unit cell type, is depicted in Fig. \ref{fig:cup_optimization}. The volume fraction is varied during the topology optimization process to match the stiffness distribution required to maximize the tissue growth. 
+The generated lattice structure of the implant, infilled by skeletal-gyroid unit cell type, is depicted in Fig. \ref{fig:cup_optimization}. The volume fraction is varied during the topology optimization process to match the stiffness distribution required to maximize the tissue growth.
 
 \begin{figure}[h]
 \centering
@@ -95,7 +95,7 @@ From a qualitative point of view, visualizing the biodegradation results, depict
 \caption[Visualization of the change of morphology of the acetabular implant]{Visualization of the change of morphology of the acetabular implant over time.} \label{fig:cup_degradation_visual}
 \end{figure}
 
-Fig. \ref{fig:cup_degradation_visual_close} demonstrate a similar visualization but on a zoomed view to the surface of the implant being plotted along with a cross section of the medium showing the concentration of release Mg ions. 
+Fig. \ref{fig:cup_degradation_visual_close} demonstrate a similar visualization but on a zoomed view to the surface of the implant being plotted along with a cross section of the medium showing the concentration of release Mg ions.
 
 \begin{figure}[h]
 \centering
@@ -155,7 +155,6 @@ This research is financially supported by the Prosperos project, funded by the I
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Keep the following \cleardoublepage at the end of this file, 
+% Keep the following \cleardoublepage at the end of this file,
 % otherwise \includeonly includes empty pages.
 \cleardoublepage
-
