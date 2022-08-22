@@ -3,6 +3,19 @@
 
 \section{Introduction}
 
+Biodegradable metallic materials are gaining more attention as promising candidates for bone implants in the recent decade. For tissue engineering applications, these biodegradable materials are magnesium (Mg), zinc (Zn), and (Iron), each of which has its own positive and negative features. They have been widely used in orthopedics and cardiovascular applications, both in commercially pure (CP) and alloyed form. They possess acceptable biocompatibility and bioabsorption properties, as well as sufficient mechanical stability. 
+
+Among these biodegradable metallic materials, Mg is gaining interest for use in bone repair applications. Despite its high degradation rate, pure Mg and Mg alloys have similar physical and mechanical properties as the natural bone, making them a perfect choice to prevent stress shielding, which is the one of the main causes of implant failure. For this reason, Mg-based alloys are called revolutionary metals in biomedical applications \cite{Shuai2019}. 
+
+In order to take advantage of these materials in bone tissue engineering applications, their degradation parameters should be tuned to the rate of regeneration of the bone. One approach for investigating biodegradation behavior is to construct computational models to assess the biodegradation properties prior to conducting any in-vitro or in-vivo tests. In addition to degradation tuning, these models can be used for evaluating the mechanical integrity of the implants, which can be considered as an important application in bone tissue engineering. 
+
+Mechanical integrity can be studied via the change of mechanical properties of the implant over time, an example of which is the stiffness variations of the implant while the degradation takes place. In this study, the change of stiffness of porous structures during the biodegradation process is investigated by coupling the degradation model and a mechanical analysis model. Such coupling allows studying the correlation of variations in different quantities in both models, such as the effect on mass loss on the compliance of the structure and as a result, on the stiffness. 
+
+The infilled structures are opted due to their interesting properties to be used in biomedical applications, one of which is to allow more interaction between the implant and the body environment \cite{Birmingham2012}. A bone implant with a proper lattice structure manufactured with functionally graded materials can improve the healing process of bone defects \cite{Mahmoud2017}. In the current study, the investigated infilled structures are created using a topology optimization (TO) routine, in which a set of different volume constraints leads to different final shapes. 
+
+Performing TO on degrading structures has been rarely studied, the reason of which is the difficulty of evaluating the sensitivity of the optimization models in presence of complex biodegradation mechanisms. Zhang et al. \cite{Zhang2021} presented such a model for a simplified degradation mechanism in which a constant mass loss from the surface was considered in a sophisticated level-set based TO to mimic the biodegradation process. In their later work \cite{Zhang2021a}, they enhanced their implementation from the TO perspective by extending and verifying it in the microscopic scale for stiffness changeable composite structures. Despite the technical difficulty, the presented model in the current study can be a first step towards building a coupled model for designing implants with optimizing the structure while the biodegradable tuning is taken into account. In this model, the change in the compliance of the degrading structure is calculated in each step of degradation, making it possible to use it later as the objective function of the TO process so as to consider the effect of the biodegradation process.
+
+
 \section{Methods}
 
 \begin{figure}[h]
