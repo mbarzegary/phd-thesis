@@ -9,7 +9,7 @@ M. Barzegari, C. Wang, S.V. Lamaka, G. Zavodszky, and L. Geris, ``Interface-coup
 
 \section{Introduction}
 
-The biodegradation behavior of Mg is investigated in corrosion tests, in which the selection of the corrosive media plays an important role since it affects the underlying chemical reactions \cite{Mei2020}. By considering the main application of the biomaterial, which can be tissue engineering scaffolds, vascular stents, or orthopedic fixation implants, the corrosive media can be selected to be a representative of the service environment. The most basic form of the medium is a saline (NaCl) solution, in which the degradation rate is the highest possible \cite{Mei2020}. More complex solutions can be used to mimic the behavior of body environment by taking into account more body fluid components, the most popular of which are the Ringer's solution, PBS (phosphate buffered saline), SBFs (simulated body fluids), HBSS (Hank's balanced salt solution), and Earle's balanced salt solution (EBSS) \cite{Mei2020}. Adding more organic components to the solution will make it ready to simulate cell culture conditions. The common media for this purpose are MEM (Minimum Essential medium) and DMEM (Dulbecco's modified Eagle's medium) \cite{Mei2020}.
+Mg is the most studied biodegradable metal \cite{Liu2019,Zheng2014,Chen2014,Zhang2013}, on which many research groups have performed valuable biodegradation studies \cite{Esmaily2017,Li2016,Atrens2020,Kirkland2012}. The biodegradation behavior of Mg is investigated in \textit{in vitro} corrosion tests, in which the selection of the corrosive media plays an important role since it affects the underlying chemical reactions \cite{Mei2020}. By considering the main application of the biomaterial, which can be tissue engineering scaffolds, vascular stents, or orthopedic fixation implants, the corrosive media can be selected to be a representative of the service environment. The most basic form of the medium is a saline (NaCl) solution, in which the degradation rate is the highest possible \cite{Mei2020}. More complex solutions can be used to mimic the behavior of body environment by taking into account more body fluid components, the most popular of which are the Ringer's solution, PBS (phosphate buffered saline), SBFs (simulated body fluids), HBSS (Hank's balanced salt solution), and Earle's balanced salt solution (EBSS) \cite{Mei2020}. Adding more organic components to the solution will make it ready to simulate cell culture conditions. The common media for this purpose are MEM (Minimum Essential medium) and DMEM (Dulbecco's modified Eagle's medium) \cite{Mei2020}.
 
 A wide range of various studies have already investigated the effect of different components in the aforementioned corrosive media on the degradation behavior of Mg materials \cite{Mei2019,Zeng2014,Johnston2017, Lamaka2018,Mei2019a}. A typical composition of "simulated body fluid" solutions (such as SBF, HBSS, and EBSS) is chloride, carbonate, phosphates, sulfate, and calcium. The individual effect of these components on the rate of degradation of Mg has been extensively studied, in which it has been observed that carbonate and phosphate slow down the rate while the effect of sulfate is negligible \cite{Johnston2017,Mei2019a}. The concentration of $\mathrm{HCO}_{3}^{-}$ affects the pH buffering capacity and the degradation rate of Mg simultaneously \cite{Xin2011}.
 
@@ -53,6 +53,8 @@ m \mathrm{Mg}^{2+}+n \mathrm{Ca}^{2+}&+x \mathrm{H}_{2} \mathrm{PO}_{4}^{-} / \m
 \end{equation}
 
 In fact, the similarity in corrosion behavior of various Mg alloys in SBF solutions is because of the similar composition of this quasi-protective layer, a mechanism that doesn't occur in NaCl solution, leading to more apparent difference of degradation rate between Mg alloys. The composition of the formed hydroxyapatite-like precipitation layer is close to the ones found \textit{in vivo} \cite{Mei2020}. Additionally, local pH measurements in HBSS and SBF shows that in contrast to saline solutions, the local pH value is not alkaline \cite{Lamaka2018,Mei2021}. This has been reported for hydrodynamics situation, under which the medium composition is kept constant by replacing the consumed ions by means of fluid flow.
+
+Building mathematical and computational models of the biodegradation process in complex buffered solutions can help saving resources required to perform \textit{in vitro} tests, but the details of the aforementioned chemistry is difficult to capture in a mechanistic model. Few attempts have been made to model the underlying chemical reactions in SBF solutions \cite{Hoche2014,Dolgikh2019,Zeller-Plumhoff2022}, but due to the complexity of the resulting mathematical models, it's not feasible to extend them to 3D and real-world cases, like for simulation of the degradation of biomedical implants. In case of data-driven approaches \cite{Zeller-Plumhoff2021}, the applicability is limited to the studied conditions, making it difficult for developed models to achieve high extensibility and generalizability. In the current study, a detailed mathematical model is presented to extend our previous work \cite{Barzegari2021}, in which a mechanistic model of the biodegradation process is coupled with a thermodynamics-based code to predict local interfacial biodegradation of Mg in HBSS solutions. The local pH changes is selected as the validation criterion to compare with experimental results. Besides other parameters affecting the Mg biodegradation mechanism, monitoring the pH changes at the degradation interface has proved to be important due to its direct effect on the formation and stability of the degradation products layer \cite{Gonzalez2021}.
 
 
 \section{Results}
@@ -291,19 +293,19 @@ The magnesium hydroxide layer is ticker at $37^{\circ}C$ \cite{Wang2022}, so the
 \end{enumerate}
 
 
-\section{Data Availability}
-
-The data used in the paper are available from the authors upon request.
-
-\section{Code Availability}
-The source code of the programs used in this paper is available from the authors upon request.
-
-
-\section{Acknowledgements}
-
-\section{Author Contributions}
-
-\section{Competing Interests}
+%\section{Data Availability}
+%
+%The data used in the paper are available from the authors upon request.
+%
+%\section{Code Availability}
+%The source code of the programs used in this paper is available from the authors upon request.
+%
+%
+%\section{Acknowledgements}
+%
+%\section{Author Contributions}
+%
+%\section{Competing Interests}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
