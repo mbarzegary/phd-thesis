@@ -219,15 +219,17 @@ The derived PDEs for the mechanistic model (Eqs. \ref{eq:kinetics_pde_mg}, \ref{
 
 \subsection{Simulation setup}
 
-%%The computational mesh was generated using a set of first-order tetrahedral elements and was adaptively refined on the metal-solution interface to increase the numerical accuracy of the simulation of the level set equation (Eq. \ref{eq:lsm_final}). The Netgen mesh engine \cite{Schoeberl1997} in the SALOME platform \cite{Ribes2007} was used to generate the mesh.
+Since the objective of the current study is to investigate local pH changes in region close to the degrading metal, the computational domain was selected to include only a small portion of the chamber used in experimental setup (Fig. \ref{fig:kinetics_setup}). The domain was a $5\times5\times5\text{mm}^3$ cube on top of the degrading object, meaning that the degrading block, represented as a disk with a diameter $3 \text{mm}$, is attached to the outside of the cube. This setup is depicted in Fig. \ref{fig:kinetics_model_setup}. The computational mesh was generated using a set of first-order tetrahedral elements, which was adaptively refined on the interface of the degrading sample to increase the numerical accuracy of the employed interface capturing technique. The Netgen mesh engine \cite{Schoeberl1997} in the SALOME platform \cite{Ribes2007} was used to generate the mesh. The generated mesh contained $\num{290997}$ elements with $\num{51757}$ degrees of freedom (DOF) for each equations.
 
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{model_setup.jpg}
-\caption[Computational model setup for local pH simulations]{Computational model setup for local pH simulations} \label{fig:kinetics_model_setup}
+\caption[Computational model setup for local pH simulations]{Computational model setup for local pH simulations: a) the geometry of the desired domain, being a small portion of the full chamber on top of the disk-like sample, b) the dimensions of the domain and applied boundary conditions for the fluid flow simulation, c) the generated computational mesh, depicting the flow region in green and the biodegradable sample in yellow, d) a cross section of the mesh showing the refined meshing on the interface of the degradable metal.} \label{fig:kinetics_model_setup}
 \end{figure}
+
+The boundary conditions include an inlet on the left of the box, outlet on the right, wall on the bottom except on the part that the degrading part exists, and free slip on top. The inlet velocity was selected to be linear profile ranging from zero on the bottom to $1.0 \text{mm.s}^{-1}$ on the top, a value coming from solving the Navier-Stokes equations in the full chamber model (described in Chapter \ref{ch:fluid}).
 
 The values of model parameters were set based on our previous work \cite{Barzegari2021}, but the following assumptions were also applied for selecting proper parameters of the coupled computational model:
 \begin{enumerate}
@@ -238,6 +240,8 @@ The hydroxyapatite-like precipitation doesn't forms immediately at the beginning
 \item
 The magnesium hydroxide layer is ticker at $37^{\circ}C$ \cite{Wang2022}, so the film elimination parameter ($k_2$) was set to be 50 times less in this temperature than the room temperate.
 \end{enumerate}
+
+The density of the electrolyte was selected to be $1.085\times10^{-3} \text{g.mm}^{-3}$, and the dynamic viscosity was set to $1.28\times10^{-3} \text{g.mm}^{-1}\text{s}^{-1}$. The simulations were carried out on the Snellius supercomputer using 100 CPU cores on a thin node with 256 GB of total memory.
 
 
 \section{Results}
