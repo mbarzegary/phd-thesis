@@ -379,32 +379,45 @@ Fig. \ref{fig:tissue_ls_tpms} depicts various simulation results of the netissue
 
 \section{Challenges in coupling tissue growth and biodegradation models}
 
+Coupling our biodegradation model \cite{Barzegari2021} with the developed tissue growth model in this chapter could have been a milestone of the current PhD thesis, where the neotissue forms from the cells seeded on a biodegradable scaffold. Another interesting example could be using biodegradable porous implants in bone healing applications (similar to the model presented in Chapter \ref{ch:cup}), in which the implant degrades while new bone forms and replaces the porous implant. However, despite the effort made on tissue growth modeling, such coupling has never been accomplished successfully due to certain technical difficulties. In this section, these challenges are briefly reviewed. 
+
+Both the biodegradation and the tissue growth models are free boundary problems, in which an interface capturing method (phase field for the tissue growth and level set for the biodegradation) was used to track the movement of a boundary. The moving boundary in the biodegradation model is the corrosion front, the interface between the metallic part and the surrounding environment, which can be a static electrolyte in immersion tests or rotating solutions in a perfusion setup. Various mass transfer boundary conditions are defined on this boundary \cite{Barzegari2021}, meaning that the boundary conditions are not fixed and move with the evolution of the surface. In other words, the boundary conditions of a set of equations are exposed on the solution of one of the governing equations of the model (level-set equation), which is one of the challenging parts of the implementation of that model. On the other hand, the moving boundary in the tissue growth model is the surface of the formed neotissue, the interface between the neotissue and the surrounding environment in the bioreactor, which is considered as the void space since there is no neotissue in that region. Coupling these two models requires defining the moving boundary problem of tissue growth on the solution of the interface capturing of the biodegradation model. No matter of either using the same technique for both problems or using separate methods for each problem, such coupling can be quite challenging from the implementation perspective.
+
+The second problem is related to the behavior of neotissue formation after coupling the models, when the biodegradable material shrinks and a new void space appears at the back of the formed tissue. Fig. \ref{fig:tissue_coupling_challenge} shows this problem schematically. Fig. \ref{fig:tissue_coupling_challenge}-A shows an initial state of the coupled system, in which a level-set formulation is used for dividing the domain into scaffold and medium parts (the $\psi$ function on the top) while a phase-field function divide the domain into tissue and void space (the $\phi$ function on the bottom). The positive side of the level-set function ($\psi > 0$) is not defined in the domain of the tissue growth model ($\phi=\text{NaN}$). After several time steps, the system enters a state similar to the one depicted in Fig. \ref{fig:tissue_coupling_challenge}-B, where the scaffold has shrunk to the left due to biodegradation, and the tissue has grown to the left. As can be seen in the figure, these movements cause a new area to appear between the scaffold and neotissue, in which the level-set function is negative ($\psi < 0$) and the phase-field variable is one ($\phi=+1$). Since this area is part of the void space for the the phase-field model, the tissue should grow in this direction as well, but this behavior doesn't have a clear definition from an implementation point of view. From a common-sense perspective, the tissue should attach to the surface of the scaffold and move with it to the left, a behavior that is quite challenging to consider in the formulation of two coupled interface moving problem. Moreover, it is not fully clear that how such behavior happens in experiments, so dedicated experiments are required to observe the actual reaction of the growing neotissue to the shrinkage of the scaffold. This behavior may be sensitive to the experimental conditions such as static or perfusion setup of the medium, making the problem even more complex from the mathematical perspective.
+
 
 \begin{figure}
 \medskip
 \centering
 \includegraphics[width=\textwidth]{coupling_challenge.jpg}
-\caption[Schematic presentation of coupled tissue growth and biodegradation models]{Schematic presentation of coupled tissue growth and biodegradation models}
+\caption[Schematic presentation of coupled tissue growth and biodegradation models]{Schematic presentation of coupled tissue growth and biodegradation models: A) initial state of the system with level-set and phase-field variables dividing the domian for the biodegradation and tissue growth models, respectively, B) the state of the system after some time steps, in which the biodegradation shrinks the scaffold to the left, the tissue grows to the right, and a new area emerges between the scaffold and the neotissue.}
 \label{fig:tissue_coupling_challenge}
 \end{figure}
 
-
-\begin{subappendices}
-
-\section{Implementing the phase-field model using physics-informed neural networks}
+The next challenge would be the validation of the coupled model. In addition to the necessity mentioned above for performing dedicated experiments to observe the actual behavior of tissue growth on biodegradable scaffolds, such experiments are crucial to validate the model from a quantitative point of view. Doing these experimental studies seems to be challenging and resource demanding because both the qualitative behavior and quantitative measurements should be recorded. The qualitative behavior is crucial to observe how tissue growth reacts to the shrinkage of the underneath material, while quantitative output of the experiments can be directly used to validate the rate of degradation and neotissue formation predicted by the coupled model. Such resource demanding experiments were never planned as part of this PhD, and as a result, the coupled models could never be easily validated.
 
 
-\begin{figure}
-\medskip
-\centering
-\includegraphics[width=\textwidth]{pinn_result.jpg}
-\caption[Simulation result of the PINN model for the square domain]{Simulation result of the PINN model for the square domain}
-\label{fig:tissue_pinn_result}
-\end{figure}
+A suitable workaround for the aforementioned challenges can be coupling the biodegradation model with a simpler tissue growth model in the first place. A simpler model here implies that it does not include an interface tracking sub-model, for which the above challenges may appear in the implementation. An example of such model is Carlier et al. work \cite{Carlier2012,Carlier2016}, in which they solved a set of taxis-diffusion-reaction PDEs describing the evolution of biochemical factors, cells and extracellular matrices to model the healing process. Such a model is easier to integrate with the biodegradation model due to lack of interface capturing. A similar integration was done by Manhas et al. \cite{Manhas2016} on calcium phosphate (CaP)-based scaffolds, in which a simplified level-set shrinking sub-model was combined with the reaction-diffusion model of bone healing process. This approach can be more difficult to validate, but it comes with the advantage of easier implementation.
 
 
-
-\end{subappendices}
+%\begin{subappendices}
+%
+%\section{Implementing the phase-field model using physics-informed neural networks}
+%
+%Dummy text for PINN model
+%
+%
+%\begin{figure}
+%\medskip
+%\centering
+%\includegraphics[width=\textwidth]{pinn_result.jpg}
+%\caption[Simulation result of the PINN model for the square domain]{Simulation result of the PINN model for the square domain}
+%\label{fig:tissue_pinn_result}
+%\end{figure}
+%
+%
+%
+%\end{subappendices}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Keep the following \cleardoublepage at the end of this file, 
