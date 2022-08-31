@@ -298,39 +298,42 @@ The derived weak form were implemented using FreeFEM open-source PDE solver \cit
 
 \section{Results and Discussion}
 
-The results of tissue growth model simulations can be visualized by depicting the +1 part of the phase field variable (Eq. \ref{eq:pf_domains}) and the positive part of the level set function (Eq. \ref{eq:ls_domains}). Fig. \ref{fig:tissue_pf_square} demonstrate such a visualization for the phase-field simulation performed on the square domain. Cells are seeded on the surrounding of the square, and the formation of neotissue is models using the evolution of the phase field variable. The light gray region in these figures shows the +1 part of the phase field variable. 
+In the current study, various 2D and 3D cases for the simulation of curvature-based neotissue formation were prepared and separately simulated using the phase-field and level-set models. The cases were a square and a semi-circle for 2D simulations, on the circumstance of which the cells were seeded to initiate the tissue growth. Similarly, a 3D cube was considered for evaluating the performance of the phase-field implementation in 3D. Additionally, the level-set model was used to simulate cell proliferation on TMPS scaffolds accompanied with quantitative measurements of the percentage and filling rate of generation of neotissue.
+
+The results of tissue growth model simulations can be visualized by depicting the +1 part of the phase field variable (Eq. \ref{eq:pf_domains}) and the positive part of the level set function (Eq. \ref{eq:ls_domains}). Fig. \ref{fig:tissue_simulation_square} demonstrates such a visualization for the phase-field and level-set simulations performed on the square domain. Cells are seeded on the surrounding of the square, and the formation of neotissue is modeled using the evolution of the phase field variable and level set function. The light gray region in these figures shows the +1 part of the phase field variable and the positive part of the level set function.
 
 \begin{figure}
 \medskip
 \centering
-\includegraphics[width=\textwidth]{pf_square.jpg}
-\caption[Simulation result of the phase-field model for tissue growth in the square domain]{Simulation result of the phase-field model for tissue growth in the square domain. The light gray region shows the +1 part of the phase field variable. The evolution occurs from top to bottom and from left to right in each row.}
-\label{fig:tissue_pf_square}
+\includegraphics[width=\textwidth]{simulation_square.jpg}
+\caption[Simulation result of tissue growth in the square domain]{Simulation result of the phase-field (A) and level-set (B) models for tissue growth in the square domain. The light gray region shows the +1 part of the phase field variable and the positive part of the distance function for the phase-field (A) and level-set (B) models respectively. The evolution occurs from left to right.}
+\label{fig:tissue_simulation_square}
 \end{figure}
 
-A similar visualization is depicted in Fig. \ref{fig:tissue_pf_circle} for the neotissue formation on the semi-circle domain. 
+As can be seen in Fig. \ref{fig:tissue_simulation_square}, a qualitative comparison of the evolution of the formed tissue interface between the phase-field and level-set models indicates that they capture the curvature driven growth in a similar way. It seems that the level-set model resulted in more sharp interfaces, in which the surfaces without curvature do not move at all in absence of curvature. But, in the phase-field predictions, the surfaces not having any curvature slightly move. This can be seen by comparing the growth pattern on the top edge of the square, where it starts to grow only in the forth row in Fig. \ref{fig:tissue_simulation_square} for the level-set results, while a minor move can be seen in the phase-field results. This slightly different behavior can be related to the implementation details, such as lack of a proper Heaviside function in FreeFEM that the phase-field model depends on. Another possible reason for this difference can be on the visualization aspect since the transition region of the phase field variable, which represents the surface, is thicker in the phase-field model in comparison to the zero iso-contour of the level set function, so the evolution can be artificially plotted in the visualization software, which is ParaView in this case. This effect can be investigated further by refining the mesh to minimize the artificial evolution. 
 
+A similar visualization is depicted in Fig. \ref{fig:tissue_simulation_circle} for the neotissue formation on the semi-circle domain. Results show that the phase-field and level-set models have a good agreement on the way they treat the curvature-based tissue growth. As can be seen in the figure, both models show identical predictions on the surface with the curvature (the curvy edge of the semi-circle). However, the small difference observed for the square case can be seen here as well on the top surface, where the neotissue grows slightly faster in the phase-field model.
 
 \begin{figure}
 \medskip
 \centering
-\includegraphics[width=\textwidth]{pf_circle.jpg}
-\caption[Simulation result of the phase-field model for tissue growth in the semi-circle domain]{Simulation result of the phase-field model for tissue growth in the semi-circle domain.}
-\label{fig:tissue_pf_circle}
+\includegraphics[width=\textwidth]{simulation_circle.jpg}
+\caption[Simulation result of tissue growth in the semi-circle domain]{Simulation result of the phase-field (A) and the level-set (B) models for tissue growth in the semi-circle domain. The evolution occurs from left to right.}
+\label{fig:tissue_simulation_circle}
 \end{figure}
 
-The results shown in Fig. \ref{fig:tissue_pf_circle} are corresponding to the evolution of the phase field variable depicted in Fig. \ref{fig:tissue_pf_circle_field}, demonstrating how the diffuse interface model works. 
+Fig. \ref{fig:tissue_simulation_circle} shows the evolution of the phase field variable corresponding to the results depicted in Fig. \ref{fig:tissue_simulation_circle}-A, demonstrating how the diffuse interface model works. In this figure, the concept of the diffusive interface can be observed, where a narrow region between the tow phases, in this case the neotissue and the void space, is formed and moves over time. This visualization demonstrates the internal mechanism of the phase-field model, in which the narrow region is kept in a fixed length (defined by the kernel in Eq. \ref{eq:kernel} for a length of $3 \sqrt{2} W$) and gets advected over time by the phase-field equation (Eq. \ref{eq:phase_field_final}). In contrast, in the level-set formalism, the interface is not tracked as a fixed length region, and instead, the zero iso-contour of a signed distance function is the interface between the phases. The signed distance function maps the whole space (the computational domain of desired) into the distance to the interface, and as a result, the change in the function determines the movement of the interface.
 
 
 \begin{figure}
 \medskip
 \centering
 \includegraphics[width=\textwidth]{pf_circle_field.jpg}
-\caption[Visualization of the evolution of phase-field variable in the semi-circle domain]{Visualization of the evolution of phase-field variable in the semi-circle domain. The evolution is depicted over time, occurring from top to bottom and from left to right in each row. The red, blue and white show the +1 region, -1 region, and the transient region on the interface, respectively.}
+\caption[Visualization of the evolution of phase-field variable in the semi-circle domain]{Visualization of the evolution of phase-field variable in the semi-circle domain. The evolution is depicted over time, occurring from top to bottom and from left to right in each row. The red, blue and white show the +1 region, -1 region, and the transient representing the interface, respectively.}
 \label{fig:tissue_pf_circle_field}
 \end{figure}
 
-Similar results are obtained in 3D, where the cells are seeded on the circumstance of a cuboid. Fig. \ref{fig:tissue_pf_3d} shows the simulation results of this 3D case, in which the evolution of the phase field variable is converted to a bulk of the formed neotissue. As can be seen in this figure, the phase-field model performs well in 3D as well, showing a similar growth behavior to the 2D model.
+Similar results are obtained in 3D, where the cells are seeded on the circumstance of a cuboid. Fig. \ref{fig:tissue_pf_3d} shows the simulation results of this 3D case, in which the evolution of the phase field variable is converted to a bulk of the formed neotissue. As can be seen in this figure, the phase-field model performs well in 3D, showing a similar growth behavior to the 2D model. The mesh in the 3D case is relatively coarse, but the captured behavior of tissue growth by the phase-field model seems to be more acceptable than the 2D case. This claim can be observed on the top and bottom surfaces of the cube, where the interface doesn't move until a curvature is created in those regions, a behavior that was better captured by the level-set model in the 2D cases. 
 
 \begin{figure}
 \medskip
@@ -340,32 +343,7 @@ Similar results are obtained in 3D, where the cells are seeded on the circumstan
 \label{fig:tissue_pf_3d}
 \end{figure}
 
-
-For the simulation results of the level-set model, the positive part of the level set function should be visualized in order to show the bulk of the neotissue. Fig. \ref{fig:tissue_ls_square} shows this visualization for the square domain, the results of which is comparable to Fig. \ref{fig:tissue_pf_square}. 
-
-
-\begin{figure}
-\medskip
-\centering
-\includegraphics[width=0.7\textwidth]{ls_square.jpg}
-\caption[Simulation result of the level-set model for tissue growth in the square domain]{Simulation result of the level-set model for tissue growth in the square domain. The light gray region shows the positive part of the level set distance function.}
-\label{fig:tissue_ls_square}
-\end{figure}
-
-A similar visualization is depicted in  Fig. \ref{fig:tissue_ls_circle} for the results of the simulation performed in the semi-circle domain, which has a good agreement with the results obtained using the phase-field method (Fig. \ref{fig:tissue_pf_circle}).
-
-
-\begin{figure}
-\medskip
-\centering
-\includegraphics[width=\textwidth]{ls_circle.jpg}
-\caption[Simulation result of the level-set model for tissue growth in the semi-circle domain]{Simulation result of the level-set model for tissue growth in the semi-circle domain}
-\label{fig:tissue_ls_circle}
-\end{figure}
-
-
-Fig. \ref{fig:tissue_ls_tpms} depicts various simulation results of the netissue formation in gyroid-TPMS scaffolds, demonstrating an example of the final application of these models in action. The reason for choosing gyroid-TPMS  scaffolds is its promising performance for neotissue formation due to its favourable local curvature. Various geometries for investigating the pore size and wall thickness were evaluated in order to obtain the combination leading to optimal neotissue growth. Pore size was varied between $700  \mu m$ and $1.3 mm $ and wall thickness was varied from $200 \mu m $ to $800 \mu m$, which are ranges that take into account restrictions of the manufacturing process in terms of smallest feature dimensions. Balancing the need for swift neotissue ingrowth (Fig. \ref{fig:tissue_ls_tpms}-B, relevant for short-term implant stability) with the volume of neotissue formed (Fig. \ref{fig:tissue_ls_tpms}-A, relevant for long-term implant stability), the combination of $700 \mu m$ pore size and $200 \mu m $ wall thickness (Fig. \ref{fig:tissue_ls_tpms}-C) seemed to be the most optimal structure. 
-
+Fig. \ref{fig:tissue_ls_tpms} depicts various simulation results of the netissue formation in gyroid-TPMS scaffolds, demonstrating an example of the final application of these models in action. The reason for choosing gyroid-TPMS  scaffolds is its promising performance for neotissue formation due to its favourable local curvature. Various geometries for investigating the pore size and wall thickness were evaluated in order to obtain the combination leading to optimal neotissue growth. Pore size was varied between $700  \mu m$ and $1.3 mm $ and wall thickness was varied from $200 \mu m $ to $800 \mu m$, which are ranges that take into account restrictions of the manufacturing process in terms of smallest feature dimensions. Balancing the need for swift neotissue ingrowth (Fig. \ref{fig:tissue_ls_tpms}-B, relevant for short-term implant stability) with the volume of neotissue formed (Fig. \ref{fig:tissue_ls_tpms}-A, relevant for long-term implant stability), the combination of $700 \mu m$ pore size and $200 \mu m $ wall thickness (Fig. \ref{fig:tissue_ls_tpms}-C) seemed to be the most optimal structure.
 
 \begin{figure}
 \medskip
@@ -375,7 +353,7 @@ Fig. \ref{fig:tissue_ls_tpms} depicts various simulation results of the netissue
 \label{fig:tissue_ls_tpms}
 \end{figure}
 
-
+The study shown as example above \cite{Hede2021} demonstrate the relevance of the developed tissue growth models in tissue engineering applications. \textit{In silico} modeling is widely used for tissue engineering as it offers a more exhaustive approach compared to a ``trial-and-error'' method and reduce the number of experimental tests. Optimization of scaffold structures for bone tissue engineering purposes is often corroborated by comparison with \textit{in vitro} tests \cite{Alias2017,Rubert2021} and only a small number of \textit{in vivo} studies have been reported \cite{Long2012,Luo2017,Luo2015}. However, in these \textit{in vivo} studies, optimization was first performed on mechanical properties rather than the structural elements such as local curvature underlying the used \textit{in silico} model. Having such model developed makes it easier to investigate the structural elements of scaffolds for improved regenerative performance. Using the modeling results makes it possible to limit the amount of conditions tested \textit{in vivo}.
 
 \section{Challenges in coupling tissue growth and biodegradation models}
 
