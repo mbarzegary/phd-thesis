@@ -18,11 +18,11 @@ Performing TO on degrading structures has been rarely studied, the reason of whi
 
 \section{Methods}
 
-This section provides the mathematical and physical frames for the topology optimization of feature-rich structures based on the reaction-diffusion equation-driven (RDE-driven) level-set method. In section \ref{Section: level-set-based topology optimization method}, the basic concept of the RDE-driven TO method is introduced. In section \ref{Section: Maximum length-scale constraint}, the local volume constraint is introduced in this workflow. The key idea here is to use a variational method (PDE-filter) to compute such local volume fraction which does not require the explicit knowledge of the spatial information of the neighboring elements. The optimum design problem is formulated in section \ref{Section: topology optimization problem}. Finally, we present several two-dimensional test cases in section \ref{Section: numerical examples}.
+This section provides the mathematical and physical frames for the topology optimization of feature-rich structures based on the reaction-diffusion equation-driven (RDE-driven) level-set method. In section \ref{Section: level-set-based topology optimization method}, the basic concept of the RDE-driven TO method is introduced. In section \ref{Section: Maximum length-scale constraint}, the local volume constraint is introduced in this workflow. The key idea here is to use a variational method (PDE-filter) to compute such local volume fraction which does not require the explicit knowledge of the spatial information of the neighboring elements. The optimum design problem is formulated in section \ref{Section: topology optimization problem}. Finally, we present two-dimensional test cases in section \ref{Section: numerical examples}, on which the biodegradation simulations was performed later in section \ref{section:biodegradation} to investigate the change of stiffness during the degradation process.
 
 
 \subsection{Level-set-based topology optimization method}\label{Section: level-set-based topology optimization method}
-First, the basic concept of the level-set-based TO method is introduced. We follow the lead of Yamada et al.\ \cite{yamada2010topology}. A structural topology optimization problem can be replaced by an optimum design problem to find the optimal material distribution. In other words, this technique is essentially to answer the question that ‘‘where should the material be placed?'' or ‘‘where should the hole be nucleated?''. Let the computational domain be denoted as $\Omega \subset \mathbb{R}^d$, where $d=2$. A solid subdomain is then defined as $\Omega_{s} \subseteq \Omega$ and a void domain is  as the complementary domain $\Omega \backslash \Omega_{s}$. An implicit level-set function $\phi \left(\boldsymbol{x}\right)$ is introduced and it can be defined to have a piecewise profile as
+First, the basic concept of the level-set-based TO method is introduced, for which we followed the work of Yamada et al.\ \cite{yamada2010topology}. A structural topology optimization problem can be replaced by an optimum design problem to find the optimal material distribution. In other words, this technique is essentially to answer the question that where the material should be placed or where the hole should be nucleated. Let the computational domain be denoted as $\Omega \subset \mathbb{R}^d$, where $d=2$. A solid subdomain is then defined as $\Omega_{s} \subseteq \Omega$ so that a void domain is  as the complementary domain $\Omega \backslash \Omega_{s}$. An implicit level-set function $\phi \left(\boldsymbol{x}\right)$ can be defined to have a piecewise profile as
 \begin{equation}
 	\left\{\begin{array}{ll}
 		{0<\phi(\boldsymbol{x}) \leq 1} & {\text { for } \boldsymbol{x} \in \Omega_{s} \backslash \partial \Omega_{s}} \\
@@ -30,9 +30,9 @@ First, the basic concept of the level-set-based TO method is introduced. We foll
 		{-1 \leq \phi(\boldsymbol{x})<0} & {\text { for } \boldsymbol{x} \in \Omega \backslash \Omega_{s}}.
 	\end{array}\right.
 \end{equation}
-Therefore, the solid--void interface $\partial \Omega_{s}$ can be represented by the zero level-set iso-surface.  
+in which the solid--void interface $\partial \Omega_{s}$ can be represented by the zero level-set iso-surface.  
 
-Next, using a Heaviside step function, the material field can be modeled using a ‘‘1/0 binary structure'' by the projection of the level-set function $\phi(\mathbf{x})$ to the characteristic function $\chi_{\phi}$ as
+Next, using a Heaviside step function, the material field can be modeled using a ``1/0 binary structure'' by the projection of the level-set function $\phi(\mathbf{x})$ to the characteristic function $\chi_{\phi}$ as
 \begin{equation}
 	\chi_{\phi} :=\left\{\begin{array}{ll}
 		{1} & {\text { for } \phi\left( \boldsymbol{x} \right) \geq 0} \\
@@ -48,22 +48,22 @@ Using the Ersatz material approach, the material properties inside the computati
 	\end{array}\right.
 	\label{eq: reaction diffusion equation semi discretize}
 \end{equation}
-where $\boldsymbol{n}$ is the unit normal vector, $\mathcal{F}'$ is the topological design sensitivity, $\tilde{C}$ is the normalizer for the sensitivity, and $\tau$ is the regularization parameter, which can be used to control the complexity of the optimal configuration. The subscript $n$ indicates the fictitious time step. For more details, the reader are referred to in the case studies in our previous work\ \cite{li2021full}. 
+where $\boldsymbol{n}$ is the unit normal vector, $\mathcal{F}'$ is the topological design sensitivity, $\tilde{C}$ is the normalizer for the sensitivity, and $\tau$ is the regularization parameter, which can be used to control the complexity of the optimal configuration. The subscript $n$ indicates the fictitious time step. For more details, the reader are referred to the case studies of Li et al. work\ \cite{li2021full}. 
 
 \subsection{Maximum length-scale constraint}\label{Section: Maximum length-scale constraint}
-To generate some feature-rich structures observed in the natural system, e.g., bone structure, a geometrical constraint is introduced. Here, we adopt the idea of Wu et al.\ \cite{wu2017infill} by imposing a maximum allowable volume fraction to the local averaged value of the characteristic function, $\bar{\chi}$. To approximate the maximum value of $\bar{\chi}_i$, we use the $p$-norm function as
+To generate some feature-rich structures observed in a natural system, e.g., bone structure, a geometrical constraint is introduced. Here, we adopt the idea of Wu et al.\ \cite{wu2017infill} by imposing a maximum allowable volume fraction to the local averaged value of the characteristic function, $\bar{\chi}$. To approximate the maximum value of $\bar{\chi}_i$, we use the $p$-norm function as
 \begin{equation}
 \max_{\forall i} \left(\bar{\chi}_i \right) \approx  
 \|\bar{\chi}_i \|_{p}=\left(\sum_i^n \bar{\chi}_{i}^{p}\right)^{1/p}
 \leq \left( \sum_{i}^n \bar{V}_{\max}^p \right)^{1/p}, 
 \end{equation}
-and it can be rewritten as
+which can be rewritten as
 \begin{equation}
 \left(\dfrac{1}{n} \sum_{i} \bar{\chi}_{i}^{p}\right)^{1 / p} \leq \bar{V}_{\max },
 \end{equation}
-where $n$ is the total number of vertices. Note that in FreeFEM\ \cite{Hecht2012}, the design variable--characteristic function is defined on the nodes of each element. $ \bar{V}_{\max }$ is the maximum allowable local volume fraction. We set $p=10$ in this paper. 
+where $n$ is the total number of vertices, and $p=10$ in this study. Note that in FreeFEM\ \cite{Hecht2012}, the design variable--characteristic function is defined on the nodes of each element. $ \bar{V}_{\max }$ is the maximum allowable local volume fraction. 
 
-We use a PDE-filter\ \cite{lazarov2011filters,kawamoto2011heaviside} to compute the local average value $\bar{\chi}$, as
+Then, we use a PDE-filter\ \cite{lazarov2011filters,kawamoto2011heaviside} to compute the local average value $\bar{\chi}$, as
 \begin{equation}
 	\left\{\begin{aligned}	
 		& -r^2 \nabla^2 \bar{\chi} +  \bar{\chi} =  \chi & \text{ in } \Omega \\
@@ -71,11 +71,18 @@ We use a PDE-filter\ \cite{lazarov2011filters,kawamoto2011heaviside} to compute 
 	\end{aligned}\right.
 	\label{Eq: pde filter}
 \end{equation}
-where $r$ is the filter radius. 
+where $r$ is the filter radius. To clarify the concept of aforementioned functions, Fig. \ref{fig:infill_diagram} depicts the level-set ($\phi$), characteristic ($\chi$), and local average characteristic ($\bar{\chi}$) functions for an optimized lattice structure.
+
+\begin{figure}[h]
+\centering
+\medskip
+\includegraphics[width=\textwidth]{diagram.jpg}
+\caption[Visualization of function used for topology optimization]{Visualization of the level-set ($\phi$), characteristic ($\chi$), and local average characteristic ($\bar{\chi}$) functions for an optimized lattice structure.} \label{fig:infill_diagram}
+\end{figure}
 
 \subsection{Optimum design problem for feature-rich structures}\label{Section: topology optimization problem}
 
-The underlying physics is the linear elasticity where the following assumptions are made: (1) small displacements and deformations are observed (linear elasticity), and (2) the body-force and gravity are neglected. Furthermore, the context of interest here is to minimize the mean compliance of the structure, or in other words, to maximize the stiffness of the structure. Therefore, the topology optimization problem can be formulated as
+The underlying physics of the optimum design problem is the linear elasticity where the following assumptions are made: (1) small displacements and deformations are observed (linear elasticity), and (2) the body-force and gravity are neglected. Furthermore, the context of interest here is to minimize the mean compliance of the structure, or in other words, to maximize the stiffness. Therefore, the topology optimization problem can be formulated as
 \begin{subequations}
 	\begin{equation}
 		\inf _{\chi_{\phi} \in \mathcal{X}} J(\Omega)=\int_{\partial \Omega_{s}^{N}} \boldsymbol{t} \cdot \boldsymbol{u} d \Gamma,
@@ -101,7 +108,7 @@ where $\mathbb{C}$ is the fourth-order elasticity tensor, $\boldsymbol{t}$ is th
 \end{equation}
 where $\mathbb{C}_{\text{s}}$ and $\mathbb{C}_{\text{v}}$ are the constitutive tensors for solid and void (weak) materials, respectively. 
 
-As it is well-known that the mean compliance problem is self-adjoint. Therefore, the topological design sensitivity can be derived as
+As it is well-known that the mean compliance problem is self-adjoint, the topological design sensitivity can be derived as
 \begin{equation}
 	\mathcal{F}^{\prime}=-\left(e(\boldsymbol{u}): \mathbb{C}_{\chi_{\phi}}\right): e(\boldsymbol{u})+\lambda_{1} + \lambda_2 \mathcal{G}',
 	\label{Eq: design sensitivity}
@@ -118,20 +125,19 @@ The sensitivity associated to the local volume constraint $\mathcal{G}'$ compute
 \end{equation}
 
 \subsection{Numerical examples}\label{Section: numerical examples}
-A two-dimensional test case is presented hereinafter. The computational domain is a rectangle with its dimension of $2.5L \times 1.0L$. There are two holes inside the domain. The surface traction $\boldsymbol{t}=\left[0,-1\right]^{\operatorname{T}}$ is distributed evenly on the boundary of the right-hand side hole, and that of the left-hand side hole is a fixed wall $\boldsymbol{u}=\left[0,0,0\right]^{\operatorname{T}}$. 
-
-For test case \#1, the local volume constraint is imposed. $\bar{V}_{\max}$ is set to $0.6$. After being optimized, the global volume fraction is $0.45$. 
-
-Then, for test case \#2, the global volume constraint is imposed. $V_{\max}$ is set to $0.45$ which is the same as that of the test case \#1. 
+In order to prepare the optimized lattices for the biodegradation simulations, the developed TO procedure was applied for two 2D test cases. The computational domain was a rectangle with a dimension of $2.5L \times 1.0L$. There were two holes inside the domain. The surface traction $\boldsymbol{t}=\left[0,-1\right]^{\operatorname{T}}$ was distributed evenly on the boundary of the right-hand side hole, and that of the left-hand side hole was a fixed wall $\boldsymbol{u}=\left[0,0,0\right]^{\operatorname{T}}$ (Fig. \ref{fig:infill_domain}). For test case \#1, the local volume constraint was imposed, with $\bar{V}_{\max}$ set to $0.6$. After being optimized, the global volume fraction was $0.45$. Then, for test case \#2, the global volume constraint was imposed with $V_{\max}=0.45$ which is the same as that of the test case \#1. The implementation of these numerical examples was done in FreeFEM.
 
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=0.5\textwidth]{domain.jpg}
-\caption[Computational domain for the topology optimization]{Computational domain for the topology optimization} \label{fig:infill_domain}
+\caption[Computational domain for the topology optimization]{The computational domain used for the topology optimization with the applied load and fixed boundary conditions.} \label{fig:infill_domain}
 \end{figure}
 
+\subsection{Biodegradation simulation}\label{section:biodegradation}
+
+The output of the TO process for both cases is shown in the Fig. \ref{fig:infill_final_cases} (the evolution of the shape to get these lattice structures is discussed later in section \ref{section:infill_results}). Since there is no space on the surrounding of the optimized shapes, this output was embedded in a bigger domain for the biodegradation simulation. For doing this, the output level-set function of the TO process was mapped on the mesh of the bigger domain, changing it to the level-set function of the biodegradation simulation, which is used to track the change of the morphology of the degrading object. 
 
 \begin{figure}[h]
 \centering
@@ -140,25 +146,19 @@ Then, for test case \#2, the global volume constraint is imposed. $V_{\max}$ is 
 \caption[Topology optimization output to be used in the biodegradation simulations]{Topology optimization output to be used in the biodegradation simulations} \label{fig:infill_final_cases}
 \end{figure}
 
-
-\begin{figure}[h]
-\centering
-\medskip
-\includegraphics[width=\textwidth]{diagram.jpg}
-\caption[Coupling topology optimization and biodegradation models]{Coupling topology optimization and biodegradation models} \label{fig:infill_diagram}
-\end{figure}
+The biodegradation simulation was done using the developed mechanistic model of biodegradation \cite{Barzegari2021}, in which the chemistry of the corrosion process is converted to a set of partial differential equations. The derived PDEs are solved using the finite element method implemented in FreeFEM. The computational mesh, resulted after mapping the level-set function of the TO process to that of biodegradation model, was refined on the interface of the degrading lattice to increase the accuracy of the interface capturing method, the result of which is demonstrated in Fig. \ref{fig:infill_mesh}.
 
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{mesh.jpg}
-\caption[Computational mesh for the biodegradation simulations]{Computational mesh for the biodegradation simulations} \label{fig:infill_mesh}
+\caption[Computational mesh for the biodegradation simulations]{Computational mesh for the biodegradation simulations, resulted from mapping the output of the TO process to a bigger domain and refining the mesh on the surface of the lattice. The lower row shows the zoomed view of the regions denoted by dashed rectangle.} \label{fig:infill_mesh}
 \end{figure}
 
 
 
-\section{Results and Discussion}
+\section{Results and Discussion}\label{section:infill_results}
 
 The coupled biodegradation and structural mechanics models were constructed using the output of the TO procedure. Fig. \ref{fig:infill_case1_to_steps} shows the temporary evolving shapes of the infill during the optimization process for case 1, each of which is taken by skipping 40 intermediate steps. Fig. \ref{fig:infill_case2_to_steps} shows a similar 2D visualization for case 2.
 
