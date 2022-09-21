@@ -36,7 +36,15 @@ From the biological perspective, Mg can contribute positively to the human body 
 
 The first application of Mg for biomedical purposes is recorded in 1878 by Hues, who made artificial radial arteries from Mg and suggested that Mg can be beneficial for treatment of ovariectomy and hemorrhoids \cite{huse1878new}. Payr performed successful animal experiments using Mg tubular vascular connectors in 1900, after which the vessels were reformed and vascular thickness returned to its normal range after 16 days of implantation \cite{Witte2010}. This started a wide range of usage of Mg for cardiovascular applications, a recent example of which is the Ikeo et al. work for designing V-shaped vascular clips made of Mg-Zn-Ca alloy \cite{Ikeo2016}. In this work, the ductility of Mg was reported to be an added advantage for bearing large plastic deformations that these clips experience. In a relevant study, Erbel et al. implanted 71 stents made of Mg alloys in the coronary arteries of 63 patients, the results of which showed a similar efficiency and safety for Mg stents in comparison to other metallic stents \cite{Erbel2007}. Moreover, Mg stents degraded without any problem after 4 months. This type of studies resulted in acquiring of CE mark for the next generation of Mg stents in Europe \cite{Sotomi2017,GarciaGarcia2018}.
 
-The history of usage of Mg in orthopedics applications starts very similar to its vascular applications. In the study by Payr mentioned above, he also stated that Mg can improve bone healing rate \cite{Witte2010}. Six years later, in 1906, first Mg-based implant was used by Lambotte for fixation of a fracture case \cite{lambotte1909technique,lambotte1932utilisation}. This study was followed by many other researchers in the previous century, the results of which showed that Mg can facilitates the bone healing process. However, these studies demonstrated that the hydrogen gas released during the biodegradation of Mg can lead to inflammation. Furthermore, since the rate of degradation is high for Mg, the tissues may not receive enough support before the implants vanish \cite{Witte2010}. These issues made the Mg-based implants less common in comparison to inert metals for orthopedics applications. But, in recent decades, these implants gained more attention again thanks to enormous research studies done on the biodegradation of Mg to control its side effects and control its degradation behavior. In 2005, the possibility of using Mg for orthopedics implants was proposed by Witte et al. \cite{Witte2005}, a suggestion that was supported by results of animal studies on femoral implants manufactured from Mg alloys (AZ31, AZ91, WE43, and LAE442). After this study, a wide variety of research works were conducted to investigate the efficiency of Mg-based implants for orthopedics applications \cite{Wang2020,Huang2020,Zhao2017}.
+The history of usage of Mg in orthopedics applications starts very similar to its vascular applications. In the study by Payr mentioned above, he also stated that Mg can improve bone healing rate \cite{Witte2010}. Six years later, in 1906, first Mg-based implant was used by Lambotte for fixation of a fracture case \cite{lambotte1909technique,lambotte1932utilisation}. This study was followed by many other researchers in the previous century, the results of which showed that Mg can facilitates the bone healing process. However, these studies demonstrated that the hydrogen gas released during the biodegradation of Mg can lead to inflammation. Furthermore, since the rate of degradation is high for Mg, the tissues may not receive enough support before the implants vanish \cite{Witte2010}. These issues made the Mg-based implants less common in comparison to inert metals for orthopedics applications. But, in recent decades, these implants gained more attention again thanks to enormous research studies done on the biodegradation of Mg to control its side effects and control its degradation behavior. In 2005, the possibility of using Mg for orthopedics implants was proposed by Witte et al. \cite{Witte2005}, a suggestion that was supported by results of animal studies on femoral implants manufactured from Mg alloys (AZ31, AZ91, WE43, and LAE442). After this study, a wide variety of research works were conducted to investigate the efficiency of Mg-based implants for orthopedics applications \cite{Wang2020,Huang2020,Zhao2017}. Fig. \ref{fig:intro_applications} shows the current usage of Mg-based implants and medical devices divided into three categories of commercially approved, on clinical trials, and potential applications \cite{Han2019}.
+
+\begin{figure}
+\centering
+\medskip
+\includegraphics[width=0.6\textwidth]{applications.jpg}
+\caption[Various potential applications of Mg as a biodegradable biomaterial]{Various potential applications of Mg as a biodegradable metallic biomaterial for cardiovascular and orthopedic implants and devices \cite{Han2019}.} 
+\label{fig:intro_applications}
+\end{figure}
 
 
 \section{Chemistry of biodegradation of magnesium}
@@ -123,7 +131,113 @@ Electrochemical impedance spectroscopy &
 \end{table}
 
 
+\section[Computational modeling of biodegradation]{Computational modeling of biodegradation\footnote{This section is partially based on a manuscript prepared to be submitted:\\S. Mukherjee, S. Mandal, M. Barzegari, F. Perez-Boerema, B. Liang, E. Sadeghian Dekhord, L. Groeneveldt, L. Geris, ``In silico design and optimization of mesoscopic and macroscopic properties of additively manufactured scaffolds: applications in skeletal tissue engineering.''}}
 
+
+Beside experimental approaches to investigate the properties of biodegradable metallic implants and scaffolds, computational modeling of the biodegradation process and behavior can act as an efficient tool to design the next generation of medical devices and implants \cite{Boland2015}. In addition to traditional modeling approaches for mechanics of materials, it is possible to take advantage of well-developed principles of modeling transport phenomena and numerical simulation to investigate the biodegradation process computationally \cite{SanzHerrera2019}.
+
+Computational models of the biodegradation process vary from a basic implementation of the process to comprehensive mathematical models that capture multiple aspects of the degradation phenomenon. In the category of simplified corrosion models, Gao et al. performed a quantitative study on the change of mechanics during the biodegradation of Mg alloys for cardiovascular applications \cite{Gao2018}. Liu et al. developed a fluid dynamics model to characterize the effect of the induced wall shear stress (WSS) on the biodegradation mechanism of Mg stents \cite{Liu2018}. They investigated the effect of blood flow velocity and dynamic environment on the degradation of cardiovascular stents. Boland et al. studied the mechanical performance of Mg stents for the treatment of coronary artery diseases using a computational model \cite{Boland2019}. Gartzke et al. proposed a degradation model for the corrosion of Mg alloys coupled with mechanical analysis, allowing them to study the change of mechanical properties during the biodegradation process \cite{Gartzke2020}. Another common category of studies in this regard is continuous damage (CD) simulations, in which geometrical discontinuities get translated into the reduction of materials. Despite the limitation of this technique for modeling biodegradation, such as more focus on the mechanical integrity rather than on the fundamental phenomena, it has been used for various relevant studies, such as Gastaldi et al. \cite{Gastaldi2011} and Shi et al. \cite{Shi2021}. 
+
+Among the relevant studies, mass transfer-related models were more successful in representing the biodegradation process mathematically. Indeed, the approach of constructing models based on the well-formulated transport phenomena equations, and then, solving the derived equations by using appropriate numerical schemes, has been followed in recent years to study the biodegradation process. Ahmed et al. derived a set of mathematical equations to capture the chemical reactions occurring in Mg degradation \cite{Ahmed2017}, in which the detailed mathematical equations provided a proper insight into the effect of different chemical components on biodegradation of Mg \textit{in vitro}. Grogan et al. developed a model to correlate the mass flux of the metallic ions in the biodegradation interface to the velocity of the interface, used to simulate the degradation of complex geometries of Mg-based stents \cite{Grogan2014}. Similarly, Shen et al. developed a theoretical model to predict the degradation behavior of Mg alloys in orthopedic implants \cite{Shen2019}. Their 3D model had a high agreement with \textit{in vitro} corrosion test results.
+
+One of the important applications of biodegradation models is to investigate the change of shape and morphology of the implants and medical devices over time. To this end, appropriate interface capturing methods should be used to track the corrosion interface during the biodegradation process. Bajger et al. developed a mathematical model to study the degradation of Mg implants by reaction-diffusion equations and level-set method (LSM), which enabled them to track the geometrical changes of the implant during degradation \cite{Bajger2016}. Similarly, Sanz-Herreraa et al. developed a comprehensive computational model as a tool for Mg implant design \cite{Sanz-Herrera2018}. They combined multiple diffusion-reaction equations to study the change of concentration of the chemical components that play an important role in \textit{in vitro} biodegradation of Mg implants. A summary of the aforementioned studies is represented in Table \ref{tab:intro_review}. 
+
+\begin{table}[h]
+\caption{Summary of the recently-developed computational models of the degradation process of Mg-based biomaterials}
+\medskip
+\resizebox{1\textwidth}{!}{
+%\begin{tabular}{lllllll}
+\begin{tabular}{p{0.18\textwidth}p{0.15\textwidth}p{0.15\textwidth}p{0.17\textwidth}p{0.15\textwidth}p{0.15\textwidth}p{0.05\textwidth}}
+\hline
+\textbf{Biological system} &
+  \textbf{Modeled device} &
+  \textbf{Material} &
+  \textbf{Basis of degradation}  &
+  \textbf{Software used} &
+  \textbf{Modeling   method} &
+  \textbf{Ref} \\ \hline
+Artery vessel &
+  Vascular stent &
+  Mg Alloy AZ31B &
+  Surface corrosion &
+  ABAQUS &
+  FEM, VUMAT &
+  \cite{Gao2018} \\ \hline
+Artery vessel &
+  Vascular stent &
+  Mg Alloy WE43 &
+  Surface corrosion &
+  ANSYS Fluent &
+  CFD, FSI, FVM &
+  \cite{Liu2018} \\ \hline
+Remodeling artery &
+  Vascular stent &
+  Mg Alloy AZ31 &
+  Uniform and pitting   corrosion &
+  ABAQUS &
+  FEM, VUSDFLD &
+  \cite{Boland2019} \\ \hline
+Artery vessel &
+  Coronary stents &
+  Mg alloys AZ31,   AZ61, AZ80, ZK60 and ZM21 &
+  Surface and stress   corrosion &
+  ABAQUS &
+  CDM, FEM &
+  \cite{Gastaldi2011} \\ \hline
+Bone regeneration &
+  Orthopedic implants &
+  Pure Mg &
+  Surface corrosion by   considering biphasic layers &
+  MATLAB &
+  Mass transfer, MoL &
+  \cite{Ahmed2017} \\ \hline
+Artery vessel &
+  Vascular stent &
+  Mg Alloy AZ31 &
+  Surface corrosion &
+  ABAQUS &
+  Diffusion model,   ALE, FEM &
+  \cite{Grogan2014} \\ \hline
+Bone regeneration &
+  Orthopedic pins &
+  Mg alloys Mg-1Ca and   Mg-3Ge &
+  Surface corrosion &
+  ABAQUS &
+  Diffusion model,   FEM, UMESHMOTION &
+  \cite{Shen2019} \\ \hline
+Hip bone &
+  Orthopedic implant &
+  Pure Mg &
+  Surface corrosion &
+  In-house, FreeFEM &
+  Reaction-diffusion   model, LSM, FEM &
+  \cite{Bajger2016} \\ \hline
+General TE &
+  Orthopedic screws &
+  Mg alloy &
+  Surface corrosion &
+  In-house &
+  Reaction-diffusion   model, FEM &
+  \cite{Sanz-Herrera2018} \\ \hline
+Bone regeneration &
+  Porous scaffolds &
+  Mg Alloy LAE442 &
+  Surface corrosion &
+  ABAQUS &
+  FEM, VUMAT &
+  \cite{Gartzke2020} \\ \hline
+Artery vessel &
+  Vascular stent &
+  Mg Alloy AZ31 &
+  Surface corrosion &
+  ABAQUS &
+  CDM, FEM, VUMAT &
+  \cite{Shi2021}
+\end{tabular}}
+\label{tab:intro_review}
+\end{table}
+
+The approach taken by Bajger et al. was followed in the current thesis, in which an improved model was developed by considering more chemical components and phenomena, allowing us to perform a more accurate validation using \textit{in vitro} data.  Although the biodegradation models are getting more mature and more promising to simulate experimental situations, their integration to other models such as mechanical stability analysis or neotissue growth has remained a challenge in order to construct fully-coupled models. Doing this enables future models to replicate complex \textit{in vivo} conditions more accurately \textit{in silico}.
 
 
 %% Some dummy code to get at least 1 entry in the nomenclature.
