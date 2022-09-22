@@ -77,7 +77,7 @@ The generated lattice structure of the implant, infilled by skeletal-gyroid unit
 
 \subsection{Biodegradation of the infilled implant}
 
-Fig. \ref{fig:cup_degradation_rate} shows the mass loss during the biodegradation for simulations performed in buffered (low degradation rate) and non-buffered (high degradation) solutions. The mass loss is one of commonly-used indicators for the degradation rate, demonstrating that the biodegradation rate is much higher in the non-buffered solution. Loss of material over time was found to be in line with the values obtained in our previous study \cite{Barzegari2021}, showing that scaling the model in an HPC environment does not affect the quantitative predictions made by the model.
+Fig. \ref{fig:cup_degradation_rate} shows the mass loss during the biodegradation for simulations performed in buffered (low degradation rate) and non-buffered (high degradation) solutions. The mass loss is one of commonly-used indicators for the degradation rate, demonstrating that the biodegradation rate is much higher in the non-buffered solution. Loss of material over time was found to be in line with the values obtained in our previous study \cite{Barzegari2021}, showing that scaling the model in an HPC environment does not affect the quantitative predictions made by the model. The developed mechanistic model of the biodegradation process includes a level-set equation correlating the loss of material to the velocity at which the implant interface shrinks. A good agreement of results on large scale (a model with $\sim$45M elements) shows that the interface tracking formulation behaves efficient even in problems with a high level of details. This verifies the performance of the developed biodegradation model, which has never been tested in such high resolutions.
 
 \begin{figure}[h]
 \centering
@@ -86,7 +86,7 @@ Fig. \ref{fig:cup_degradation_rate} shows the mass loss during the biodegradatio
 \caption[Biodegradation rate for the acetabular implant]{Rate of mass loss during the biodegradation of the porous acetabular implant in saline and buffered solutions.} \label{fig:cup_degradation_rate}
 \end{figure}
 
-From a qualitative point of view, visualizing the biodegradation results, depicted in Fig. \ref{fig:cup_degradation_visual} over time, shows that the acetabular implant degrades faster in the regions with higher porosity, i.e. the region with more exposed surface area to the environment. These regions have lower stiffness, which resulted in high porosity by being filled with TPMS unit cells having low volume fraction.
+From a qualitative point of view, visualizing the biodegradation results, depicted in Fig. \ref{fig:cup_degradation_visual} over time, shows that the acetabular implant degrades faster in the regions with higher porosity, i.e. the region with more exposed surface area to the environment. These regions have lower stiffness, which resulted in high porosity by being filled with TPMS unit cells having low volume fraction. This correlation can be discussed from the pathological perspective as well, meaning that the low stiffness parts get replaced faster by the newly formed bone during the bone healing process. It is the expected behavior of the porous implant and the aim of such a patient-specific design.
 
 \begin{figure}[h]
 \centering
@@ -95,7 +95,7 @@ From a qualitative point of view, visualizing the biodegradation results, depict
 \caption[Visualization of the change of morphology of the acetabular implant]{Visualization of the change of morphology of the acetabular implant over time.} \label{fig:cup_degradation_visual}
 \end{figure}
 
-Fig. \ref{fig:cup_degradation_visual_close} demonstrate a similar visualization but on a zoomed view to the surface of the implant being plotted along with a cross section of the medium showing the concentration of release Mg ions.
+Fig. \ref{fig:cup_degradation_visual_close} demonstrates a similar visualization but on a zoomed view to the surface of the implant being plotted along with a cross section of the medium showing the concentration of released Mg ions. The movement of the corrosion interface is formulated based on the release of material ions, and as a result, the material loss rate is higher in regions with higher ions concentration. The  concentration is directly correlated to exposed surface area, meaning that higher surface to volume ratio results in higher material release. This explains why the regions with higher porosity degrades faster in the current model, which is a realistic behavior captured by the developed mathematical model. 
 
 \begin{figure}[h]
 \centering
@@ -106,7 +106,9 @@ Fig. \ref{fig:cup_degradation_visual_close} demonstrate a similar visualization 
 
 \subsection{Scaling tests on the computational models}
 
-The results of the strong scaling tests are plotted in Fig. \ref{fig:cup_strong_scaling}, which shows the solution time of individual comprising equations of the biodegradation model in a single time step versus the varying number of CPU cores. The strong scaling test shows that the optimal size for the distributed computing environment is \num{5000} CPU cores, above which no significant improvement in the execution time was observed in all the three tested problem size.
+The results of the strong scaling tests are plotted in Fig. \ref{fig:cup_strong_scaling}, which shows the solution time of individual comprising equations of the biodegradation model in a single time step versus the varying number of CPU cores. The run time of a single time step was measured for three model sizes of $\sim$16M (small), $\sim$29M (medium), and $\sim$45M (big) elements. As can be seen in the strong scaling results, different PDEs show different scaling behavior, the most distinct of which belongs to the OH equation used to calculate the change of pH in the surrounding environment. The different scaling behavior routed in the boundary conditions used for each equation, and since penalization technique is used to implement boundary conditions, they impact the formation of the linear system of equations and appear in the scaling results as well.
+
+The strong scaling test shows that the optimal size for the distributed computing environment is \num{5000} CPU cores, above which no significant improvement in the execution time was observed in all the three tested problem sizes. However, the scaling behavior of models slightly differs depending on the size. As expected, in problems with smaller size, the costs associated with inter nodes communication become effective faster in comparison to bigger models, and as a result, increasing the number of nodes becomes useless in earlier stages in these model sizes. This fact can be seen in the cumulative strong scaling plots (the plot in the bottom right), where the graph for the small model tends to reach a vertical line earlier in comparison to the graph for the big model.
 
 \begin{figure}[h]
 \centering
@@ -115,7 +117,9 @@ The results of the strong scaling tests are plotted in Fig. \ref{fig:cup_strong_
 \caption[Strong scaling of individual components of the biodegradation model]{Strong scaling of the computational model, performed using the small, medium, and large mesh for the solution of individual comprising equations of the biodegradation model, in which the execution time is plotted versus the varying CPU cores in the logarithmic scale.} \label{fig:cup_strong_scaling}
 \end{figure}
 
-Fig. \ref{fig:cup_weak_strong} shows the results of the strong and weak scaling tests side by side. As can be seen in the weak scaling result, the model shows an ideal scaling behavior in environments with less than \num{1000} cores. With the number of CPU cores more than this, the system shows non-ideal behavior, as can be observed in strong scaling results, in which the addition of more CPU cores does not cause a linear drop in the execution time (wall time).
+Fig. \ref{fig:cup_weak_strong} shows the results of the strong and weak scaling tests side by side. As can be seen in the weak scaling result, the model shows an ideal scaling behavior in environments with less than \num{1000} cores. With the number of CPU cores more than this, the system shows non-ideal behavior, as can be observed in strong scaling results, in which the addition of more CPU cores does not cause a linear drop in the execution time (wall time). 
+
+The weak and strong scaling results clearly indicate that the code cam be improved to increase the performance of the model, considering the fact that even taking 10K CPU cores is not a big thing to tackle in the current state of HPC and typical scales used for biomedical related simulations and computational modeling works. The first part to improve seems to be the assembling of the linear system, in which the schemes used for numerical integration, order of elements used for various involved physics, and the mthod for applying boundary conditions play an important tole. Secondly, the configuration of employed preconditioners and iterative solvers can be modified for individual components according to the numerical computing requirements, which can affect their scaling behavior (Fig. \ref{fig:cup_strong_scaling}). However, making a more concrete conclusion on the performance bottlenecks of the developed model needs further analysis of the results for the parallel speedup, similar to the analysis performed in our previous work \cite{Barzegari2022}. Furthermore, it should be taken into account that such performance analysis has an inherent simplification of more complex technical aspects affecting the simulation execution time, such as load balancing, network communication, and per node limitations in memory access, which may differ in each HPC environment due to the configurations made by the maintainers.
 
 
 \begin{figure}[h]
@@ -124,6 +128,7 @@ Fig. \ref{fig:cup_weak_strong} shows the results of the strong and weak scaling 
 \includegraphics[width=\textwidth]{weak_strong.png}
 \caption[Weak and strong scaling of of the acetabular implant model]{Weak and strong scaling of of the computational biodegradation model of the acetabular implant, plotted for the total time needed to solve all the equations in a single time step.} \label{fig:cup_weak_strong}
 \end{figure}
+
 
 \section{Conclusions}
 
@@ -134,9 +139,9 @@ In this work, taking advantage of HPC techniques to simulate a large-scale 3D mo
 This research is financially supported by the Prosperos project, funded by the Interreg VA Flanders – The Netherlands program, CCI grant no. 2014TC16RFCB046 and by the Fund for Scientific Research Flanders (FWO), grant G085018N. The results were obtained during a research visit to the Computational Science Lab at the University of Amsterdam, funded and supported by FWO long stay grant V408622N. The computational resources and services used in this work were provided by SURF (www.surf.nl) using the Dutch National Supercomputer Snellius. The visualization works used the ARCHER2 UK National Supercomputing Service (www.archer2.ac.uk).
 
 
-\begin{subappendices}
+%\begin{subappendices}
 
-\section{Challenges in scaling the computational model to thousands of CPU cores}
+%\section{Challenges in scaling the computational model to thousands of CPU cores}
 
 %Building with different MPI implementations
 %Inter-node communication
@@ -151,7 +156,7 @@ This research is financially supported by the Prosperos project, funded by the I
 %Storage
 %Solving NS equation
 
-\end{subappendices}
+%\end{subappendices}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
