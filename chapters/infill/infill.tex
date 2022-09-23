@@ -156,11 +156,13 @@ The biodegradation simulation was done using the developed mechanistic model of 
 \caption[Computational mesh for the biodegradation simulations]{Computational mesh for the biodegradation simulations, resulted from mapping the output of the TO process to a bigger domain and refining the mesh on the surface of the lattice. The lower row shows the zoomed view of the regions denoted by dashed rectangle.} \label{fig:infill_mesh}
 \end{figure}
 
+The change of the stiffness of the structure was measured during the biodegradation process by applying the boundary condition illustrated in Fig. \ref{fig:infill_domain}. The stiffness was calculated as the inverse of the compliance computed using Eq. \ref{Eq: G'}, which is the sensitivity criterion used for the TO process.  
+
 
 
 \section{Results and Discussion}\label{section:infill_results}
 
-The coupled biodegradation and structural mechanics models were constructed using the output of the TO procedure. Fig. \ref{fig:infill_case1_to_steps} shows the temporary evolving shapes of the infill during the optimization process for case 1, each of which is taken by skipping 40 intermediate steps. Fig. \ref{fig:infill_case2_to_steps} shows a similar 2D visualization for case 2.
+The coupled biodegradation and structural mechanics models were constructed using the output of the TO procedure. Fig. \ref{fig:infill_case1_to_steps} shows the temporary evolving shapes of the infill during the optimization process for case 1, each of which is taken by skipping 40 intermediate steps. Fig. \ref{fig:infill_case2_to_steps} shows a similar 2D visualization for case 2. As mentioned in Section \ref{Section: numerical examples}, the difference between these two cases is related to the applied constraints, where a local volume constraint and a global volume constraint are assigned for case 1 and case 2, respectively. 
 
 
 \begin{figure}[h]
@@ -174,11 +176,10 @@ The coupled biodegradation and structural mechanics models were constructed usin
 \centering
 \medskip
 \includegraphics[width=\textwidth]{case2_to_steps.jpg}
-\caption[Evolution of the topology optimization level set function for case 2]{Evolution of the topology optimization level set function to get the optimized shape for case 1, where only the global volume constraint was imposed.} \label{fig:infill_case2_to_steps}
+\caption[Evolution of the topology optimization level set function for case 2]{Evolution of the topology optimization level set function to get the optimized shape for case 2, where only the global volume constraint was imposed.} \label{fig:infill_case2_to_steps}
 \end{figure}
 
-Fig. \ref{fig:infill_degradation_stiffness} shows the quantitative results of both components of the coupled computational model for the investigated cases. On the top row, the degradation rate is plotted by measuring the mass loss over time, showing how the diffusion rate of the Mg ions affects the rate of biodegradation in this model. On the bottom row, the change of the stiffness during the biodegradation is plotted, where the stiffness is calculated by inverting the compliance, the objective function of the TO routine calculated in each time step after adjusting the geometry in presence of degradation.
-
+Fig. \ref{fig:infill_degradation_stiffness} shows the quantitative results of both components of the coupled computational model for the investigated cases. On the top row, the degradation rate is plotted by measuring the mass loss over time, showing how the diffusion rate of the Mg ions affects the rate of biodegradation in this model. On the bottom row, the change of the stiffness during the biodegradation is plotted, where the stiffness is calculated by inverting the compliance, the objective function of the TO routine calculated in each time step after adjusting the geometry in presence of degradation. The morphology of the object changes as the degradation continues, leading to an increment in compliance, and subsequently, decrease in the stiffness of the structure. This behavior is captured properly by the coupled model, demonstrating that the models are well coupled, leading to prediction of the effect of degradation on the strength of the structures. 
 
 \begin{figure}[h]
 \centering
@@ -187,7 +188,9 @@ Fig. \ref{fig:infill_degradation_stiffness} shows the quantitative results of bo
 \caption[Results of the coupled model to predict the stiffness changes during biodegradation]{Results of the coupled model to predict the mass loss and stiffness changes during the biodegradation process of the infilled shapes.} \label{fig:infill_degradation_stiffness}
 \end{figure}
 
-Fig. \ref{fig:infill_results_mechanics} demonstrate how the qualitative results of the coupled model look like, in which the infilled part goes under the degradation and mechanical load at the same time. The green surface is the result of the mechanical analysis, visualized by bending the part according to the computed deformation vector in each node. The light green surface is the degradation object without bending being visualized, showing the change of the morphology due to biodegradation while the release of the metallic ions are also depicted.
+Case 2 has a higher initial stiffness due to more constitutive materials, but it is also subject to a higher loss of stiffness in the investigated time window in comparison to case 1 (Fig. \ref{fig:infill_degradation_stiffness}) in the high diffusion model. In the first place, this effect may seem to be related to higher degradation rate and loss of material, i.e., more exposed surfaces to corrosion. However, the mass loss plots show the opposite, where the degradation rate of case 1 is higher in the simulated time window. This observation is more complicated for the medium diffusion regime ($D=0.01$), in which both the drop in stiffness and mass loss are higher for case 1. In low diffusion, both cases show a similar behavior. These observations demonstrate the necessity of this study, where the mutual effect of biodegradation and the structural characteristics, such as the exposed surface, surface to volume ratio, infill type, and initial material, shows high level of variability to different degradation parameters. Moreover, it shows the value of the coupled model to investigate the interplay of various parameters that should be taken into account for designing and testing the next generation of biomedical implants and devices. Such interplay can be employed in the TO process as well, yielding to more accurate optimization of the morphology of the implants by considering the effect of biodegradation.
+
+Fig. \ref{fig:infill_results_mechanics} demonstrate how the qualitative results of the coupled model look like, in which the infilled part goes under the degradation and mechanical load at the same time. The green surface is the result of the mechanical analysis, visualized by bending the part according to the computed deformation vector in each node. The light gray surface is the degradation object visualized without bending, showing the change of the morphology due to biodegradation while the release of the metallic ions are also depicted. The red region shows the release of Mg ions to the surrounding medium, pushing back the biodegradation interface. This visualization demonstrate the result of the applied boundary condition depicted in Fig. \ref{fig:infill_domain}, where a load is applied on the circumstance of the right hole, and the left hole is fixed. These boundary conditions were also used for the TO process for getting the optimized morphology of the infilled structures. 
 
 
 \begin{figure}[h]
@@ -197,7 +200,7 @@ Fig. \ref{fig:infill_results_mechanics} demonstrate how the qualitative results 
 \caption[Coupled model results showing the stiffness analysis taking place during biodegradation simulation]{Coupled model results showing the stiffness analysis taking place during the biodegradation simulation. The green surface shows the deformed infilled structure, and the light gray surface is the state of the morphology during biodegradation. The colors show the concentration of metallic ions as being released from the surface of the degrading part.} \label{fig:infill_results_mechanics}
 \end{figure}
 
-In order to visualize the biodegradation only, the green surface is removed from Fig. \ref{fig:infill_results_mechanics}, and the results are plotted in various time points during the process. Figs. \ref{fig:infill_results_degradation_case1} and \ref{fig:infill_results_degradation_case2} show such visualization for case 1 and case 2, respectively, in which the surface of the degrading part is depicted in light gray, showing how the metallic ions are released during the biodegradation process. 
+In order to visualize the biodegradation only, the green surface is removed from Fig. \ref{fig:infill_results_mechanics}, and the results are plotted in various time points during the process. Figs. \ref{fig:infill_results_degradation_case1} and \ref{fig:infill_results_degradation_case2} show such visualization for case 1 and case 2, respectively, in which the surface of the degrading part is depicted in light gray, showing how the metallic ions are released during the biodegradation process. From the biodegradation perspective, the biggest difference between the two studied cases is the exposed surface area, which is higher for case 1 as can be seen in these figures. This fact impacts the degradation rate (Fig. \ref{fig:infill_degradation_stiffness}), leading to higher loss of material in case 1 in the same simulation time period. However, another crucial aspect to consider is the saturation of the holes disconnected from the bulk electrolyte, where the released materials get accumulated since there is no way for them to spread away. This accumulation prevents further corrosion in the developed biodegradation model because the level-set formulation for the movement of the degradation front works based on the gradient of the concentration of released materials. In the absent of gradient caused by the accumulation impacts the rate of degradation as can be seen in Fig. \ref{fig:infill_degradation_stiffness}, in which the rate of materials loss tends to slow down exponentially for case 1. This behavior is more dominant in the high diffusion regime, meaning that the effect can be observed in earlier stages. On the side, the material loss curve for case 2 shows a semi-linear behavior tending to increase and achieve stability in later stages in comparison to case 1, which is due to presence of bigger holes in the optimized structure. 
 
 \begin{figure}[h]
 \centering
@@ -214,7 +217,9 @@ In order to visualize the biodegradation only, the green surface is removed from
 \caption[Visualization of the results of the biodegradation simulation for case 2]{Visualization of the results of the biodegradation simulation for case 2, showing the degrading of the infilled structure and release of Mg ions over time. The colors depict the Mg ions concentration.} \label{fig:infill_results_degradation_case2}
 \end{figure}
 
-As mentioned before, in order to increase the accuracy of the employed interface capturing method, the biodegradation model needs a refined mesh on the metal-environment interface. A closer look at the results of Fig. \ref{fig:infill_results_degradation_case1}, depicted in Fig. \ref{fig:infill_results_degradation_case1_zoom}, shows the mesh being refined on the interface. In this figure, the colors show the concentration of Mg ions released from the interface, and the biodegradation can be observed by the shrinkage of the light gray surface representing the undegraded parts of the infilled object.
+It should be noted that the impact of the saturated concentration occurring in the holes is highly dependent on the number of dimensions in $\mathbb{R}^d$, meaning that whether it's a 2D or 3D analysis. In a 3D study, the holes have more connections to the bulk volume via the Z axis, whereas in 2D, as the case in the current study, the isolated holes are the main source of material accumulation slowing down the degradation rate. It emphasizes the necessity of continuing this study by developing a 3D model, which was skipped in the current stage of model development due to technical difficulties in implementing the parallelization of the coupling techniques. This will be the first consideration in further development of the current coupled model.
+
+As mentioned before, in order to increase the accuracy of the employed interface capturing method, the biodegradation model needs a refined mesh on the metal-environment interface. A closer look at the results of Fig. \ref{fig:infill_results_degradation_case1}, depicted in Fig. \ref{fig:infill_results_degradation_case1_zoom}, shows the mesh being refined on the interface. In this figure, the colors show the concentration of Mg ions released from the interface, and the biodegradation can be observed by the shrinkage of the light gray surface representing the undegraded parts of the infilled object. 
 
 
 \begin{figure}[h]
@@ -223,6 +228,13 @@ As mentioned before, in order to increase the accuracy of the employed interface
 \includegraphics[width=\textwidth]{results_degradation_case1_zoom.jpg}
 \caption[Zoom view of the results of the biodegradation simulation for case 1]{Zoomed view of the visualization results of the biodegradation simulation for case 1, showing the refined mesh, concentration of released ions, and shrinkage of the degrading object.} \label{fig:infill_results_degradation_case1_zoom}
 \end{figure}
+
+\section{Conclusion}
+
+The development of the proposed coupled model was motivated by the strong desire for biodegradable porous implants for tissue engineering and orthopedics applications. As stated while discussing the results, the reported findings suggest that the biodegradation behavior of these complex structures does not necessarily follow the common-sense. As a result, such studies become crucial to help designing next generation of biomedical implants, in which the structural behavior during the biodegradation process is considered as one of the design objectives.
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Keep the following \cleardoublepage at the end of this file, 
