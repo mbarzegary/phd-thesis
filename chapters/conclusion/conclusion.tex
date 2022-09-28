@@ -31,6 +31,23 @@ In the end, in order to demonstrate the capabilities of the developed biodegrada
 % open source, the benefits, tuxriders, education
 % figure of empoyed tools
 
+Open-source paradigm, including open science principles, played an important role in the carried out research in this PhD. Without the added value of open-source tools, it was literally impossible to build and simulate a multiphysics moving boundary problem with over 45M elements on 7000 CPU cores (as presented in Chapter \ref{ch:cup}). The added values of open-source comprise the potential flexibility required by computational science project, open standards and exchange formats required for integration and interoperability of models, availability of tools for almost every aspect of model development, responsive support provided by open-source communities, and increasing transparency. These advantages will be elaborated in this section.
+
+Implementing the mathematical model derived from the chemistry of biodegradation, which was also coupled with other physical problems such as the perfusion effect, needed flexibility and full control on numerical details. As a result, doing such implementation in commercial tools with pre-built models such as ANSYS, Abaqus, and COMSOL would have been very inefficient due to waste of resources and time. Even though certain customization features such as user subroutines in Abaqus and weak form interface in COMSOL are available to provide some flexibility in model implementation, the allowed level of modification would decrease work productivity and efficiency of models. Instead, we decided to opt a different approach, bringing freedom in development of the intended large-scale mechanistic model of the biodegradation behavior for any arbitrary 3D shape. For doing this, a broad range of relevant open-source tools and libraries were employed in various aspects of this PhD to obtain desired numerical accuracy in high-performance computational models, such as mesh generation and refinement, geometry construction, preconditioning, weak form implementation, parameter estimation, and postprocessing. An overview of these tools is presented in Fig. \ref{fig:conclusion_tools}.
+
+\begin{figure}[h]
+\centering
+\medskip
+\includegraphics[width=\textwidth]{tools.jpg}
+\caption[Overview of open-source tools and libraries used in this PhD]{An overview of tools and libraries used in this research, which are all free and open-source.} \label{fig:conclusion_tools}
+\end{figure}
+
+
+
+%As a summary, we should emphasize that this PhD was not possible without the freedom and control available in open-source scientific computing world. 
+
+
+
 \subsection{Moving interface problems}
 
 % defining BCs on an implicit interface
