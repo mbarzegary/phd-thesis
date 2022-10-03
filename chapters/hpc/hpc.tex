@@ -315,7 +315,7 @@ Krylov methods have been frequently used by researchers as robust iterative appr
 In order to yield the highest performance, a variety of different combinations of KSP types and preconditioners were evaluated, such as Conjugate Gradients (CG) \cite{hestenes1952}, Successive Over-Relaxation (SOR) \cite{habetler1961}, block Jacobi, and Algebraic Multigrid (AMG) \cite{mccormick1987}, to name a few. The performance tests results are presented in the supplementary materials of this paper. The best performance for the reaction-diffusion system model was achieved using the HYPRE preconditioner \cite{Falgout2002} and the GMRES solver \cite{Saad1986}. This was the combination used for all the performance analysis tests.
 
 
-\subsection{Level set issues}
+\subsection{Level set issues}  \label{sec:hpc_ls_issues}
 
 
 As mentioned before, in order to track the interface of the bulk material and the surrounding fluid, an implicit signed distance function is defined as the solution of Eq. \ref{eq:lsm_final_parallel}. This equation can be solved using the aforementioned finite element discretization, but in a practical implementation, there are usually a couple of problems associated with this PDE.
