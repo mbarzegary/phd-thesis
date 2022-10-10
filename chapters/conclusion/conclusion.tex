@@ -88,20 +88,17 @@ In this section, various issues one can face for tackling HPC and performance tu
 \textbf{Inter-node communication}: Communications taking place among the computing nodes is the source of almost all the problems happening in parallelization and performance tuning of codes. A first step toward a faster model can always be to check the code to remove unnecessary inter-node communications, especially for large-scale simulations. For example, there are usually redundant collective MPI calls in the model initialization that can be replaced by encapsulating more work in the master process and performing the collective operations in the end of it. These collective calls appear in the code during the first round of parallelization of the code as a result of direct translation from sequential procedures.
 \item
 \textbf{Running parallel version of tools and codes}: This point is actually a combination of the two previous points from a practical point of view. When a computational tool is built in HPC environment, it may fail to run in more than one node due to an inappropriate configuration during the build process. For example, FreeFEM may fail to execute when the job is supposed to run in more than a single node, implying that the inter-node communication does not work due to the used MPI or compiler toolchain. This scenario happens commonly, showing the importance of employing correct toolchains and MPI implementations. The correct configuration differs from environment to environment, so the best recommendation would be to check the HPC documentation provided by vendors or system maintainers.
+\item
+\textbf{Mesh generation for large-scale models}: The mesh of the acetabular cup presented in Chapter \ref{ch:cup} had more than 45M tetrahedral elements. Besides the technical aspects of the computational part, generating such a mesh can be quite challenging and time consuming. Some of the common tools used for mesh generation have a parallel version, aimed to work with a couple of CPU cores to reduce the mesh generation time. For example, Mmg has a parallel version called ParMmg, and CGAL supports shared-memory paralleization for volumetric mesh generation. However, these tools are not very reliable and may cause further problems. In our tests on ParMmg, the tool showed major issues with inter-node communication on large-scale mesh generation, leading us to use sequential mesh generation principles for making the mesh files.
+\item
+\textbf{Mesh partitioning for large-scale models}: Choosing a proper mesh partitioning tool plays an important role in the initialization of the simulations and can be the source of some failure in this stage. The commonly-used partitioner in this research was METIS software. However, in particular cases and contrary to the previous point for mesh generators, it was observed that its parallel version, called ParMETIS, has significantly better performance. Switching between the sequential and parallel version of this partitioner, as well as using other tools such as SCOTCH, should be considered in performance tuning of computational models.
+\item
+\textbf{Memory issues in each node}: Memory-related issues are one of the most common problem one can face while tuning computational models for better scaling behavior. There usually exists bunch of problems in the codes that can reduce the memory usage especially in the initialization stage, helping overcome part of these memory bottlenecks. The memory issues can be debugged in a single node execution first with the maximum memory available. In some cases, one need to reduce the number of employed CPU cores in a node so that more memory is available to each core. Although this action can help removing memory-related errors, it reduces the efficiency of the whole computational task, leaving some CPU cores unused in each node due to memory problems.
+\item
+\textbf{Storage and IO bottlenecks}: There are usually different storage volumes available in HPC environments, which differ in various aspects such the speed of access, space limitations, and backup policies. Choosing a proper location for file IO can greatly impact the performance of the codes. In more advanced HPC environments, the user does not have a direct access to high-speed storage, so explicit file operations should be defined in the job batch file, describing how the files should be copied to the high-speed volumes and moved back to the home directories. Another storage-related performance bottleneck is the known issue of slowed down read speed of large number of small files, which exists in some HPC environments. This problem usually impacts remote postprocessing and visualization tasks, in which a large number of files should be processed on an HPC node.
+\item
+\textbf{Remote visualization}: In large-scale simulations, where the model predictions result in tremendous output files, the remote prostprocessing and visualization can be a more efficient option compared to conventional local processing. Moreover, doing this can be beneficial for the debugging and performance tuning of computational models, where it saves a lot of time needed to transfer the files to a local machine for analysis. For the simulation presented in Chapter \ref{ch:cup}, the results comprise of \num{95000} files with a total size of 148 GB. The visualization was done on a node featuring a GPU using the ParaView server on the remote node and ParaView client on the local machine. Configuring such a remote processing needs extra steps in HPC environments, such as making secure tunnels and setting up offscreen rendering, which are needed to perform normal computational tasks. 
 \end{itemize}
-
-%Building with different MPI implementations
-%Inter-node communication
-%Running parallel FF
-%Mesh generation (parallel, sequential)
-%Converting surface mesh to volume
-%Scaling issues
-%Memory issues
-%Node types
-%Visualization, GPU nodes
-%Partitioning (METIS, ParMETIS)
-%Storage
-%Solving NS equation
 
 \subsection{Representing the chemistry in mechanistic models}
 
