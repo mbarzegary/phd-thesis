@@ -4,7 +4,7 @@
 
 Each chapter of this thesis consists of an independent scientific study and includes its own detailed discussion. Consequently, this chapter provides a general summary and conclusion of the current PhD research. Moreover, it includes an overview of the limitation and challenges we needed to tackle during the project, as well as suggested future directions and contributions to continue this piece of work.
 
-\section{Project summary}
+\section{Project summary} \label{sec:conclusion_summary}
 
 % overview of chapters and objectives
 
@@ -100,7 +100,7 @@ In this section, various issues one can face for tackling HPC and performance tu
 \textbf{Remote visualization}: In large-scale simulations, where the model predictions result in tremendous output files, the remote prostprocessing and visualization can be a more efficient option compared to conventional local processing. Moreover, doing this can be beneficial for the debugging and performance tuning of computational models, where it saves a lot of time needed to transfer the files to a local machine for analysis. For the simulation presented in Chapter \ref{ch:cup}, the results comprise of \num{95000} files with a total size of 148 GB. The visualization was done on a node featuring a GPU using the ParaView server on the remote node and ParaView client on the local machine. Configuring such a remote processing needs extra steps in HPC environments, such as making secure tunnels and setting up offscreen rendering, which are needed to perform normal computational tasks. 
 \end{itemize}
 
-\subsection{Representing the chemistry in mechanistic models}
+\subsection{Representing the chemistry in mechanistic models} \label{sec:conclusion_mechanistic}
 
 % capturing the chemistry in math
 % lack of certainty in chemical experiments, leading to difficulty in modeling
@@ -123,13 +123,29 @@ The research carried out in this PhD can be seen as the first steps for construc
 
 Future perspective can be seen as an attempt to address the mentioned limitations we faced in various stages and aspects of this research, allowing the developed model to capture more chemical and biological processes and improve its credibility. It's worth mentioning that besides improved numerical and computational methodologies, these perspectives require more sophisticated experimental approaches for validation purposes. This aspect of future development is not discussed here in details.
 
-\subsection{Other materials and effect of alloying elements}
+\subsection{Other materials and effect of alloying elements} \label{sec:conclusion_alloy}
 
-\subsection{Mechanistic modeling of complex electrolytes}
+As stated several times throughout this thesis, biodegradable metals include magnesium, zinc, and iron, among which magnesium is the most studied material. That's why this However, zing and iron are gaining attention in recent years for various applications. As a result, the model can be further developed to capture the biodegradation of iron and zinc as well. Doing this does not need a development from scratch since the biodegradation mechanisms of zinc and iron are similar to magnesium, meaning that the underlying reduction-oxidation reactions can easily be converted to the mathematical model developed in this thesis.
 
-\subsection{Uncertainty quantification on the chemistry of precipitation layer}
+Moreover, another factor limiting the applicability of the current developed model is related to lack of support for different types of biodegradation other than uniform corrosion. The developed mathematical model, including the reaction-diffusion-convection equations coupled with the level-set formalism for tracking the moving corrosion front, is currently capable of simulating a homogeneous corrosion only. Capturing localized corrosion behavior, such as pitting and galvanic corrosion, requires adding the effect of alloying elements and impurities. This needs further development in the core of the mathematical formulation such that it allows inclusion of active zones in which the rate of degradation is higher. 
 
-\subsection{Coupled models for orthopedics and cardiovascular applications}
+As part of the work done in Chapter \ref{ch:infill}, we intended to develop a multi-material biodegradation model capable of simulating the corrosion in composite materials with particular fixation applications in orthopedics. The work lacked certain theoretical foundation, and as a result, it was not presented in this thesis. However, due to interesting applications it may have, it can be considered as an added feature for later development.
+
+\subsection{Biodegradation in complex electrolytes and environments}
+
+The work presented in Chapters \ref{ch:fluid} and \ref{ch:kinetics} aimed to investigate the biodegradation process in a complex electrolyte in the presence of various contributing chemical components. Doing such modeling has many potential applications, which in combine with the prospective development mentioned in Section \ref{sec:conclusion_alloy} can extend the model such that it can mimic the behavior of any metallic biomaterial in any environment of desire. However, capturing the biodegradation behavior in complex electrolytes, such as HBSS and SBF, can be quite challenging in a mechanistic model, the benefits of which are elaborated in Section \ref{sec:conclusion_mechanistic}. In Chapter \ref{ch:kinetics}, the modeling approach was the coupling of the mechanistic model of biodegradation with a thermodynamics-based code being responsible for calculating the concentration of involved chemical species on the corrosion interface. Even though such coupling resulted in acceptable predictions of local pH changes, the extensibility and generalizability of it can still be questionable. On the other hand, a fully mechanistic model, in which the concentration of all components is tracked by means of a set of PDEs, can facilitate the credibility of the model for such complex environments. This can be considered as an important further development on the model.
+
+Additionally, there is another potential for future research in the limiting uncertainty mentioned in Section \ref{sec:conclusion_mechanistic}. The uncertainty in various levels of the chemistry of biodegradation, such as the stoichiometry of the precipitation layer in complex electrolytes, is a limiting factor for developing more detailed mathematical models. However, it opens the stage for inverse problem formulations, where the computational model can actually help demystifying the complex reactions. As the first step, since the formation of the hydroxyapatite-like precipitation has an unknown stoichiometry (Eq. \ref{eq:kinetics_hydrox_react} in Chapter \ref{ch:kinetics}), an uncertainty quantification (UQ) problem can be constructed to find the chemical coefficients such that the simulation output matches the experimentally-obtained values. With such an inverse problem formulation, the computational modeling of the biodegradation process can help the experimental research works to better understand the underlying phenomena.
+
+\subsection{Coupled models for a wide range of applications}
+
+As indicated in Section \ref{sec:conclusion_summary}, as well as Section \ref{sec:aim_objective} in Chapter \ref{ch:objective}, one of the objectives of the research carried out in this thesis was to utilize the developed biodegradation model in various case studies for different applications. Being facilitated by using open-source tools, this objective was demonstrated with three sample studies presented in Chapters \ref{ch:mandible}, \ref{ch:cup}, and \ref{ch:infill}, where the biodegradation model was coupled with other mechanical integrity models, in order to deliver a more comprehensive representation of the underlying processes in tissue engineering. As an output of these sample use cases, the model showed a big potential from the integration point of view, meaning that it can bring certain added values when integrated into other modeling workflows. 
+
+In addition to the mentioned samples, at the time of writing this thesis, the model is being in a few more studies, one of which is a master thesis project in which the developed model is used to evaluate the biodegradation behavior of a set of different designs of cardiovascular stents in order to move toward an optimum design. In line with all the constructed studies, the developed biodegradation model can be further employed in any other potential use case of modeling studies in tissue engineering and biomaterials science, where the biodegradation plays a role that needed to be taken into account. Moreover, further research can be carried out to overcome the challenges mentioned in Section \ref{sec:tissue_challenges}, after which the biodegradation model can be coupled with sophisticated tissue growth models to investigate the phenomenon of replacement of biodegradable implants with neotissue happening inside the human body.
+
+By considering the common applications of biodegradable metallic materials, the impact zone of the developed model will be mostly related to orthopedics and cardiovascular studies. Nevertheless, adding NerstPlanck terms to the mathematical model enables it to capture the electrochemical potential changes. Doing this allows the model to act as an efficient tool in fundamental research relevant to chemistry and chemical engineering, where the corrosion of metals in aqueous solutions is being studied in the field of electrochemistry. Consequently, it results in a model that can have a broader application in the field of corrosion science as well.
+
+
 
 
 
