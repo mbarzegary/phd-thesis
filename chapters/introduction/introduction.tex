@@ -49,8 +49,14 @@ The history of usage of Mg in orthopedics applications starts very similarly to 
 
 \section{Chemistry of biodegradation of magnesium}
 
+\newglossaryentry{PBS}{name={PBS},description={phosphate buffered saline}}
+\newglossaryentry{SBF}{name={SBF},description={simulated body fluid}}
+\newglossaryentry{HBSS}{name={HBSS},description={Hank's balanced salt solution}}
+\newglossaryentry{EBSS}{name={EBSS},description={Earle's balanced salt solution}}
+\newglossaryentry{MEM}{name={MEM},description={minimum essential medium}}
+\newglossaryentry{DMEM}{name={DMEM},description={Dulbecco's modified Eagle's medium}}
 
-The biodegradation behavior of Mg is investigated in corrosion tests, in which the selection of the corrosive media plays an important role since it affects the underlying chemical reactions \cite{Mei2020}. By considering the main application of the biomaterial, which can be tissue engineering scaffolds, vascular stents, or orthopedic fixation implants, the corrosive media can be selected to be a representative of the service environment. The most basic form of the medium is a saline (NaCl) solution, in which the degradation rate is the highest possible \cite{Mei2020}. More complex solutions can be used to mimic the behavior of the body environment by taking into account more body fluid components, the most popular of which are Ringer's solution, PBS (phosphate buffered saline), SBFs (simulated body fluids), HBSS (Hank's balanced salt solution), and Earle's balanced salt solution (EBSS) \cite{Mei2020}. Adding more organic components to the solution will prepare it to simulate cell culture conditions. The common media for this purpose are MEM (Minimum Essential medium) and DMEM (Dulbecco's modified Eagle's medium) \cite{Mei2020}. Fig. \ref{fig:components} summarizes various commonly used electrolytes for testing biodegradable metals \cite{Mei2020}.
+The biodegradation behavior of Mg is investigated in corrosion tests, in which the selection of the corrosive media plays an important role since it affects the underlying chemical reactions \cite{Mei2020}. By considering the main application of the biomaterial, which can be tissue engineering scaffolds, vascular stents, or orthopedic fixation implants, the corrosive media can be selected to be a representative of the service environment. The most basic form of the medium is a saline (NaCl) solution, in which the degradation rate is the highest possible \cite{Mei2020}. More complex solutions can be used to mimic the behavior of the body environment by taking into account more body fluid components, the most popular of which are Ringer's solution, \gls{PBS} (phosphate buffered saline), \gls{SBF}s (simulated body fluids), \gls{HBSS} (Hank's balanced salt solution), and Earle's balanced salt solution (\gls{EBSS}) \cite{Mei2020}. Adding more organic components to the solution will prepare it to simulate cell culture conditions. The common media for this purpose are \gls{MEM} (Minimum Essential medium) and \gls{DMEM} (Dulbecco's modified Eagle's medium) \cite{Mei2020}. Fig. \ref{fig:components} summarizes various commonly used electrolytes for testing biodegradable metals \cite{Mei2020}.
 
 
 \begin{figure}
@@ -68,12 +74,15 @@ Various studies have already investigated the effect of different components in 
 
 The most common solution for performing corrosion tests on Mg is saline (NaCl) solution, in which the material undergoes aggressive corrosion due to higher electrochemical activities \cite{Hadzima2014,Lu2019}. In a typical aqueous solution, the major corrosion reactions occurring can be written as \cite{Li2020,Atrens2015}:
 
-Main, hydrogen evolution reaction (HER):
+\newglossaryentry{HER}{name={MD},description={hydrogen evolution reaction}}
+\newglossaryentry{ORR}{name={ORR},description={oxygen reduction reaction}}
+
+Main, hydrogen evolution reaction (\gls{HER}):
 \begin{equation}
 \mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O} \rightarrow \mathrm{Mg}(\mathrm{OH})_{2}+\mathrm{H}_{2} 
 \end{equation}
 
-Secondary, oxygen reduction reaction (ORR):
+Secondary, oxygen reduction reaction (\gls{ORR}):
 \begin{equation}
 2 \mathrm{Mg}+2 \mathrm{H}_{2} \mathrm{O}+\mathrm{O}_{2} \rightarrow 2 \mathrm{Mg}(\mathrm{OH})_{2}
 \end{equation}
@@ -90,7 +99,7 @@ In this situation, the corrosion products forming on the corroded surface of Mg 
 The main advantage of using a saline solution for corrosion tests compared to more complex media is that the absence of inorganic ions like carbonate, phosphate, sulfate, and calcium allows for investigating the corrosion behavior without concerning possible contamination by microbial life. On the other hand, the main weakness of saline solution is that it cannot represent the complexity of real body fluid, and as a result, a more complex medium is required to investigate such conditions. To address this issue, more complex saline solutions, such as PBS, are widely used for assessing the applicability of Mg alloys in more complex conditions from the chemical perspective \cite{Schille2011,Xue2012}. Despite the mentioned limitations, corrosion test in saline solution is beneficial for understanding intrinsic degradation properties of Mg. 
 
 
-The term "simulated body fluid" is generally used to refer to solutions containing inorganic ions of human serum and interstitial fluid in corrosion tests \cite{Mei2020}. The commonly used media in this regard are SBF, HBSS, and EBSS, which include the same inorganic components with a slight difference in their concentrations. A typical composition of these media is chloride, carbonate, phosphates, sulfate, and calcium. The individual effect of these components on the rate of degradation of Mg has been extensively studied, in which it has been observed that carbonate and phosphate slow down the rate. In contrast, the effect of sulfate is negligible \cite{Johnston2017,Mei2019a}. The concentration of $\mathrm{HCO}_{3}^{-}$ affects the pH buffering capacity and the degradation rate of Mg simultaneously \cite{Xin2011}. The effect of calcium ions is more complex because it doesn't contribute to Mg corrosion directly. Fig. \ref{fig:reactions_intro} briefly summarizes the various reactions and formed precipitation compositions of the mentioned media for testing the degradation behavior of Mg \cite{Mei2020}.
+The term "simulated body fluid" is generally used to refer to solutions containing inorganic ions of human serum and interstitial fluid in corrosion tests \cite{Mei2020}. The commonly used media in this regard are \gls{SBF}, \gls{HBSS}, and \gls{EBSS}, which include the same inorganic components with a slight difference in their concentrations. A typical composition of these media is chloride, carbonate, phosphates, sulfate, and calcium. The individual effect of these components on the rate of degradation of Mg has been extensively studied, in which it has been observed that carbonate and phosphate slow down the rate. In contrast, the effect of sulfate is negligible \cite{Johnston2017,Mei2019a}. The concentration of $\mathrm{HCO}_{3}^{-}$ affects the pH buffering capacity and the degradation rate of Mg simultaneously \cite{Xin2011}. The effect of calcium ions is more complex because it doesn't contribute to Mg corrosion directly. Fig. \ref{fig:reactions_intro} briefly summarizes the various reactions and formed precipitation compositions of the mentioned media for testing the degradation behavior of Mg \cite{Mei2020}.
 
 
 \begin{figure}
@@ -101,7 +110,7 @@ The term "simulated body fluid" is generally used to refer to solutions containi
 \end{figure}
 
 
-There are various evaluation techniques for measuring the degradation rate of Mg. Generally speaking, the method used for evaluating the degradation rate can affect the reported behavior. For example, it has been shown that in HBSS, the measured corrosion rate of Mg is lower (slower) when evaluated using hydrogen evolution in comparison to the rate found by direct weight loss measurements \cite{Johnston2015,Johnston2019}, which can be due to the secondary dissolution of evolved hydrogen. Moreover, oxygen consumption due to secondary ORR can affect the volume of evolved gas, which is more significant for media with slower degradation rates such as HBSS and MEM \cite{Wang2020}. Table \ref{tab:methods_intro} summarizes the advantages and shortcomings of widely used techniques for measuring degradation rate \cite{Mei2020}. 
+There are various evaluation techniques for measuring the degradation rate of Mg. Generally speaking, the method used for evaluating the degradation rate can affect the reported behavior. For example, it has been shown that in \gls{HBSS}, the measured corrosion rate of Mg is lower (slower) when evaluated using hydrogen evolution in comparison to the rate found by direct weight loss measurements \cite{Johnston2015,Johnston2019}, which can be due to the secondary dissolution of evolved hydrogen. Moreover, oxygen consumption due to secondary \gls{ORR} can affect the volume of evolved gas, which is more significant for media with slower degradation rates such as \gls{HBSS} and \gls{MEM} \cite{Wang2020}. Table \ref{tab:methods_intro} summarizes the advantages and shortcomings of widely used techniques for measuring degradation rate \cite{Mei2020}. 
 
 
 \begin{table}[h]
@@ -118,7 +127,7 @@ Weight loss &
   \begin{tabular}[p{0.4\textwidth}]{@{}p{0.45\textwidth}}Non-continuous. Does not reveal varying corrosion rate throughout the immersion\\ Low sensitivity at the initial stages\end{tabular} \\ \hline
 Hydrogen evolution &
   \begin{tabular}[p{0.4\textwidth}]{@{}p{0.45\textwidth}}Continuous\\ Can be automated\\ Can be performed in closed eudiometers\end{tabular} &
-  \begin{tabular}[p{0.4\textwidth}]{@{}p{0.45\textwidth}}Performed in open environment in most cases\\ Might show underestimated values of corrosion rate due to secondary ORR and solubility of H2 in aqueous media\end{tabular} \\ \hline
+  \begin{tabular}[p{0.4\textwidth}]{@{}p{0.45\textwidth}}Performed in open environment in most cases\\ Might show underestimated values of corrosion rate due to secondary \gls{ORR} and solubility of H2 in aqueous media\end{tabular} \\ \hline
 Potentiodynamic polarization &
   Fast measurement &
   \begin{tabular}[p{0.4\textwidth}]{@{}p{0.45\textwidth}}Non-continuous\\ Open environment measurement in most cases\\ Very often low correlation with long-term weight loss measurements\end{tabular} \\ \hline
@@ -136,11 +145,25 @@ Electrochemical impedance spectroscopy &
 
 Besides experimental approaches to investigate the properties of biodegradable metallic implants and scaffolds, computational modeling of the biodegradation process and behavior can act as an efficient tool to design the next generation of medical devices and implants \cite{Boland2015}. In addition to traditional modeling approaches for mechanics of materials, it is possible to take advantage of well-developed principles of modeling transport phenomena and numerical simulation to investigate the biodegradation process computationally \cite{SanzHerrera2019}.
 
-Computational models of the biodegradation process vary from a basic implementation of the process to comprehensive mathematical models that capture multiple aspects of the degradation phenomenon. In the category of simplified corrosion models, Gao et al. performed a quantitative study on the change of mechanics during the biodegradation of Mg alloys for cardiovascular applications \cite{Gao2018}. Liu et al. developed a fluid dynamics model to characterize the effect of the induced wall shear stress (WSS) on the biodegradation mechanism of Mg stents \cite{Liu2018}. They investigated the effect of blood flow velocity and dynamic environment on the degradation of cardiovascular stents. Boland et al. studied the mechanical performance of Mg stents for the treatment of coronary artery diseases using a computational model \cite{Boland2019}. Gartzke et al. proposed a degradation model for the corrosion of Mg alloys coupled with mechanical analysis, allowing them to study the change of mechanical properties during the biodegradation process \cite{Gartzke2020}. Another common category of studies in this regard is continuous damage (CD) simulations, in which geometrical discontinuities get translated into the reduction of materials. Despite the limitation of this technique for modeling biodegradation, such as more focus on the mechanical integrity rather than on the fundamental phenomena, it has been used for various relevant studies, such as Gastaldi et al. \cite{Gastaldi2011} and Shi et al. \cite{Shi2021}. 
+\newglossaryentry{WSS}{name={WSS},description={wall shear stress}}
+\newglossaryentry{CD}{name={CD},description={continuous damage}}
+
+Computational models of the biodegradation process vary from a basic implementation of the process to comprehensive mathematical models that capture multiple aspects of the degradation phenomenon. In the category of simplified corrosion models, Gao et al. performed a quantitative study on the change of mechanics during the biodegradation of Mg alloys for cardiovascular applications \cite{Gao2018}. Liu et al. developed a fluid dynamics model to characterize the effect of the induced wall shear stress (\gls{WSS}) on the biodegradation mechanism of Mg stents \cite{Liu2018}. They investigated the effect of blood flow velocity and dynamic environment on the degradation of cardiovascular stents. Boland et al. studied the mechanical performance of Mg stents for the treatment of coronary artery diseases using a computational model \cite{Boland2019}. Gartzke et al. proposed a degradation model for the corrosion of Mg alloys coupled with mechanical analysis, allowing them to study the change of mechanical properties during the biodegradation process \cite{Gartzke2020}. Another common category of studies in this regard is continuous damage (\gls{CD}) simulations, in which geometrical discontinuities get translated into the reduction of materials. Despite the limitation of this technique for modeling biodegradation, such as more focus on the mechanical integrity rather than on the fundamental phenomena, it has been used for various relevant studies, such as Gastaldi et al. \cite{Gastaldi2011} and Shi et al. \cite{Shi2021}. 
 
 Among the relevant studies, mass transfer-related models were more successful in representing the biodegradation process mathematically. Indeed, the approach of constructing models based on the well-formulated transport phenomena equations and then solving the derived equations using appropriate numerical schemes has been followed in recent years to study biodegradation. Ahmed et al. derived a set of mathematical equations to capture the chemical reactions occurring in Mg degradation \cite{Ahmed2017}, in which the detailed mathematical equations provided a proper insight into the effect of different chemical components on the biodegradation of Mg \textit{in vitro}. Grogan et al. developed a model to correlate the mass flux of the metallic ions in the biodegradation interface to the velocity of the interface, used to simulate the degradation of complex geometries of Mg-based stents \cite{Grogan2014}. Similarly, Shen et al. developed a theoretical model to predict the degradation behavior of Mg alloys in orthopedic implants \cite{Shen2019}. Their 3D model had a high agreement with \textit{in vitro} corrosion test results.
 
-One of the important applications of biodegradation models is to investigate the change of shape and morphology of the implants and medical devices over time. To this end, appropriate interface capturing methods should be used to track the corrosion interface during the biodegradation process. Bajger et al. developed a mathematical model to study the degradation of Mg implants by reaction-diffusion equations and level-set method (LSM), which enabled them to track the geometrical changes of the implant during degradation \cite{Bajger2016}. Similarly, Sanz-Herreraa et al. developed a comprehensive computational model as a tool for Mg implant design \cite{Sanz-Herrera2018}. They combined multiple diffusion-reaction equations to study the change of concentration of the chemical components that play an essential role in \textit{in vitro} biodegradation of Mg implants. A summary of the studies mentioned above is represented in Table \ref{tab:intro_review}. 
+\newglossaryentry{LSM}{name={LSM},description={level-set method}}
+
+One of the important applications of biodegradation models is to investigate the change of shape and morphology of the implants and medical devices over time. To this end, appropriate interface capturing methods should be used to track the corrosion interface during the biodegradation process. Bajger et al. developed a mathematical model to study the degradation of Mg implants by reaction-diffusion equations and level-set method (\gls{LSM}), which enabled them to track the geometrical changes of the implant during degradation \cite{Bajger2016}. Similarly, Sanz-Herreraa et al. developed a comprehensive computational model as a tool for Mg implant design \cite{Sanz-Herrera2018}. They combined multiple diffusion-reaction equations to study the change of concentration of the chemical components that play an essential role in \textit{in vitro} biodegradation of Mg implants. A summary of the studies mentioned above is represented in Table \ref{tab:intro_review}. 
+
+\newglossaryentry{FVM}{name={FVM},description={finite volume method}}
+\newglossaryentry{FEM}{name={FEM},description={finite element method}}
+\newglossaryentry{UMAT}{name={UMAT},description={user-defined material model}}
+\newglossaryentry{FSI}{name={FSI},description={fluid-structure interaction}}
+\newglossaryentry{ALE}{name={ALE},description={arbitrary Lagrangian-Eulerian}}
+\newglossaryentry{USDFLD}{name={USDFLD},description={user-defined field}}
+\newglossaryentry{CFD}{name={CFD},description={computational fluid dynamics}}
+\newglossaryentry{MOL}{name={MOL},description={method of lines}}
 
 \begin{table}[h]
 \caption{Summary of the recently-developed computational models of the degradation process of Mg-based biomaterials}
@@ -161,77 +184,77 @@ Artery vessel &
   Mg Alloy AZ31B &
   Surface corrosion &
   ABAQUS &
-  FEM, VUMAT &
+  \gls{FEM}, \gls{UMAT} &
   \cite{Gao2018} \\ \hline
 Artery vessel &
   Vascular stent &
   Mg Alloy WE43 &
   Surface corrosion &
   ANSYS Fluent &
-  CFD, FSI, FVM &
+  \gls{CFD}, \gls{FSI}, \gls{FVM} &
   \cite{Liu2018} \\ \hline
 Remodeling artery &
   Vascular stent &
   Mg Alloy AZ31 &
   Uniform and pitting   corrosion &
   ABAQUS &
-  FEM, VUSDFLD &
+  \gls{FEM}, \gls{USDFLD} &
   \cite{Boland2019} \\ \hline
 Artery vessel &
   Coronary stents &
   Mg alloys AZ31,   AZ61, AZ80, ZK60 and ZM21 &
   Surface and stress   corrosion &
   ABAQUS &
-  CDM, FEM &
+  \gls{CD}, \gls{FEM} &
   \cite{Gastaldi2011} \\ \hline
 Bone regeneration &
   Orthopedic implants &
   Pure Mg &
   Surface corrosion by   considering biphasic layers &
   MATLAB &
-  Mass transfer, MoL &
+  Mass transfer, \gls{MOL} &
   \cite{Ahmed2017} \\ \hline
 Artery vessel &
   Vascular stent &
   Mg Alloy AZ31 &
   Surface corrosion &
   ABAQUS &
-  Diffusion model,   ALE, FEM &
+  Diffusion model,   \gls{ALE}, \gls{FEM} &
   \cite{Grogan2014} \\ \hline
 Bone regeneration &
   Orthopedic pins &
   Mg alloys Mg-1Ca and   Mg-3Ge &
   Surface corrosion &
   ABAQUS &
-  Diffusion model,   FEM, UMESHMOTION &
+  Diffusion model,   \gls{FEM}&
   \cite{Shen2019} \\ \hline
 Hip bone &
   Orthopedic implant &
   Pure Mg &
   Surface corrosion &
   In-house, FreeFEM &
-  Reaction-diffusion   model, LSM, FEM &
+  Reaction-diffusion   model, \gls{LSM}, \gls{FEM} &
   \cite{Bajger2016} \\ \hline
 General TE &
   Orthopedic screws &
   Mg alloy &
   Surface corrosion &
   In-house &
-  Reaction-diffusion   model, FEM &
+  Reaction-diffusion   model, \gls{FEM} &
   \cite{Sanz-Herrera2018} \\ \hline
 Bone regeneration &
   Porous scaffolds &
   Mg Alloy LAE442 &
   Surface corrosion &
   ABAQUS &
-  FEM, VUMAT &
+  \gls{FEM}, {UMAT} &
   \cite{Gartzke2020} \\ \hline
 Artery vessel &
   Vascular stent &
   Mg Alloy AZ31 &
   Surface corrosion &
   ABAQUS &
-  CDM, FEM, VUMAT &
+  \gls{CD}, \gls{FEM}, \gls{UMAT} &
   \cite{Shi2021}
 \end{tabular}}
 \label{tab:intro_review}
