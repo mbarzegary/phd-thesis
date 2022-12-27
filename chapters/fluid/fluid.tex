@@ -8,13 +8,17 @@ M. Barzegari, C. Wang, S.V. Lamaka, G. Zavodszky, and L. Geris, ``Interface-coup
 
 \section{Introduction}
 
-Considering fluid flow in the developed biodegradation model is crucial regarding the final application of the model, which is to be coupled with cell differentiation and tissue growth models to predict the rate of neotissue formation on biodegradable implants and scaffolds. In tissue engineering, cell expansion and differentiation experiments usually take place inside perfusion bioreactors, meaning that the flow of a biological fluid provides sufficient nutrients needed for the growth process and removes unnecessary wastes \cite{Sikavitsas2005,Grayson2010,Sonnaert2014}. Moreover, the induced shear stress resulting from this perfusion plays a prominent role in the cell differentiation process \cite{Song2013,McCoy2012,Rauh2011,Papantoniou2013}, making the fluid flow inside the bioreactor even more critical. Consequently, the effect of the fluid flow should be considered in the biodegradation model to enable it to make predictions in a perfusion setup, which is interchangeably called hydrodynamics conditions in chemistry.
-
-Computational Fluid Dynamics (\gls{CFD}) is the field of studying the dynamics of fluid flow using mathematical and computational methods \cite{H.Versteeg2007,Sharma2022}. The fluid flow is usually expressed in the form of Navier-Stokes or Stokes equations, on which appropriate numerical schemes are applied, and the derived system of equations is solved using computers, resulting in the prediction of flow patterns and secondary entities like the shear stress. \gls{CFD} modeling has been used in tissue engineering to study fluid flow systems such as dynamic cell culture conditions in perfusion bioreactors \cite{Hutmacher2008, Hossain2012,Patrachari2012}.
+Considering fluid flow in the developed biodegradation model is crucial in light of the final application of the model, which is to be coupled with cell differentiation and tissue growth models to predict the rate of neotissue formation on biodegradable implants and scaffolds. In tissue engineering, cell expansion and differentiation experiments usually take place inside perfusion bioreactors, meaning that the flow of a biological fluid provides sufficient nutrients needed for the growth process and removes unnecessary and undesirable waste \cite{Sikavitsas2005,Grayson2010,Sonnaert2014}. Moreover, the induced shear stress resulting from this perfusion plays a prominent role in the cell differentiation process \cite{Song2013,McCoy2012,Rauh2011,Papantoniou2013}, making the fluid flow inside the bioreactor even more critical. Consequently, the effect of the fluid flow should be considered in the biodegradation model to enable it to make predictions in a perfusion setup, which is interchangeably called hydrodynamics conditions in chemistry.
 
 Fluid flow in the context of a hydrodynamic condition has a similar application in corrosion and biodegradation experiments \cite{Wang2014}. In a typical setup, the electrolyte moves and is refreshed over time to remove the corrosion products and provide needed mechanical stimuli if applicable. In biodegradation experiments, the flow velocity and induced shear stress affect the corrosion behavior of degradable scaffolds and implants due to increased mechanical forces and mass transfer \cite{Wang2014}. Studies show that hydrodynamics conditions play a significant role in Mg degradation \cite{Levesque2008} where the corrosion rate increases in comparison to static conditions in immersion tests, in the presence of flowing \cite{Li2012}, rotating \cite{Jafarzadeh2009}, circulating \cite{Chen2010}, and \textit{in vivo} perfusion \cite{Witte2013}. Additionally, the fluid flow helps remove the corrosion products and avoid their accumulation \cite{Hiromoto2008}.
 
-In this chapter, a parallel computational model for fluid flow simulations was developed and coupled with the biodegradation model. To verify the validity of the simulation results, the model output was compared with an OpenFOAM simulation on the same geometry and setup. The model was developed by solving the derived equations, i.e., Navier-Stokes equations coupled with the Darcy effect for the degrading object, using the finite element method.
+\newglossaryentry{CT}{name={CT},description={computed tomography}}
+
+The effect of hydrodynamics condition on the rate and pattern of biodegradation is rooted in the distribution and diffusion of fluids \cite{Efird2011}, which can be related to increment of mechanical stimuli like wall shear stress or increment in ions transport. It is reported that the presence of fluid flow leading to accelerated movement of the corrosive medium increases the rate of uniform and localized corrosion of Mg alloys \cite{Wang2014}. The increase in corrosion rate is due to the increase of mass transfer of ions \cite{Efird2011}, affecting the chemical reactions occurring in the interface of Mg and the electrolyte \cite{Hiromoto2008,Xu2009}. Moreover, the increment in mass transfer removes more corrosion products from the surface, which is another contribution of the fluid flow to increasing the biodegradation rate \cite{Efird2011}. Wang et al. \cite{Wang2014} reported that the degradation rate was $0.37\pm0.007$ and $1.21\pm0.27 \text{mm.year}^{-1}$ for the corrosion of stents made of Mg AZ31 alloys in static and hydrodynamics conditions, respectively. After considering the volume loss with \gls{CT} measurements, they have concluded that the corrosion rate of these alloys is three times more in the presence of fluid flow, increasing from $\sim 0.6\text{mm.year}^{-1}$ in static condition to $\sim 1.5\text{mm.year}^{-1}$ in a hydrodynamics setup \cite{Wang2014}. This shows the significance of adding fluid flow to the developed biodegradation model.
+
+Computational Fluid Dynamics (\gls{CFD}) is the field of studying the dynamics of fluid flow using mathematical and computational methods \cite{H.Versteeg2007,Sharma2022}. The fluid flow is usually expressed in the form of Navier-Stokes or Stokes equations, on which appropriate numerical schemes are applied, and the derived system of equations is solved using computers, resulting in the prediction of flow patterns and secondary entities like the shear stress. \gls{CFD} modeling has been used in tissue engineering to study fluid flow systems such as dynamic cell culture conditions in perfusion bioreactors \cite{Hutmacher2008, Hossain2012,Patrachari2012}.
+
+In this chapter, a parallel computational model for fluid flow simulations was developed and coupled with the biodegradation model. The model was developed by solving the derived equations, i.e., Navier-Stokes equations coupled with the Darcy effect for the degrading object, using the finite element method. To ensure proper verification of the simulation results, the model output was compared with an OpenFOAM simulation on the same geometry and setup. 
 
 \section{Methodology}
 
@@ -23,11 +27,11 @@ In this chapter, a parallel computational model for fluid flow simulations was d
 In its general form, the Navier-Stokes equations describing the flow of an incompressible fluid with constant density $\rho$ in the domain $\Omega \subset \mathbb{R}^{d}$ (with $d$ being the dimension, so 2 or 3) can be written as \cite{Chung2014}:
 \begin{equation} \label{eq:fluid_ns_general}
 \left\{ {\begin{array}{*{20}{l}}
-\displaystyle  {\frac{{\partial {\mathbf{u}}}}{{\partial t}} - {\nabla\cdot}[\nu(\nabla {\mathbf{u}} + \nabla {{\mathbf{u}}^T})] + ({\mathbf{u}}.\nabla ){\mathbf{u}} + \nabla {\mathbf{p}} = {\mathbf{f}},\quad x \in \Omega ,t > 0,} \\
+\displaystyle  {\frac{{\partial {\mathbf{u}}}}{{\partial t}} - {\nabla\cdot}[\nu(\nabla {\mathbf{u}} + \nabla {{\mathbf{u}}^T})] + ({\mathbf{u}}.\nabla ){\mathbf{u}} + \nabla p = {\mathbf{f}},\quad x \in \Omega ,t > 0,} \\
 \displaystyle  {\nabla\cdot{\mathbf{u}} = 0,\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad x \in \Omega ,t > 0,}
 \end{array}} \right.
 \end{equation}
-in which $\mathbf{u}$ is the fluid velocity, $\mathbf{p}$ is the pressure (which is actually pressure divided by the density), $\nu = \frac{\mu}{\rho}$ is the kinematic viscosity (with $\mu$ being the dynamic viscosity), and
+in which $\mathbf{u}$ is the fluid velocity, $p$ is the pressure (which is actually pressure divided by the density), $\nu = \frac{\mu}{\rho}$ is the kinematic viscosity (with $\mu$ being the dynamic viscosity), and
 $\mathbf{f}$ is a force term. The equations are conservation of linear momentum and conservation of mass (also called continuity equation), respectively. When $\nu$ is constant, the diffusion term in Eq. \ref{eq:fluid_ns_general} can be simplified as \cite{Quarteroni2014}:
 \begin{equation}
 \text{div} [\nu(\nabla {\bf u}+\nabla {\bf u}^{T})] =\nu (\Delta {\bf u} + \nabla \text{div} {\bf u})=\nu \Delta {\bf u},
@@ -56,9 +60,9 @@ On $\Gamma_2$, a wall boundary no-slip condition can be considered:
 
 On $\Gamma_3$, for the outlet condition, a homogeneous Neumann condition on velocity and a zero pressure condition can be defined like:
 \begin{equation} \label{eq:fluid_gamma3}
-\frac{\partial {\bf u}}{\partial n} = 0, \quad \mathbf{p} = 0, \quad \text{on } \Gamma_3
+\frac{\partial {\bf u}}{\partial \boldsymbol{n}} = 0, \quad p = 0, \quad \text{on } \Gamma_3
 \end{equation}
-with $n$ being the normal direction on the boundary $\partial \Omega$. Broadly speaking, these boundaries can be grouped into 2 sets: $\Gamma_{D} = \Gamma_{1} \cup \Gamma_{2}$ and $\Gamma_{N} = \Gamma_{3}$ for boundaries with Dirichlet and Neumann conditions, respectively.
+with $\boldsymbol{n}$ being the normal direction on the boundary $\partial \Omega$. Broadly speaking, these boundaries can be grouped into 2 sets: $\Gamma_{D} = \Gamma_{1} \cup \Gamma_{2}$ and $\Gamma_{N} = \Gamma_{3}$ for boundaries with Dirichlet and Neumann conditions, respectively.
 
 The Navier-Stokes equations can be written componentwise for individual components of the flow vector field in the Cartesian coordinates. Denoting $u_i, i=1,\ldots,d$ (with $d=2$ in 2D and $d=3$ in 3D), Eq. \ref{eq:fluid_ns} can be presented as:
 
@@ -72,9 +76,9 @@ The Navier-Stokes equations can be written componentwise for individual componen
 
 \subsection{Weak formulation of the Navier-Stokes equations} \label{sec:fluid_weak}
 
-For deriving the weak formulation, the first equation of \ref{eq:fluid_ns} is multiplied by a test function $v$ defined on a proper function space V in which the test functions vanish on the Dirichlet boundary:
+For deriving the weak formulation, the first equation of \ref{eq:fluid_ns} is multiplied by a test function $\bf v$ defined on a proper function space V (with ${\bf H}^{1}$ being the Sobolev space defined in domain $\Omega$) in which the test functions vanish on the Dirichlet boundary:
 \begin{equation} \label{eq:fluid_space_v}
-V = [{\bf H}^{1}_{\Gamma_{D}}(\Omega)]^{d} = \lbrace{\bf V} \in [{\bf H}^{1}(\Omega)]^{d} : {\bf v}|\Gamma_{D} = {\bf 0}\rbrace.
+V = [{\bf H}^{1}_{\Gamma_{D}}(\Omega)]^{d} = \lbrace{\bf V} \in [{\bf H}^{1}(\Omega)]^{d} : {\bf v}|_{\Gamma_{D}} = {\bf 0}\rbrace.
 \end{equation}
 yielding to:
 \begin{equation} \label{eq:fluid_weak1}
@@ -100,9 +104,9 @@ and
 
 \noindent The last term of Eq. \ref{eq:fluid_ns_weak} is expressed in accordance to the defined Neumann boundary condition, which vanishes on $\Gamma_3$ due to the defined condition in the current study (Eq. \ref{eq:fluid_gamma3}). Moreover, this term vanishes on the Dirichlet boundaries due to the properties of the function space $V$ (Eq. \ref{eq:fluid_space_v}).
 
-Similarly, the second equation of \ref{eq:fluid_ns} is multiplied by a test function $q$ belonging to the function space Q, called the pressure space:
+Similarly, the second equation of \ref{eq:fluid_ns} is multiplied by a test function $q$ belonging to the function space Q (with ${\bf L}^2$ being a Hilbert space defined in domain $\Omega$), called the pressure space:
 \begin{equation}
-Q = {\bf L}^2_0(\Omega) = \lbrace p \in L^2(\Omega) : {\mathop{\int}_{\Omega}} p \ d\omega = 0\rbrace,
+Q = {\bf L}^2_0(\Omega) = \lbrace p \in {\bf L}^2(\Omega) : {\mathop{\int}_{\Omega}} p \ d\omega = 0\rbrace,
 \end{equation}
 resulting in:
 \begin{equation} \label{eq:fluid_ns_weak_pressure}
@@ -116,7 +120,7 @@ Eqs. \ref{eq:fluid_ns_weak} and \ref{eq:fluid_ns_weak_pressure} are so called we
 For viscous flow, where the Reynolds number is less than 1 ($Re = {|{\bf U}|L \over \nu}$, with $L$ and $\bf U$ being the representative length and velocity of the domain), the convection term of the Navier-Stokes equations can be neglected, simplifying Eq. \ref{eq:fluid_ns} to \cite{Quarteroni2014}:
 \begin{equation} \label{eq:fluid_stokes}
 \left\{ {\begin{array}{*{20}{l}}
-\displaystyle  {\alpha \mathbf{u} - \nu\Delta \mathbf{u} + \nabla p = f\quad \text{in}\;\Omega ,} \\
+\displaystyle  {\alpha \mathbf{u} - \nu\Delta \mathbf{u} + \nabla p = \mathbf{f} \quad \text{in}\;\Omega ,} \\
 \displaystyle  {\nabla\cdot\mathbf{u} = 0\quad \quad \quad \quad \;\;\;\text{in}\;\Omega ,}
 \end{array}} \right.
 \end{equation}
@@ -135,11 +139,11 @@ Eq. \ref{eq:fluid_stokes_weak} can be written in the standard finite element var
 \displaystyle  {b({\mathbf{u}},{\mathbf{q}}) =  - \int\limits_\Omega  {q\nabla\cdot{\mathbf{u}}\;d\omega ,} }
 \end{array}
 \end{equation}
-which causes the variational problem of the Stokes equation becomes to find $(\mathbf{u}, p) \in V \times Q$ such that
+which simplifies the notation of the variational problem of the Stokes equation to:
 \begin{equation}
 \left\{ {\begin{array}{*{20}{l}}
-\displaystyle  {a({\mathbf{u}},{\mathbf{v}}) + {\mathbf{b}}({\mathbf{v}},{\mathbf{p}}) = ({\mathbf{f}},{\mathbf{v}})\qquad {\forall {\mathbf{v}}} \in V,} \\
-\displaystyle  {b({\mathbf{u}},{\mathbf{q}}) = 0\qquad \qquad \qquad \quad \;{\forall {\mathbf{q}}} \in Q,}
+\displaystyle  {a({\mathbf{u}},{\mathbf{v}}) + {b}({\mathbf{v}},p) = ({\mathbf{f}},{\mathbf{v}})\qquad {\forall {\mathbf{v}}} \in V,} \\
+\displaystyle  {b({\mathbf{u}},q) = 0\qquad \qquad \qquad \quad \;{\forall q} \in Q,}
 \end{array}} \right.
 \end{equation}
 in which
@@ -164,7 +168,7 @@ property), a pseudo-compressibility assumption can be added to the continuity eq
 Similarly, the Stokes equation can be written as:
 \begin{equation} \label{eq:fluid_stokes_pseudo}
 \left\{ {\begin{array}{*{20}{l}}
-\displaystyle  {\alpha \mathbf{u} - \nu\Delta \mathbf{u} + \nabla p = f,} \\
+\displaystyle  {\alpha \mathbf{u} - \nu\Delta \mathbf{u} + \nabla p = \mathbf{f},} \\
 \displaystyle  {\nabla\cdot\mathbf{u} + \varepsilon p = 0.}
 \end{array}} \right.
 \end{equation}
@@ -174,13 +178,13 @@ Similarly, the Stokes equation can be written as:
 Another challenging part is to approximate the convection terms in the equations. One of the best approaches to do so is to take advantage of the method of characteristics, in which the characteristics curves of a \gls{PDE} are used to convert it to an \gls{ODE}, resulting in a simpler solution. By using the method of characteristics for the convection term and a backward Euler discretization for the temporal term, the weak form of the Navier-Stokes and continuity equations (Eq. \ref{eq:fluid_ns_pseudo}) can be rewritten as:
 \begin{equation} \label{eq:fluid_ns_weak_implement}
 \begin{aligned}
-&\int_{\Omega} \frac{\mathbf{u}^{n+1}-\mathbf{u}^{n} \circ X^{n}}{\Delta t} \cdot \mathbf{v} d \omega+\nu \int_{\Omega} \nabla \mathbf{u}^{n+1} \cdot \nabla \mathbf{v} d \omega-\int_{\Omega} p^{n+1} \nabla \cdot \mathbf{v} d \omega=\int_{\Omega} \boldsymbol{f} \cdot \mathbf{v} d\omega \\
+&\int_{\Omega} \frac{\mathbf{u}^{n+1}-\mathbf{u}^{n} \circ X^{n}}{\Delta t} \cdot \mathbf{v} d \omega+\nu \int_{\Omega} \nabla \mathbf{u}^{n+1} \cdot \nabla \mathbf{v} d \omega-\int_{\Omega} p^{n+1} \nabla \cdot \mathbf{v} d \omega=\int_{\Omega} \mathbf{f} \cdot \mathbf{v} d\omega \\
 &\int_{\Omega} \nabla \cdot \mathbf{u}^{n+1} q d \omega+\varepsilon \int_{\Omega} p^{n+1} q d \omega=0
 \end{aligned}
 \end{equation}
 in which $(\mathbf{u}^{n+1},p^{n+1})$ are the unknowns to be computed from the known state $\mathbf{u}^{n}$ coming from the previous time step or the initial condition. In Eq. \ref{eq:fluid_ns_weak_implement}, the term $\mathbf{u}^{n+1}-\mathbf{u}^{n} \circ X^{n}$ is corresponding to the convection term being approximated using the method of characteristics.
 
-The weak form of the Stokes equations stays almost the same as Eq. \ref{eq:fluid_stokes_weak} (because it doesn't contain transient and convection terms) but needs a slight modification to add the pseudo-compressible terms from Eq. \ref{eq:fluid_stokes_pseudo}:
+The weak form of the Stokes equations stays almost the same as Eq. \ref{eq:fluid_stokes_weak} (because it does not contain transient and convection terms) but needs a slight modification to add the pseudo-compressible terms from Eq. \ref{eq:fluid_stokes_pseudo}:
 \begin{equation} \label{eq:fluid_stokes_weak_implement}
 \begin{array}{*{20}{l}}
 \displaystyle  {\int\limits_\Omega  {(\alpha {\mathbf{u}}.{\mathbf{v}} + \nu\nabla {\mathbf{u}}.\nabla {\mathbf{v}})\,} d\omega  - \int\limits_\Omega  {p\nabla\cdot{\mathbf{v}}\;d\omega  = } \int\limits_\Omega  {{\mathbf{f}}.{\mathbf{v}}\;d\omega,} } \\
@@ -195,11 +199,9 @@ The model was implemented in the open-source \gls{PDE} solver FreeFEM \cite{Hech
 
 The solution of the Stokes and Navier-Stokes equations using the finite element method in 3D is a computationally intensive process, and as a result, taking advantage of high-performance techniques to reduce the simulation time becomes crucial in real-world applications. Preconditioning the system and parallelizing the simulation by partitioning the mesh and distributing the partitions among available computing nodes in a parallel computing setup are great solutions to this challenge.
 
-In this implementation, the METIS graph partitioner \cite{METIS1998} and \gls{HPDDM} package \cite{Jolivet2013} were used to partition the computational mesh and distribute the load over the available resources. For preconditioning and improving the solution time of the derived equations, various preconditioners and iterative or direct solvers available in the \gls{PETSc} toolkit \cite{petsc} were tested to find the most suitable combination.
+In the current implementation, the METIS graph partitioner \cite{METIS1998} and \gls{HPDDM} package \cite{Jolivet2013} were used to partition the computational mesh and distribute the load over the available resources. For preconditioning and improving the solution time of the derived equations, various (combinations of) preconditioners and iterative or direct solvers available in the \gls{PETSc} toolkit \cite{petsc} were tested to find the most suitable combination.
 
-While exact factorization preconditioners (such as LU) are easy to implement and use for fluid flow applications, they show bad memory scaling profiles in large-scale problems, meaning that memory usage increases exponentially with the problem size, making it almost impossible to use them for 3D cases. A better solution for this class of problems is to take advantage of the FieldSplit preconditioner in the \gls{PETSc} toolkit, which allows solving the derived linear system of equations using the block matrices technique. In this technique, the matrices are divided into smaller blocks, and separate preconditioners or solvers can be assigned to each block (each field). These blocks arise naturally from the underlying physics or numerical discretization of the problem, such as velocity and pressure in fluid flow applications.
-
-For matrices with an arbitrary number of blocks, three different ``block'' algorithms are available in the \gls{PETSc} toolkit: block Jacobi (\verb|additive|), block Gauss-Seidel (\verb|multiplicative|), and symmetric block Gauss-Seidel \\ (\verb|symmetric_multiplicative|), which can be set by passing the desired one to the \verb|pc_fieldsplit_type| flag. For two blocks, like the one in fluid flow problems with velocity and pressure as the blocks, another family of solvers based on Schur complements can be used.
+While exact factorization preconditioners (such as LU) are easy to implement and use for fluid flow applications, they show bad memory scaling profiles in large-scale problems, meaning that memory usage increases exponentially with the problem size, making it almost impossible to use them for 3D cases. A better solution for this class of problems is to take advantage of the FieldSplit preconditioner in the \gls{PETSc} toolkit, which allows solving the derived linear system of equations using the block matrices technique. In this technique, the matrices are divided into smaller blocks, and separate preconditioners or solvers can be assigned to each block (each field). These blocks arise naturally from the underlying physics or numerical discretization of the problem, such as velocity and pressure in fluid flow applications. For matrices with an arbitrary number of blocks, three different ``block'' algorithms are available in the \gls{PETSc} toolkit: block Jacobi (\verb|additive|), block Gauss-Seidel (\verb|multiplicative|), and symmetric block Gauss-Seidel (\verb|symmetric_multiplicative|), which can be selected by passing the desired one to the \verb|pc_fieldsplit_type| flag. For two blocks, like the one in fluid flow problems with velocity and pressure as the blocks, another family of solvers based on Schur complements can be used.
 
 \newglossaryentry{AMG}{name={AMG},description={algebraic multigrid}}
 \newglossaryentry{KSP}{name={KSP},description={Krylov subspace}}
@@ -224,7 +226,12 @@ Adding the Darcy  term to Eq. \ref{eq:fluid_stokes} and considering no other act
 \begin{equation} \label{eq:fluid_stokes_permeab}
 - \nu\Delta \mathbf{u} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0,
 \end{equation}
-where $K$ is the permeability function. The Darcy term vanishes in regions with high permeability, i.e., inside the fluid domain, resembling the Stokes equation. Still, when $K$ is very small, i.e., inside the solid part, it dominates the flow and acts like a barrier. To avoid numerical perturbation for switching between these 2 regions, a Heaviside function is defined to update $K$ \cite{Guyot2016}:
+where $K$ is the permeability function.  Similar to Eq. \ref{eq:fluid_stokes_permeab} the effect of the solid part can be added to the Navier-Stokes equation (Eq. \ref{eq:fluid_ns}) by the Darcy term, leading to the following equation:
+\begin{equation}  \label{eq:fluid_ns_permeab}
+\frac{{\partial {\mathbf{u}}}}{{\partial t}} - \nu\Delta{\mathbf{u}} + \left( {{\mathbf{u}} \cdot \nabla } \right) {\mathbf{u}} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0.
+\end{equation}
+
+The Darcy term vanishes in regions with high permeability, i.e., inside the fluid domain, resembling the Stokes equation. Still, when $K$ is very small, i.e., inside the solid part, it dominates the flow and acts like a barrier. To avoid numerical perturbation for switching between these 2 regions, a Heaviside function is defined to update $K$ \cite{Guyot2016}:
 \begin{equation}
 H(\phi)=\left\{\begin{array}{l}
 0, \quad \phi<-\varepsilon \\
@@ -236,10 +243,7 @@ in which $\phi$ is the level-set signed distance function used to separate the s
 \begin{equation}
 K(\boldsymbol{x})=10^{30}(1-H)+K_{0} H
 \end{equation}
-where $K_{0}$ is the permeability of metals in fluid regions ($\sim10^{-6}$ H/m). Similar to Eq. \ref{eq:fluid_stokes_permeab} the effect of the solid part can be added to the Navier-Stokes equation (Eq. \ref{eq:fluid_ns}) by the Darcy term, leading to the following equation:
-\begin{equation}  \label{eq:fluid_ns_permeab}
-\frac{{\partial {\mathbf{u}}}}{{\partial t}} - \nu\Delta{\mathbf{u}} + \left( {{\mathbf{u}} \cdot \nabla } \right) {\mathbf{u}} + \nabla p + \frac{\nu}{K} \mathbf{u} = 0.
-\end{equation}
+where $K_{0}$ is the permeability of metals in fluid regions ($\sim10^{-6}$ H/m).
 
 \subsection{Simulation setup}
 
@@ -247,7 +251,7 @@ where $K_{0}$ is the permeability of metals in fluid regions ($\sim10^{-6}$ H/m)
 
 \newglossaryentry{SIMPLE}{name={SIMPLE},description={semi-implicit method for pressure linked equations}}
 
-In order to perform verification on the developed \gls{CFD} model, a 3D case of flow inside a chamber was constructed to compare the simulation results with a well-established and known \gls{CFD} solver. For this reason, OpenFOAM open-source solver was used, which has been extensively used for fluid dynamics simulations over the last decades \cite{Weller1998}. The simulation was carried out using the simpleFOAM solver, which uses the \gls{SIMPLE} (Semi-Implicit Method for Pressure Linked Equations) algorithm for coupling and solving the Navier-Stokes equations.
+In order to perform a verification analysis on the developed \gls{CFD} model, a case of 3D flow inside a chamber was implemented to compare the simulation results with those of a well-established and known \gls{CFD} solver. For this reason, the OpenFOAM open-source solver was used, which has been extensively used for fluid dynamics simulations over the last decades \cite{Weller1998}. The simulation was carried out using the simpleFOAM solver, which uses the \gls{SIMPLE} (Semi-Implicit Method for Pressure Linked Equations) algorithm for coupling and solving the Navier-Stokes equations.
 
 \begin{figure}[h]
 \centering
@@ -258,7 +262,7 @@ In order to perform verification on the developed \gls{CFD} model, a 3D case of 
 
 The geometry was chosen based on the experiments performed for biodegradation in hydrodynamics conditions. The experimental setup is depicted in Fig. \ref{fig:fluid_setup}-A, where the constructed CAD geometry is shown in Fig. \ref{fig:fluid_setup}-B. The computational mesh, comprising linear tetrahedral elements, was generated using Netgen \cite{Schoeberl1997} in the SALOME platform \cite{Ribes2007}. The final mesh used in both FreeFEM and OpenFOAM models is shown in Fig. \ref{fig:fluid_setup}-C, containing \num{100888} elements.
 
-The fluid flow direction is from left to right, meaning that the inlet was set on the vertical face of the small pipe on the bottom left side of the chamber, and the outlet was set similarly on the upper right pipe. The rest of the boundaries were set to no-slip boundary conditions. Zero pressure boundary condition was set on the outlet. The inlet velocity was set to $1.0 mm/s$, and the parameter $\nu$ was set to $0.85 mm^2/s$.
+The fluid flow direction is from left to right, meaning that the inlet was set on the vertical face of the small pipe on the bottom left side of the chamber, and the outlet was set similarly on the upper right pipe. The rest of the boundaries were set to no-slip boundary conditions. A zero pressure boundary condition was set on the outlet. The inlet velocity was set to $1.0 \mathrm{mm}/\mathrm{s}$, and the parameter $\nu$ was set to $0.85 \mathrm{mm}^2/\mathrm{s}$.
 
 \subsubsection{Test case to check coupling with degradation model}
 
@@ -283,59 +287,59 @@ Additionally, a simple 2D representation of the full chamber model (Fig. \ref{fi
 
 \section{Results}
 
-To verify the robustness of the model predictions, the results of the \gls{CFD} code were compared both quantitatively and qualitatively with an identical  OpenFOAM model. The qualitative comparison was made via the streamlines, showing how the flow develops by plotting the trajectory lines of the fluid velocity field inside the desired domain, which is the chamber in this case. Figs. \ref{fig:fluid_streamlines_side} and \ref{fig:fluid_streamlines_top} demonstrate such comparison between the developed model and OpenFOAM. Fig. \ref{fig:fluid_streamlines_side} shows the streamlines for both models from a side view, in which the flow enters the chamber from the left inlet pipe and leaves it from the top right outlet. The qualitative comparison shows a good agreement between the predictions of the models.
+To verify the robustness of the model predictions, the results of the \gls{CFD} code developed in FreeFEM were compared both quantitatively and qualitatively with an OpenFOAM model of an identical set-up. The qualitative comparison was made via the streamlines, showing how the flow develops by plotting the trajectory lines of the fluid velocity field inside the desired domain, which is the chamber in this case. Figs. \ref{fig:fluid_streamlines_side} and \ref{fig:fluid_streamlines_top} show such comparison between the developed model and OpenFOAM. Fig. \ref{fig:fluid_streamlines_side} shows the streamlines for both models from a side view, in which the flow enters the chamber from the left inlet pipe and leaves it from the top right outlet. The qualitative comparison shows a good agreement between the predictions of the models.
 
 \begin{figure}[h]
 \centering
 \medskip
-\includegraphics[width=\textwidth]{streamlines_side.png}
-\caption[Comparing streamline results of developed CFD code and OpenFOAM - side view]{Comparing the results of the developed \gls{CFD} model (top) with OpenFOAM (bottom) via plotting the streamlines of the fluid velocity field, depicted from the side view. The colors on the trajectory lines show the magnitude of the velocity vector.} \label{fig:fluid_streamlines_side}
+\includegraphics[width=\textwidth]{streamlines_side.jpg}
+\caption[Comparing streamline results of developed CFD code and OpenFOAM - side view]{Comparing the results of the developed \gls{CFD} model (top) with OpenFOAM (bottom) via plotting the streamlines of the fluid velocity field, depicted from the side view. The colors on the trajectory lines show the magnitude of the velocity vector (in $\mathrm{mm}/\mathrm{s}$).} \label{fig:fluid_streamlines_side}
 \end{figure}
 
-Similarly, Fig. \ref{fig:fluid_streamlines_top} depicts a comparison but from the top view, showing good agreement between the predictions, although the OpenFOAM model (bottom) shows slightly better performance on the boundaries.
+Similarly, Fig. \ref{fig:fluid_streamlines_top} depicts a comparison but from the top view, showing good agreement between the predictions, although the OpenFOAM model (bottom) shows slightly better performance on the boundaries as can be appreciated from the existence of extra streamlines close to the cylinder boundary in the FreeFEM code results.
 
 \begin{figure}[h]
 \centering
 \medskip
-\includegraphics[width=\textwidth]{streamlines_top.png}
-\caption[Comparing streamline results of developed CFD code and OpenFOAM - top view]{Streamlines of the fluid velocity field plotted from a top view to compare the output of the developed \gls{CFD} model (top) and OpenFOAM (bottom)  with colors showing the magnitude of the velocity vector at each point.} \label{fig:fluid_streamlines_top}
+\includegraphics[width=\textwidth]{streamlines_top.jpg}
+\caption[Comparing streamline results of developed CFD code and OpenFOAM - top view]{Streamlines of the fluid velocity field plotted from a top view to compare the output of the developed \gls{CFD} model (top) and OpenFOAM (bottom)  with colors showing the magnitude of the velocity vector at each point (in $\mathrm{mm}/\mathrm{s}$).} \label{fig:fluid_streamlines_top}
 \end{figure}
 
-Moreover, a quantitative comparison is possible by comparing the numerical values predicted by the models in various regions of the desired domain, including the regions close to the boundaries. Fig. \ref{fig:fluid_flow_chamber} shows the comparison of the fluid velocity field visualization between the developed \gls{CFD} code and OpenFOAM on a cross-section in the center of the chamber, demonstrating that both models produce the same results quantitatively.
+Moreover, a quantitative comparison is possible by comparing the numerical values predicted by the models in various regions of the desired domain, including the regions close to the boundaries. Fig. \ref{fig:fluid_flow_chamber} shows the comparison of the fluid velocity field visualization between the developed \gls{CFD} code and OpenFOAM on a cross-section in the center of the chamber, showing that both models produce the same results quantitatively.
 
 \begin{figure}[h]
 \centering
 \medskip
-\includegraphics[width=\textwidth]{flow_chamber.png}
-\caption[Comparing flow field results of developed CFD code and OpenFOAM]{comparison between the fluid velocity field predicted by the developed \gls{CFD} code (top) and OpenFOAM (bottom), depicted on a vertical cross-section in the center of the chamber. Fluid enters the chamber from the left and leaves it from the right. The colors show the magnitude of the velocity vector at each point.} \label{fig:fluid_flow_chamber}
+\includegraphics[width=\textwidth]{flow_chamber.jpg}
+\caption[Comparing flow field results of developed CFD code and OpenFOAM]{comparison between the fluid velocity field predicted by the developed \gls{CFD} code (top) and OpenFOAM (bottom), depicted on a vertical cross-section in the center of the chamber. Fluid enters the chamber from the left and leaves it from the right. The colors show the magnitude of the velocity vector at each point (in $\mathrm{mm}/\mathrm{s}$). The white dashed-line box shows the zoomed-in area of Fig. \ref{fig:fluid_flow_chamber_zoom}.} \label{fig:fluid_flow_chamber}
 \end{figure}
 
-A closer look at the center of Fig. \ref{fig:fluid_flow_chamber} is depicted in Fig. \ref{fig:fluid_flow_chamber_zoom}, where the color bar range is adapted to contain only the visible values. This close comparison also confirms the good agreement between the \gls{CFD} model and OpenFOAM results. The employed mesh is relatively coarse in the center (regions far from the inlet and outlet), the effect of which can be seen as non-smooth velocity profiles in Fig. \ref{fig:fluid_flow_chamber_zoom}. Still, both models handle this coarse mesh effect similarly.
+A closer look at the center of Fig. \ref{fig:fluid_flow_chamber} is depicted in Fig. \ref{fig:fluid_flow_chamber_zoom}, where the color bar range is adapted to contain only the visible values. This zoomed-in comparison confirms the good agreement between the \gls{CFD} model and OpenFOAM results. The employed mesh is relatively coarse in the center (regions far from the inlet and outlet), the effect of which can be seen as non-smooth velocity profiles in Fig. \ref{fig:fluid_flow_chamber_zoom}. Still, both models handle this coarse mesh effect similarly.
 
 \begin{figure}[h]
 \centering
 \medskip
-\includegraphics[width=\textwidth]{flow_chamber_zoom.png}
-\caption[Comparing flow field results of developed CFD code and OpenFOAM - zoomed view]{A closer look at the fluid velocity field for results predicted by the developed \gls{CFD} code (top) and OpenFOAM (bottom) with colors showing the magnitude of the velocity vector at each point.} \label{fig:fluid_flow_chamber_zoom}
+\includegraphics[width=\textwidth]{flow_chamber_zoom.jpg}
+\caption[Comparing flow field results of developed CFD code and OpenFOAM - zoomed-in view]{A zoomed-in view of the area depicted as white dashed-line in Fig. \ref{fig:fluid_flow_chamber}, indicating the fluid velocity field for results predicted by the developed \gls{CFD} code (top) and OpenFOAM (bottom) with colors showing the magnitude of the velocity vector at each point (in $\mathrm{mm}/\mathrm{s}$).} \label{fig:fluid_flow_chamber_zoom}
 \end{figure}
 
-Fig. \ref{fig:fluid_flow_degrading} shows the result of a proof-of-concept simulation in which the biodegradation model \cite{Barzegari2021} is coupled with the fluid flow model. This was done by solving Eq. \ref{eq:fluid_ns_permeab} (or Eq. \ref{eq:fluid_stokes_permeab} for simpler cases) and adding a convection term to the equations of the biodegradation model to include the bidirectional effect of fluid flow on the degrading object. This effect can be seen in Fig. \ref{fig:fluid_flow_degrading} with the released ions being advected to the right (the direction of the fluid flow) and the degrading object being slightly more degraded on the left.
+Fig. \ref{fig:fluid_flow_degrading} shows the result of a proof-of-concept simulation in which the biodegradation model \cite{Barzegari2021} is coupled with the fluid flow model. This was done by solving Eq. \ref{eq:fluid_ns_permeab} (or Eq. \ref{eq:fluid_stokes_permeab} for simpler cases) and adding a convection term to the equations of the biodegradation model to include the directional effect of fluid flow on the degrading object. The interplay between the fluid flow and the degradation can be seen in Fig. \ref{fig:fluid_flow_degrading} with the released ions being advected to the right (the direction of the fluid flow) and the degrading object being slightly more degraded on the left.
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{flow_degrading.jpg}
-\caption[Biodegradation simulation results in the presence of fluid flow]{Biodegradation simulation results in the presence of fluid flow over time, showing the bidirectional effect of fluid flow. The flow gets detoured due to the presence of an obstacle, and the released ions get advected to the direction of fluid flow (left to right). The colors represent the concentration of Mg ions as they get released to the surrounding environment and subsequently get diffused/advected. The gray surface shows the zero iso-contour of the used level-set function to track the degrading object's interface, demonstrating the solid part's change of morphology.} \label{fig:fluid_flow_degrading}
+\caption[Biodegradation simulation results in the presence of fluid flow]{Biodegradation simulation results in the presence of fluid flow over time (in arbitrary units), showing the interplay between the fluid flow and biodegradation models. The flow gets detoured due to the presence of an obstacle, and the released ions get advected to the direction of fluid flow (left to right). The colors represent the concentration of Mg ions as they get released to the surrounding environment and subsequently get diffused/advected. The gray surface shows the zero iso-contour of the used level-set function to track the degrading object's interface, demonstrating the solid part's change of morphology.} \label{fig:fluid_flow_degrading}
 \end{figure}
 
-Fig. \ref{fig:fluid_flow_degrading_streamline} intended to demonstrate the effect of the degrading object on the fluid velocity field, depicted as streamlines passing over the solid part. As seen in the figure, the fluid velocity field evolves over time, demonstrating the fluid flow response obtained from solving the Navier-Stokes equations (Eq. \ref{eq:fluid_ns_permeab}) to the change of the morphology of the obstacle.
+Fig. \ref{fig:fluid_flow_degrading_streamline} shows the effect of the degrading object on the fluid velocity field, depicted as streamlines passing over the solid part at the end of the performed simulation. The figure demonstrates the fluid flow response to the presence of the changing morphology of the obstacle, obtained from solving the Navier-Stokes equations containing the Darcy term (Eq. \ref{eq:fluid_ns_permeab}).
 
 
 \begin{figure}[h]
 \centering
 \medskip
 \includegraphics[width=\textwidth]{flow_degrading_streamline.jpg}
-\caption[Fluid flow streamlines in the presence of a degrading object]{Visualization of the evolution of the fluid velocity field depicted by streamlines passing over a degrading object. Colors show the magnitude of the velocity field projected on the streamlines.} \label{fig:fluid_flow_degrading_streamline}
+\caption[Fluid flow streamlines in the presence of a degrading object]{Visualization of the fluid velocity field depicted by streamlines passing over a degrading object. Colors show the magnitude of the velocity field (in $\mathrm{mm}/\mathrm{s}$) projected on the streamlines.} \label{fig:fluid_flow_degrading_streamline}
 \end{figure}
 
 
@@ -353,21 +357,19 @@ Fig. \ref{fig:fluid_degradation_chamber} shows the results of the second test ca
 \section{Discussion}
 
 
-In this study, a parallel fluid flow model was developed to be coupled with the computational biodegradation model to make it possible to consider the effect of the hydrodynamics condition in corrosion tests. The most important form of hydrodynamics in tissue engineering is the perfusion phenomenon in bioreactors, which makes the development of such coupled degradation-\gls{CFD} model even more crucial considering the final application of the biodegradation model.
+In this study, a parallel fluid flow model was developed to be coupled with the computational biodegradation model enabling the consideration of the effect of the hydrodynamics conditions in corrosion tests. The most important form of hydrodynamics in tissue engineering is the perfusion phenomenon in bioreactors, which makes the development of such coupled degradation-\gls{CFD} model even more crucial considering the final application of the biodegradation model. Similar to perfusion bioreactors, the hydrodynamics set-up in biodegradation tests helps removing corrosion products and providing mechanical forces if applicable.
 
 
-In order to verify the developed \gls{CFD} model, a test case was prepared to simulate a similar chamber flow model in both the in-house and OpenFOAM code, a well-established open-source \gls{CFD} solver. Qualitative (Figs. \ref{fig:fluid_streamlines_side} and \ref{fig:fluid_streamlines_top}) and quantitative (Figs. \ref{fig:fluid_flow_chamber_zoom} and \ref{fig:fluid_flow_chamber}) comparison of results show identical predictions for the flow field in both models, demonstrating that the derivation of the weak forms of Navier-Stokes equations as well as their numerical implementation in FreeFEM were performed correctly. This comparison indicates that the developed code can be used instead of a well-known and sophisticated \gls{CFD} solver for the desired flow regime, which is laminar flow with low Reynolds numbers.
+In order to verify the developed \gls{CFD} model, a test case was prepared to simulate a similar chamber flow model in both the in-house FreeFEM code and the OpenFOAM code, a well-established open-source \gls{CFD} solver. Qualitative (Figs. \ref{fig:fluid_streamlines_side} and \ref{fig:fluid_streamlines_top}) and quantitative (Figs. \ref{fig:fluid_flow_chamber} and \ref{fig:fluid_flow_chamber_zoom}) comparison of results show identical predictions for the flow field in both models, demonstrating that the derivation of the weak forms of Navier-Stokes equations as well as their numerical implementation in FreeFEM were performed correctly. This comparison indicates that the developed code can be used instead of a well-known and sophisticated \gls{CFD} solver for the desired flow regime, which is laminar flow with low Reynolds numbers.
 
 \newglossaryentry{IO}{name={IO},description={input output}}
 
-The reason for developing an in-house \gls{CFD} code instead of using a well-established \gls{CFD} solver lies in the lack of availability of proper coupling software. Although various efficient solver coupling codes exist and are widely used in similar scenarios (such preCISE coupling library \cite{preCICEv2}), at the time of this writing and to the best of the authors' knowledge, there is no compatible coupling software for FreeFEM, the language in which the computational model of the biodegradation process was implemented. In case of existence, the computational biodegradation model could have been linked with OpenFOAM, SU2, or Code\_Saturne in an efficient in-memory way. But, with such an approach not available, the only feasible approach would be coupling the models using disk \gls{IO} (input-output), meaning that in each time step, the computational model should write the domain data on disk (we should notice that the domain evolves since it is a moving interface problem), and the \gls{CFD} code reads the data, computes the flow field, and writes it back to the disk so that the biodegradation would read it back. Despite the possibility of employing this approach, the computationally intensive aspects of the models, which is the result of a 3D mesh refined on the corrosion interface leading to normally 2M-4M elements, makes the workflow dramatically inefficient. Working in \gls{HPC} environments and dealing with partitioned mesh can make the situation even more complex. This reasoning made it inevitable to develop an in-house \gls{CFD} code so that it can be seamlessly coupled with other models efficiently.
+The reason for developing an in-house \gls{CFD} code instead of using a well-established \gls{CFD} solver lies in the lack of availability of proper coupling software. Although various efficient solver coupling codes exist and are widely used in similar scenarios (such as the preCISE coupling library \cite{preCICEv2}), at the time of this writing and to the best of the authors' knowledge, there is no compatible coupling software for FreeFEM, the language in which the computational model of the biodegradation process was implemented. In case of existence, the computational biodegradation model could have been linked with OpenFOAM, SU2, or Code\_Saturne in an efficient in-memory way. But, with such an approach not available, the only feasible approach would be coupling the models using disk \gls{IO} (input-output), meaning that in each time step, the computational model should write the domain data on disk (we should notice that the domain evolves since it is a moving interface problem), and the \gls{CFD} code reads the data, computes the flow field, and writes it back to the disk so that the biodegradation would read it back. Despite the possibility of employing this approach, the computationally intensive aspects of the models, which is the result of a 3D mesh refined on the corrosion interface leading to normally 2M-4M elements, makes the workflow dramatically inefficient. Working in \gls{HPC} environments and dealing with a partitioned mesh can make the situation even more complex. This reasoning made it inevitable to develop an in-house \gls{CFD} code so that it can be seamlessly and efficiently coupled with other models.
 
 In order to couple the flow model with the computational biodegradation model, both models should be modified to include the effect of the other one. For the biodegradation model, the effect of fluid flow was considered as an extra convection term in the set of derived reaction-diffusion equations, which can be implemented using the method of characteristics in FreeFEM. On the other side, the inclusion of the effect of a degrading object can be more tricky in the \gls{CFD} model. This was done by adding a Darcy term to the Navier-Stokes and Stokes equation, which considers a high permeability for the regions inside the degrading object, preventing fluid from penetrating into those parts. After the degrading part interface shrinks, the Darcy term gets updated automatically since it is formulated based on the level-set function used in the biodegradation model to describe the moving corrosion interface. Figs. \ref{fig:fluid_flow_degrading} and \ref{fig:fluid_flow_degrading_streamline} demonstrate the effect of the presence of the degrading part on the pattern of flow, while Fig.
 \ref{fig:fluid_degradation_chamber} shows the effect of fluid flow on the biodegradation, which is the ions being convected in the direction of the fluid velocity field, leading to a minor directional degradation in which the side facing the flow direction degrades slightly faster.
 
-\newglossaryentry{CT}{name={CT},description={computed tomography}}
-
-The effect of hydrodynamics condition on the rate and pattern of biodegradation is rooted in the distribution and diffusion of fluids \cite{Efird2011}, which can be related to increment of mechanical stimuli like wall shear stress or increment in ions transport. It is reported that the presence of fluid flow leading to accelerated movement of the corrosive medium increases the rate of uniform and localized corrosion of Mg alloys \cite{Wang2014}. The increase in corrosion rate is due to the increase of mass transfer of ions \cite{Efird2011}, affecting the chemical reactions occurring in the interface of Mg and the electrolyte \cite{Hiromoto2008,Xu2009}. Moreover, the increment in mass transfer removes more corrosion products from the surface, which is another contribution of the fluid flow to increasing the biodegradation rate \cite{Efird2011}. Wang et al. \cite{Wang2014} reported that the degradation rate was $0.37\pm0.007$ and $1.21\pm0.27 \text{mm.year}^{-1}$ for the corrosion of stents made of Mg AZ31 alloys in static and hydrodynamics conditions, respectively. After considering the volume loss with \gls{CT} measurements, they have concluded that the corrosion rate of these alloys is three times more in the presence of fluid flow, increasing from $\sim 0.6\text{mm.year}^{-1}$ in static condition to $\sim 1.5\text{mm.year}^{-1}$ in a hydrodynamics setup \cite{Wang2014}. This shows the significance of adding fluid flow to the developed biodegradation model.
+The performed verification study on the developed CFD code is not enough to call it a fully validated fluid flow model. However, by considering the desired flow regime in biodegradation tests, the verification shows that the coupled model is capable of predicting acceptable and correct results. Nonetheless, dedicated validation tests can be further done to fully validate the developed model as a general CFD code which can be used standalone for simulating laminar flows with low Reynolds numbers.
 
 
 
