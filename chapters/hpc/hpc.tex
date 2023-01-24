@@ -7,6 +7,10 @@ This chapter is based on previously published content in \textit{The Internation
 M. Barzegari, and L. Geris, ``Highly scalable numerical simulation of coupled reaction–diffusion systems with moving interfaces,'' \textit{The International Journal of High Performance Computing Applications}, vol. 36, pp. 198-213, 2022.
 \end{shaded}
 
+\section*{Abstract}
+
+A combination of reaction-diffusion models with moving-boundary problems yields a system in which the diffusion (spreading and penetration) and reaction (transformation) evolve the system's state and geometry over time. These systems can be used in a wide range of engineering applications. In this study, as an example of such a system, the degradation of metallic materials is investigated. A mathematical model is constructed of the diffusion-reaction processes and the movement of corrosion front of a magnesium block floating in a chemical solution. The corresponding parallelized computational model is implemented using the finite element method, and the weak and strong scaling behaviors of the model are evaluated to analyze the performance and efficiency of the employed high-performance computing techniques.
+
 \section{Introduction}
 
 Moving-boundary problems \cite{Crank1987} are a subset of the general concept of boundary-value problems which not only require the solution of the underlying partial differential equation (\gls{PDE}), but also the determination of the boundary of the domain (or sub-domains) as part of the solution.  Moving-boundary problems are usually referred to as Stefan problems \cite{Crank1987} and can be used to model a plethora of phenomena ranging from phase separation and multiphase flows in materials engineering to bone development and tumor growth in biology. Reaction-diffusion systems are the  mathematical models in which the change of state variables occurs via transformation and spreading. These systems are described by a set of parabolic \gls{PDE}s and can model a large number of different systems in science and engineering, for instance predator-prey models in biology and chemical components reactions in chemistry \cite{Grindrod1996}. Combining the reaction-diffusion systems with moving-boundary problems provides a way to study the systems in which the diffusion and reaction lead to the change of domain geometry. Such systems have great importance in various real-world scenarios in chemistry and chemical engineering as well as environmental and life sciences.
@@ -234,32 +238,32 @@ In order to derive a linear system of equations for obtaining the unknown coeffi
 \begin{equation} \label{eq:u_definition}
 u=\sum_{j=0}^{N} c_{j} \psi_{j}(\boldsymbol{x}), \quad u^{n}=\sum_{j=0}^{N} c_{j}^{n} \psi_{j}(\boldsymbol{x})
 \end{equation}
-
 \noindent as the definition of the unknown function $u$ and its value in the previous time step $u^n$. We then insert it into Eq. \ref{eq:weak_compact}, which yields the following equation for each degree of freedom $i=0, \ldots, N$, where the test functions are selected as $v = \psi_i$:
 \begin{equation} \label{eq:weak_sum_all}
 \sum_{j=0}^{N}\left(\psi_{i}, \psi_{j}\right) c_{j} + \alpha \Delta t \sum_{j=0}^{N}\left(\nabla \psi_{i}, D \nabla \psi_{j}\right) c_{j} =\sum_{j=0}^{N} \alpha \left(\psi_{i}, \psi_{j}\right) c_{j}^{n}+\alpha\Delta t\left(f^{n}, \psi_{i}\right).
 \end{equation}
 
-Eq. \ref{eq:weak_sum_all} is a linear system
+Eq. \ref{eq:weak_sum_all} is a linear system:
 \begin{equation} \label{eq:linear_system}
-\sum_{j} A_{i, j} c_{j}=b_{i}
+\sum_{j} A_{i, j} c_{j}=b_{i},
 \end{equation}
 with
 \begin{equation} \label{eq:system_a}
 A_{i, j}=\left(\psi_{i}, \psi_{j}\right) + \alpha \Delta t \left(\nabla \psi_{i}, D \nabla \psi_{j}\right)
 \end{equation}
 \begin{equation} \label{eq:system_b}
-b_{i}=\sum_{j=0}^{N}\alpha \left(\psi_{i}, \psi_{j}\right) c_{j}^{n}+\alpha \Delta t\left(f^{n}, \psi_{i}\right)
+b_{i}=\sum_{j=0}^{N}\alpha \left(\psi_{i}, \psi_{j}\right) c_{j}^{n}+\alpha \Delta t\left(f^{n}, \psi_{i}\right),
 \end{equation}
 
-\noindent which can also be rewritten as
+\noindent which can also be rewritten as:
 \begin{equation} \label{eq:linear_eq_simple}
 (M+\alpha \Delta t K) c=\alpha M c_{1}+\alpha \Delta t f.
 \end{equation}
 
-$M$ (which traditionally is called the mass matrix), $K$ (which traditionally is called the stiffness matrix), $f$, $c$, and $c_1$ are defined as
+$M$ (which traditionally is called the mass matrix), $K$ (which traditionally is called the stiffness matrix), $f$, $c$, and $c_1$ are defined as:
+
 \begin{equation} \label{eq:matrices_defintion}
-\begin{aligned} M &=\left\{M_{i, j}\right\}, \quad M_{i, j}=\left(\psi_{i}, \psi_{j}\right), \quad i, j \in \mathcal{I}_{s} \\ K &=\left\{K_{i, j}\right\}, \quad K_{i, j}=\left(\nabla \psi_{i}, D \nabla \psi_{j}\right), \quad i, j \in \mathcal{I}_{s} \\ f &=\left\{f_{i}\right\}, \quad f_{i}=\left(f\left(\boldsymbol{x}, t_{n}\right), \psi_{i}\right), \quad i \in \mathcal{I}_{s} \\ c &=\left\{c_{i}\right\}, \quad i \in \mathcal{I}_{s} \\ c_{1} &=\left\{c_{i}^{n}\right\}, \quad i \in \mathcal{I}_{s} \end{aligned}
+\begin{aligned} M &=\left\{M_{i, j}\right\}, \quad M_{i, j}=\left(\psi_{i}, \psi_{j}\right), \quad i, j \in \mathcal{I}_{s} \\ K &=\left\{K_{i, j}\right\}, \quad K_{i, j}=\left(\nabla \psi_{i}, D \nabla \psi_{j}\right), \quad i, j \in \mathcal{I}_{s} \\ f &=\left\{f_{i}\right\}, \quad f_{i}=\left(f\left(\boldsymbol{x}, t_{n}\right), \psi_{i}\right), \quad i \in \mathcal{I}_{s} \\ c &=\left\{c_{i}\right\}, \quad i \in \mathcal{I}_{s} \\ c_{1} &=\left\{c_{i}^{n}\right\}, \quad i \in \mathcal{I}_{s}. \end{aligned}
 \end{equation}
 
 By solving Eq. \ref{eq:linear_system} and substituting the obtained $c$ in Eq. \ref{eq:u_definition}, $u$ ($C_{\mathrm{Mg}}$ in the example in this study) can be calculated in the current time step. As stated before, the same approach can be applied to Eq. \ref{eq:pde_film_parallel} and Eq. \ref{eq:lsm_final_parallel} to get $C_{\mathrm{Film}}$ and $\phi$. This procedure is repeated in each time step to compute the values of $C_{\mathrm{Mg}}$, $C_{\mathrm{Film}}$, and $\phi$ over time.
