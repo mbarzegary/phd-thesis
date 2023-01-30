@@ -303,3 +303,5 @@ TSWLatexianTemp*
 
 # exclude the output file temporarily to save disk space (by avoiding storing the file in each commit)
 thesis.pdf
+
+__pycache__
