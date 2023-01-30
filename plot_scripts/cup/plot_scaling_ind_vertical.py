@@ -21,7 +21,7 @@ plot_compare("Mg equation", ax[0][0], big_mg, medium_mg, small_mg)
 plot_compare("Film equation", ax[0][1], big_f, medium_f, small_f)
 plot_compare("Cl equation", ax[1][0], big_cl, medium_cl, small_cl)
 plot_compare("OH equation", ax[1][1], big_oh, medium_oh, small_oh)
-plot_compare("Level set equation", ax[2][0], big_ls, medium_ls, small_ls)
+plot_compare("Level-set equation", ax[2][0], big_ls, medium_ls, small_ls)
 plot_compare("Total", ax[2][1], big_sum, medium_sum, small_sum)
 
 ax[0][0].set_ylabel("Wall time (s)")
