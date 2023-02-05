@@ -198,6 +198,148 @@ The results of the strength simulations provided useful knowledge about the limi
 
 This study has some limitations. First of, the separate analysis of mechanical behavior of and loading on the implant are simplified compared to a structural mechanics model of the entire mandible with jaw plate. This would more accurately capture the loading on the bone-implant complex, including loading modes that deviate from the purely tensile loading as assumed in this study. Secondly, the biodegradation algorithm does not account for pitting corrosion. Since the reality of corrosion always involves a combination of localized and uniform corrosion, adding the localized corrosion to the simulations will be a relevant extension. Third, the results from the biodegradation simulation were simplified to geometry changes based on mass loss data, instead of on its direct output. Fourth, the bone healing algorithm was also simplified to linear increases in E-modulus of the bone in the fracture area. Finally, while looking at the relative change in force values led to interesting conclusions, the absolute values of the results obtained in this study were not validated. Manufacturing real samples, immersing them in SBF, and objecting them to a tensile test would give \textit{in vitro} results that can be compared to the simulation predictions.
 
+\begin{subappendices}
+
+\section{Converting mass loss to jaw plate dimensions}
+\label{sec:jawplatedimensions}
+
+The changes in dimensions were assumed to be determined by a 'thickness' of the entire outer surface that was removed as a result of corrosion. If this 'thickness' is represented by $x$, the dimensions of the jaw plate are written as:
+
+\begin{equation}
+depth=0.001-2x
+\label{eq:depth}
+\end{equation}
+\begin{equation}
+H=0.004-2x
+\end{equation}
+\begin{equation}
+R_i=0.001
+\end{equation}
+\begin{equation}
+R_o=0.002-x
+\end{equation}
+
+\noindent Note that $R_i$ was constant, which means that these equations were for the five-screw case. The five-screw case was the reference for the mass loss data from the degradation simulation. So, the change in geometry was calculated for the five-screw case, but could then be applied to all three cases. The volume of the jaw plate was calculated as:
+
+\begin{equation}
+Volume=(TH-5\pi R_i^2+\pi R_o^2)\cdot depth
+\end{equation}
+
+\noindent with $T$ the length of the straight edge of the jaw plate ($T=L-2R_o$). The value of the mass loss was converted to a volume with the formula:
+
+\begin{equation}
+Volume=InitialVolume\cdot  \frac{100-MassLoss(\%)}{100}
+\label{eq:massloss}
+\end{equation}
+
+\noindent with $InitialVolume$ being the volume for $x=0$. The combination of equations \ref{eq:depth} to \ref{eq:massloss} lead to an equation with two unknowns, being $x$ and $MassLoss$. By solving this equation to $x$ and filling in values of the mass loss, the corresponding values of $x$ were calculated.
+
+\section{Beam theory equations}
+\label{sec:beamtheory}
+
+\noindent The formulas in this appendix were based on the book 'Advanced Mechanics of Materials and Applied Elasticity' by Ugural and Fenster \cite{beamtheory}. The mandibular body behaved as a beam and as a result the moment $M$ in the fracture as a result of the load was given by: 
+
+\begin{equation}
+M=lever arm\cdot load
+\end{equation} 
+
+\subsection{Neutral axis}
+
+The neutral axis is an axis in the cross-section where the stress is zero. Taking the loading situation into account, everything above the neutral axis is under positive (tensile) stress and everything below the neutral axis is under negative (compressive) stress. Since the approximation of the cross-section was symmetrical with respect to the vertical line through the center of the cross-section, the neutral axis was horizontal. Because different materials were used, with different E-moduli, an extra step was taken before calculating the neutral axis. The width of the cross-sections of different materials was multiplied with a factor that took the E-modulus of the material into account. The E-modulus of the cortical bone was taken as a reference here. This method is called the transformed-section method. $h_{o,bone}$ and $w_{o,bone}$ indicated the height and width of the cortical (outer) bone and $t_{cortical}$ indicated the thickness of the cortical bone layer. $h_{i,bone}$ and $w_{i,bone}$ indicated the height and width of the trabecular (inner) bone and are calculated based on the outer dimensions of the bone and the thickness of the cortical bone layer:
+
+\begin{equation}
+h_{i,bone}=h_{o,bone}-2t_{cortical}
+\end{equation}
+\begin{equation}
+w_{i,bone}=w_{o,bone}-2t_{cortical}
+\end{equation}
+
+\noindent The relevant dimensions of the jaw plate (abbreviated as JP) cross-section were the height ($h_{JP}$) and the width ($h_{JP}$). The two individual rectangles were treated as one, since this made no difference in the calculations. As mentioned above, the widths of the trabecular bone and the jaw plate were adjusted: 
+
+\begin{equation}
+w'_{i,bone}=w_{i,bone}\cdot \frac{E_{trab.bone}}{E_{cort.bone}}
+\end{equation}
+\begin{equation}
+w'_{JP}=w_{JP}\cdot \frac{E_{JP}}{E_{cort.bone}}
+\end{equation}
+
+\noindent The areas of the trabecular bone, cortical bone and jaw plate, as used for the calculation of the neutral axis, were:
+
+\begin{equation}
+A_{cort.bone}=h_{o,bone}w_{o,bone}-h_{i,bone}w_{i,bone}
+\end{equation}
+\begin{equation}
+A_{trab.bone}=h_{i,bone}w'_{i,bone}
+\end{equation}
+\begin{equation}
+A_{JP}=h_{JP}w'_{JP}
+\end{equation}
+
+\noindent The accented widths were the E-modulus-adjusted widths. The height of the neutral axis with respect to the lowest point of the bone cross-section was calculated as:
+
+\begin{equation}
+y_{mid}=\frac{A_{trab.bone}y_{trab.bone}+A_{cort.bone}y_{cort.bone}+A_{JP}y_{JP}}{A_{trab.bone}+A_{cort.bone}+A_{JP}}
+\end{equation}
+
+\noindent with $y_{trab.bone}$,$y_{cort.bone}$ and $y_{JP}$ the height of the center of mass of the different sections, which were (relative to the lowest point of the bone cross-section):
+
+\begin{equation}
+y_{cort.bone}=y_{trab.bone}=h_{o,bone}/2
+\end{equation}
+\begin{equation}
+y_{JP}=h_{o,bone}+h_{JP}/2
+\end{equation}
+
+\subsection{Area moment of inertia}
+
+The area moment of inertia of the different materials in the cross-section were calculated with equations \ref{eq:i1} to \ref{eq:i2}. The total area moment of inertia was the sum of those (equation \ref{eq:i3}).
+
+\begin{equation}
+\label{eq:i1}
+I_{cort.bone}=\frac{w_{o,bone}h_{o,bone}^3}{12}-\frac{w_{i,bone}h_{i,bone}^3}{12}+(y_{mid}-y_{cort.bone})^2\cdot A_{cort.bone}
+\end{equation}
+\begin{equation}
+I_{trab.bone}=\frac{w'_{i,bone}h_{i,bone}^3}{12}+(y_{mid}-y_{trab.bone})^2\cdot A_{trab.bone}
+\end{equation}
+\begin{equation}
+\label{eq:i2}
+I_{JP}=\frac{w'_{JP}h_{JP}^3}{12}+(y_{mid}-y_{JP})^2\cdot A_{JP}
+\end{equation}
+
+\begin{equation}
+\label{eq:i3}
+I=I_{cort.bone}+I_{trab.bone}+I_{JP}
+\end{equation}
+
+\subsection{Stress, strain and force}
+
+The moment that was created by the load caused the beam to bend and this induced stresses in the cross-section. The radius of curvature $\rho$ was first calculated and used to calculate the strain $\epsilon$. For that, the distance with respect to the neutral axis $y$ was also used.
+\begin{equation}
+\rho =-\frac{E_{cort.bone}I}{M}
+\end{equation}
+
+\begin{equation}
+\epsilon =-\frac{y}{\rho}
+\end{equation}
+
+\noindent The strain depended on $y$, but there is no difference between different materials. When calculating the stress $\sigma$, however, the incorporation of the E-modulus did make a distinction between the different materials. The stress in the jaw plate was:
+
+\begin{equation}
+\sigma _{JP} =\epsilon \cdot E_{JP}
+\label{eq:stress}
+\end{equation}
+
+\noindent Finally, the stress in the jaw plate was integrated over the area of the jaw plate to find the total force in the jaw plate:
+
+\begin{equation}
+F_{JP}=\int_{h_{o,bone}}^{h_{o,bone}+h_{JP}} \sigma _{JP}\cdot w_{JP} \,dy
+\end{equation}
+
+\noindent It was important to use $w_{JP}$ here, which represented the non-adjusted width of the jaw plate, since the calculation of the stress in equation \ref{eq:stress} used the E-modulus of the jaw plate.
+
+
+\end{subappendices}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Keep the following \cleardoublepage at the end of this file,
