@@ -18,11 +18,17 @@ Performing \gls{TO} on degrading structures has been rarely studied, the reason 
 
 \section{Methods}
 
- Finally, we present two-dimensional test cases in Section \ref{Section: numerical examples}, on which biodegradation simulations were performed later in Section \ref{section:biodegradation} to investigate the change of stiffness during the degradation process.
+The coupled model developed in this chapter includes two sub-models: 1) a level-set-based TO model to get optimized lattice shapes out of initial geometries, and 2) a biodegradation model to perform degradation simulation on the optimized shapes. The computational workflow is such that the TO model generates lattice structures first, which are transferred to the biodegradation model to get the morphology changes due to the degradation process. These morphological changes are then moved to a sub-module of the TO model to compute the change in the strength (stiffness) of the structure and its deformation due to the applied load. A fully-coupled model is still under-development, in which the output of the biodegradation simulation is transferred back to the TO model during the optimization process, making it possible to consider biodegradation as part of the objective function of the optimization routine. Fig. \ref{fig:infill_workflow} shows a schematic representation of how simulation data is being passed from one model to the next, in which the sub-module of the TO model performing the stiffness analysis is depicted as a separate module (component 3) for easier demonstration. The ongoing development is shown in a yellow arrow, indicating that it is not considered in the work presented in this chapter.
 
-\subsection{Numerical examples}\label{Section: numerical examples}
-In order to prepare the optimized lattices for the biodegradation simulations, the developed \gls{TO} procedure was applied for two 2D test cases. The computational domain was a rectangle with a dimension of $2.5L \times 1.0L$. There were two holes inside the domain. The surface traction $\boldsymbol{t}=\left[0,-1\right]^{\operatorname{T}}$ was distributed evenly on the boundary of the right-hand side hole, and that of the left-hand side hole was a fixed wall $\boldsymbol{u}=\left[0,0,0\right]^{\operatorname{T}}$ (Fig. \ref{fig:infill_domain}). For test case \#1, the local volume constraint was imposed, with $\bar{V}_{\max}$ set to $0.6$. After being optimized, the global volume fraction was $0.45$. Then, for test case \#2, the global volume constraint was imposed with $V_{\max}=0.45$, which is the same as that of the test case \#1. The implementation of these numerical examples was done in FreeFEM.
+\begin{figure}[h]
+\centering
+\medskip
+\includegraphics[width=\textwidth]{workflow.jpg}
+\caption[Computational workflow of the coupled TO-biodegradation model]{Computational workflow of the coupled TO-biodegradation model, showing how individual components are connected, the programming languages and tools used for the implementation, and the university at which each component is developed.} \label{fig:infill_workflow}
+\end{figure}
 
+\subsection{Topology optimization test cases}\label{Section: numerical examples}
+In order to prepare the optimized lattices for the biodegradation simulations, the developed \gls{TO} procedure was applied on two 2D test cases, which were different due to type of applied constraint. The details of the developed level-set-based TO is briefly presented in the appendix. The computational domain was a rectangle with a dimension of $2.5L \times 1.0L$. There were two holes inside the domain. The surface traction $\boldsymbol{g}=\left[0,-1\right]^{\operatorname{T}}$ was distributed evenly on the boundary of the right-hand side hole, and that of the left-hand side hole was a fixed wall $\boldsymbol{u}=\left[0,0\right]^{\operatorname{T}}$ (Fig. \ref{fig:infill_domain}). The Young's Modulus was set to $1.0$, and the Poisson's ratio was set to $0.3$. This setup was used for both the TO procedure and the structural analysis used to get the deformations and change of stiffness. For test case \#1, the local volume constraint was imposed, with maximum allowable local volume fraction ($\bar{V}_{\max}$ in Eqs. \ref{eq:infill_vmax_1} and \ref{eq:infill_vmax_2}) set to $0.6$. After being optimized, the global volume fraction was $0.45$. Then, for test case \#2, the global volume constraint was imposed with $V_{\max}=0.45$, the value obtained from the final global volume fraction of test case \#1. The implementation of these numerical examples was done in FreeFEM.
 
 \begin{figure}[h]
 \centering
@@ -173,13 +179,13 @@ where $\boldsymbol{n}$ is the unit normal vector, $\mathcal{F}'$ is the topologi
 
 \subsection{Maximum length-scale constraint}\label{Section: Maximum length-scale constraint}
 A geometrical constraint is introduced to generate feature-rich structures observed in a natural system such as the trabecular bone. Here, we adopt the idea of Wu et al.\ \cite{wu2017infill} by imposing a maximum allowable volume fraction to the local averaged value of the characteristic function, $\bar{\chi}$. To approximate the maximum value of $\bar{\chi}_i$, we use the $p$-norm function as
-\begin{equation}
+\begin{equation} \label{eq:infill_vmax_1}
 \max_{\forall i} \left(\bar{\chi}_i \right) \approx  
 \|\bar{\chi}_i \|_{p}=\left(\sum_i^n \bar{\chi}_{i}^{p}\right)^{1/p}
 \leq \left( \sum_{i}^n \bar{V}_{\max}^p \right)^{1/p}, 
 \end{equation}
 which can be rewritten as
-\begin{equation}
+\begin{equation} \label{eq:infill_vmax_2}
 \left(\dfrac{1}{n} \sum_{i} \bar{\chi}_{i}^{p}\right)^{1 / p} \leq \bar{V}_{\max },
 \end{equation}
 where $n$ is the total number of vertices and $p=10$ in this chapter \cite{li2021full}. Note that in FreeFEM \cite{Hecht2012}, the software package used to solve the derived system, the design variable, i.e. the characteristic function, is defined on the nodes of each element. $ \bar{V}_{\max }$ is the maximum allowable local volume fraction. 
