@@ -10,15 +10,15 @@ This chapter focuses on developing computational models of the curvature-driven 
 
 \section{Introduction}
 
-Neotissue is defined as the cells and the extracellular matrix they produce. Coupling biodegradation and neotissue growth models can be useful for tuning the biodegradation rate to the rate of regeneration of new tissue. Similar to the biodegradation model, the modeling of the tissue formation process can take advantage of the interface tracking techniques in which the neotissue surface evolves over time, representing the growth process. Neotissue growth in porous scaffolds has been shown to be depending on the local mean curvature of the interface between the neotissue and the surrounding void space \cite{Bidan2012, Bidan2012a, Rumpler2008}. The commonly-used interface tracking techniques provide an efficient way to formulate curvature-driven problems. 
+Neotissue is defined as the cells and the extracellular matrix they produce. Coupling biodegradation and neotissue growth models can be useful for tuning the biodegradation rate to the rate of regeneration of new tissue. Similar to the biodegradation model, the modeling of the tissue formation process can take advantage of the interface tracking techniques in which the neotissue surface evolves over time, representing the growth process. Neotissue growth in porous scaffolds has been shown to be depending on the local mean curvature of the interface between the neotissue and the surrounding void space \cite{Bidan2012, Bidan2012a, Rumpler2008}. The commonly-used interface tracking techniques provide an efficient way to formulate curvature-driven problems.
 
 \newglossaryentry{VOF}{name={VOF},description={volume-of-fluid}}
 
-Numerical tracking of interface movement has been widely used for certain modeling applications in science and engineering for multi-material and multiphase problems such as solidification, melting, corrosion, and grain growth to name a few \cite{Sun2007}. The most popular Eulerian methodologies in this regard are the level-set \cite{Osher1988,Andrew2000,RonaldFedkiw2002}, volume-of-fluid (\gls{VOF}) \cite{Rider1998}, and phase-field methods \cite{Boettinger2002,Bellemans2017}. 
+Numerical tracking of interface movement has been widely used for certain modeling applications in science and engineering for multi-material and multiphase problems such as solidification, melting, corrosion, and grain growth to name a few \cite{Sun2007}. The most popular Eulerian methodologies in this regard are the level-set \cite{Osher1988,Andrew2000,RonaldFedkiw2002}, volume-of-fluid (\gls{VOF}) \cite{Rider1998}, and phase-field methods \cite{Boettinger2002,Bellemans2017}.
 
 \newglossaryentry{HJ}{name={HJ},description={Hamilton-Jacobi}}
 
-The basic idea of the level-set method is to employ the Hamilton-Jacobi (\gls{HJ}) algorithm for solving the general interface advection equation. The independent variable in the level-set method is a signed distance function called the level-set function $\psi$ \cite{RonaldFedkiw2002}. The level-set function should be re-initialized as the interface evolves, which is the reason behind an inadvertent mass loss, one of the most prominent shortcomings of the level-set method. Although the \gls{VOF} method is not vulnerable to the mass loss issue, calculating the interface curvature is difficult from the volume fraction \cite{Sun2007}, making it less efficient to be used for curvature-driven problems. 
+The basic idea of the level-set method is to employ the Hamilton-Jacobi (\gls{HJ}) algorithm for solving the general interface advection equation. The independent variable in the level-set method is a signed distance function called the level-set function $\psi$ \cite{RonaldFedkiw2002}. The level-set function should be re-initialized as the interface evolves, which is the reason behind an inadvertent mass loss, one of the most prominent shortcomings of the level-set method. Although the \gls{VOF} method is not vulnerable to the mass loss issue, calculating the interface curvature is difficult from the volume fraction \cite{Sun2007}, making it less efficient to be used for curvature-driven problems.
 
 To overcome these challenges, diffuse interface methods \cite{Anderson1998} have gained attention in recent decades, among which the phase-field method has shown potential for solving complex moving interface problems. Contrary to the level-set method, the interface is considered a smooth transition between phases, which usually has a finite width in diffuse interface methods. In the phase-field method, a non-conserved (or conserved) order parameter $\phi$ is defined such that $\phi=1$ in one bulk phase and $\phi=-1$ in the other. Then, the smooth transition between these two phases ($-1<\phi<1$) is marked as the interface. One of the advantages of the phase-field method is that the derived equation can be solved over the entire desired domain without considering the location of the interface. Moreover, although the curvature and interface normal vectors are not formulated explicitly, the phase-field method is suitable for problems in which the evolution of the interface depends on the local curvature or a field acting normal to the interface \cite{Sun2007}. The phase-field method keeps a constant thickness for the smooth transition region normal to the interface, and as a result, no re-initialization as for the level-set method is needed.
 
@@ -73,7 +73,7 @@ Using the defined kernel, the terms in Eq. \ref{eq:curvature} can be expressed a
 |\nabla \phi|=-\frac{\partial \phi}{\partial n}=\frac{1-\phi^{2}}{\sqrt{2} w} \quad \text { and } \quad \frac{(\nabla \phi \cdot \nabla)|\nabla \phi|}{|\nabla \phi|}=\frac{\partial^{2} \phi}{\partial n^{2}}=-\frac{\phi\left(1-\phi^{2}\right)}{w^{2}}.
 \end{equation}
 
-Substituting Eq. \ref{eq:normal_terms} into Eq. \ref{eq:curvature} yields to the following definition of interface curvature: 
+Substituting Eq. \ref{eq:normal_terms} into Eq. \ref{eq:curvature} yields to the following definition of interface curvature:
 \begin{equation}
 \kappa=\frac{1}{|\nabla \phi|}\left[\nabla^{2} \phi+\frac{\phi\left(1-\phi^{2}\right)}{w^{2}}\right],
 \end{equation}
@@ -112,11 +112,11 @@ x^\prime = \frac{x}{x_c} \quad \text{and} \quad t^\prime = \frac{t}{t_c}.
 \end{equation}
 
 So, Eq. \ref{eq:stationary_general} can be rewritten using these new variables:
-\begin{equation} 
+\begin{equation}
 \frac{1}{t_{c}} \frac{\partial \phi}{\partial t^{\prime}}=\frac{b}{x_{c}^{2}} \frac{\partial^{2} \phi}{\partial x^{\prime 2}}+\frac{b}{w^{2}} f(\phi),
 \end{equation}
 with $f(\phi)$ being defined as:
-\begin{equation} 
+\begin{equation}
 f(\phi)=\phi\left(1-\phi^{2}\right).
 \end{equation}
 
@@ -129,8 +129,8 @@ Defining $x_c = w$ and $t_c=w^2/b$ leads to the following dimensionless form of 
 Numerical results for Eq. \ref{eq:stationary_dimenless} is depicted in Fig.  \ref{fig:fig:pf_ls}, and the phase-field profile is compared with the level-set distance function profile. An appropriate value for grid spacing and the layer width should be selected such that $0.25 w < \Delta x^\prime < 0.5 w $. Additionally, the selected value of $w$ should satisfy $w < R/4.2$, in which $R$ is the local radius of curvature \cite{Sun2007}.
 
 \begin{figure}
-\medskip
 \centering
+\medskip
 \includegraphics[width=0.7\textwidth]{pf_ls.jpg}
 \caption[Comparison of phase-field variable and level-set function]{Comparison of phase-field variable and level-set function on the interface of a stationary interface with step function like initial condition \cite{Sun2007}}
 \label{fig:fig:pf_ls}
@@ -169,8 +169,8 @@ in which $t^{\prime}$ and $\nabla^{\prime}$ are defined similar to Eq. \ref{eq:d
 Due to intrinsic support of interface curvature in the phase-field and level-set methods, an \textit{in silico} model of curvature-based tissue growth can be efficiently implemented using these principles. The growth-induced changes in the neotissue topology during the culture process can be seen as a moving interface between two different domains \cite{Rumpler2008}. In this study, one domain represents the neotissue volume  ($\Omega_{\text{nt}}$), and the other one is the void ($\Omega_{\text{v}}$), which are separated by an interface ($\Gamma$) as can be seen in Fig. \ref{fig:growth_domain}.
 
 \begin{figure}
-\medskip
 \centering
+\medskip
 \includegraphics[width=0.5\textwidth]{growth_domain.jpg}
 \caption[Schematic representation of the phase-field and level-set models for tissue growth]{Schematic representation of the phase-field and level-set models for tissue growth, in which the neotissue domain ($\Omega_{\text{nt}}$) is separated from the void domain ($\Omega_{\text{v}}$) by an interface ($\Gamma$).}
 \label{fig:growth_domain}
@@ -217,9 +217,9 @@ with $\kappa$ being calculated similarly to Eq. \ref{eq:curvature} for a distanc
 
 \subsection{Phase-field model}
 
-The numerical solution of the phase-field equation requires dealing with the nonlinearity of the equation. Additionally, in the case of the dimensional form (Eq. \ref{eq:phase_field_final}), small coefficients of the state variable in the \gls{PDE} lead to numerical difficulties. As a result, numerical implementation of the phase-field equation, especially for the spectral methods and the finite element method, is not straightforward and is an active field of research \cite{Shen2010,Abboud2019}. 
+The numerical solution of the phase-field equation requires dealing with the nonlinearity of the equation. Additionally, in the case of the dimensional form (Eq. \ref{eq:phase_field_final}), small coefficients of the state variable in the \gls{PDE} lead to numerical difficulties. As a result, numerical implementation of the phase-field equation, especially for the spectral methods and the finite element method, is not straightforward and is an active field of research \cite{Shen2010,Abboud2019}.
 
-In the finite element method, the solution of a \gls{PDE} is calculated based on a sum of a set of certain basis functions, which are commonly piecewise linear, quadratic or polynomial functions that are non-zero only on a small element. For doing this, the \gls{PDE} is first written in a weak formulation, and then the weak form is projected on a discretized space (a set of elements) to be written as the summation of the basis functions. 
+In the finite element method, the solution of a \gls{PDE} is calculated based on a sum of a set of certain basis functions, which are commonly piecewise linear, quadratic or polynomial functions that are non-zero only on a small element. For doing this, the \gls{PDE} is first written in a weak formulation, and then the weak form is projected on a discretized space (a set of elements) to be written as the summation of the basis functions.
 
 In this section, the numerical solution of the stationary form (Eq. \ref{eq:stationary_general}) and its corresponding considerations are elaborated as an example of employing the finite element formulation for simulating the phase-field equation. So, by assuming $b=1$, the problem can be summarized as:
 \begin{equation} \label{eq:fe_problem}
@@ -244,7 +244,7 @@ where $L$ is a limit related to the non-linear part:
 \max \left|f^{\prime}(\phi)\right| \leq L.
 \end{equation}
 
-Obviously, since $\Delta t \sim w^2$, a very small time step is required to achieve stability in this scheme. 
+Obviously, since $\Delta t \sim w^2$, a very small time step is required to achieve stability in this scheme.
 
 Taking advantage of a fully implicit scheme improves the stability because it will be unconditionally stable, but it results in an equation that is difficult to implement as it needs to solve a fixed point problem at each time step. For example, a modified second-order implicit Crank-Nicolson scheme for Eq. \ref{eq:fe_problem} can be written as \cite{Abboud2019,Elliott1989}:
 \begin{equation}
@@ -268,7 +268,7 @@ which is unconditionally stable for any $S \geq \frac{L}{2}$ \cite{Shen2010}.
 
 \subsection{Level-set model}
 
-The derived level-set \gls{PDE} (Eq. \ref{eq:ls_advect}) is an advection equation, which can be implemented numerically using the finite element method, in which the temporal term is discretized by the backward Euler method, and the advection term can be treated with the method of characteristics. 
+The derived level-set \gls{PDE} (Eq. \ref{eq:ls_advect}) is an advection equation, which can be implemented numerically using the finite element method, in which the temporal term is discretized by the backward Euler method, and the advection term can be treated with the method of characteristics.
 
 A key parameter of the developed model is the local growth velocity of the neotissue. In the current implementation, the velocity was dependent on the interface's local mean curvature as shown in \cite{Bidan2012a,Guyot2014}. In order to match the growth velocity to experimental data, a coefficient can be added to the derived interface convection velocity (Eq. \ref{eq:ls_veloc}):
 \begin{equation} \label{eq:ls_veloc2}
@@ -295,17 +295,17 @@ in which $\varepsilon$ denotes the numerical diffusion coefficient.
 
 \newglossaryentry{TPMS}{name={TPMS},description={triply periodic minimal surface}}
 
-Numerical simulations of neotissue formation on various shapes (scaffolds) were carried out using the developed phase-field and level-set models to compare their performance. In 2D, two shapes were used, a square and a semi-circle (Fig. \ref{fig:tissue_domain_geometry}), which were simulated using both phase-field and level-set models. The qualitative comparison of the two developed models were done using this 2D setup, so for 3D cases, the models were simulated on vastly different geometries for just checking the performance of the interface tracking techniques on 3D scaffolds. In 3D, the phase-field model was evaluated on a cube, while the level-set model was used to simulate the cell growth behavior on scaffolds with triply periodic minimal surface (\gls{TPMS}) shapes. 
+Numerical simulations of neotissue formation on various shapes (scaffolds) were carried out using the developed phase-field and level-set models to compare their performance. In 2D, two shapes were used, a square and a semi-circle (Fig. \ref{fig:tissue_domain_geometry}), which were simulated using both phase-field and level-set models. The qualitative comparison of the two developed models were done using this 2D setup, so for 3D cases, the models were simulated on vastly different geometries for just checking the performance of the interface tracking techniques on 3D scaffolds. In 3D, the phase-field model was evaluated on a cube, while the level-set model was used to simulate the cell growth behavior on scaffolds with triply periodic minimal surface (\gls{TPMS}) shapes.
 
 \begin{figure}
-\medskip
 \centering
+\medskip
 \includegraphics[width=0.6\textwidth]{domain_geometry.jpg}
 \caption[Schematic representation of the simulation domains]{Schematic representation of the simulation domains}
 \label{fig:tissue_domain_geometry}
 \end{figure}
 
-The initial configuration of the phase-field variable and level-set distance function corresponds to a homogenous single cell layer over the scaffold struts with a thickness equal to $10 \mu m$ in a dimensional setup \cite{Darling2008}. This is depicted as the green layer in Fig. \ref{fig:tissue_domain_geometry}. For the 3D level-set model, neotissue growth was simulated for a variety of \gls{TPMS} family and compared in a qualitative manner. A full quantitative prediction is not possible due to the absence of relevant validation experiments, which explains why comparisons between geometries are made over non-dimensional time. 
+The initial configuration of the phase-field variable and level-set distance function corresponds to a homogenous single cell layer over the scaffold struts with a thickness equal to $10 \mu m$ in a dimensional setup \cite{Darling2008}. This is depicted as the green layer in Fig. \ref{fig:tissue_domain_geometry}. For the 3D level-set model, neotissue growth was simulated for a variety of \gls{TPMS} family and compared in a qualitative manner. A full quantitative prediction is not possible due to the absence of relevant validation experiments, which explains why comparisons between geometries are made over non-dimensional time.
 
 The derived weak forms were implemented using FreeFEM open-source \gls{PDE} solver \cite{Hecht2012}. An Eulerian computational mesh for each simulation was constructed by generating tetrahedral elements using the internal mesh generator of FreeFEM, called BAMG. To decrease run time and increase the performance of the simulation, the mesh was partitioned using  METIS graph partitioner \cite{METIS1998} and \gls{HPDDM} preconditioner \cite{Jolivet2013}, available in FreeFEM and the \gls{PETSc} toolkit \cite{petsc}. Moreover, the efficiency was boosted by using the HYPRE BoomerAMG preconditioner \cite{Falgout2002} and the \gls{GMRES} iterative solver \cite{Saad1986} of the \gls{PETSc} toolkit.
 
@@ -317,20 +317,20 @@ In the current study, various 2D and 3D cases for the simulation of curvature-ba
 The results of neotissue growth model simulations can be visualized by depicting the +1 part of the phase-field variable (Eq. \ref{eq:pf_domains}) and the positive part of the level-set function (Eq. \ref{eq:ls_domains}). Fig. \ref{fig:tissue_simulation_square} demonstrates such a visualization for the phase-field and level-set simulations performed on the square domain. Cells were seeded on the circumstance of the square, and the formation of neotissue was modeled using the evolution of the phase-field variable and level-set function. The light gray region in these figures shows the +1 part of the phase-field variable and the positive part of the level-set function.
 
 \begin{figure}
-\medskip
 \centering
+\medskip
 \includegraphics[width=\textwidth]{simulation_square.jpg}
 \caption[Simulation result of neotissue growth in the square domain]{Simulation result of the phase-field (A) and level-set (B) models for neotissue growth in the square domain. The light gray region shows the +1 part of the phase-field variable and the positive part of the distance function for the phase-field (A) and level-set (B) models, respectively. The evolution occurs from left to right over non-dimensionalized time.}
 \label{fig:tissue_simulation_square}
 \end{figure}
 
-As shown in Fig. \ref{fig:tissue_simulation_square}, a qualitative comparison of the evolution of the formed tissue interface between the phase-field and level-set models indicates that they capture the curvature-driven growth similarly. It seems that the level-set model resulted in sharper interfaces, in which the surfaces without curvature do not move at all. But, in the phase-field predictions, the surfaces not having any curvature slightly move. This can be seen by comparing the growth pattern on the middle part of the top edge of the square, where it starts to grow only in the fourth column in Fig. \ref{fig:tissue_simulation_square} for the level-set results, while a minor move can be seen in the phase-field predictions. This slightly different behavior can be related to the implementation details, such as the lack of a proper Heaviside function in FreeFEM that the phase-field model depends on. Another possible reason for this difference can be the visualization aspect since the transition region of the phase-field variable representing the surface is thicker in the phase-field model in comparison to the zero iso-contour of the level-set function. As a result, the evolution can be artificially plotted in the visualization software, which was ParaView in this case. This effect can be investigated further by refining the mesh to minimize artificial evolution. 
+As shown in Fig. \ref{fig:tissue_simulation_square}, a qualitative comparison of the evolution of the formed tissue interface between the phase-field and level-set models indicates that they capture the curvature-driven growth similarly. It seems that the level-set model resulted in sharper interfaces, in which the surfaces without curvature do not move at all. But, in the phase-field predictions, the surfaces not having any curvature slightly move. This can be seen by comparing the growth pattern on the middle part of the top edge of the square, where it starts to grow only in the fourth column in Fig. \ref{fig:tissue_simulation_square} for the level-set results, while a minor move can be seen in the phase-field predictions. This slightly different behavior can be related to the implementation details, such as the lack of a proper Heaviside function in FreeFEM that the phase-field model depends on. Another possible reason for this difference can be the visualization aspect since the transition region of the phase-field variable representing the surface is thicker in the phase-field model in comparison to the zero iso-contour of the level-set function. As a result, the evolution can be artificially plotted in the visualization software, which was ParaView in this case. This effect can be investigated further by refining the mesh to minimize artificial evolution.
 
 A similar visualization is depicted in Fig. \ref{fig:tissue_simulation_circle} for the neotissue formation on the semi-circle domain. Results show that the phase-field and level-set models have good agreement on the way they treat the curvature-based tissue growth. As seen in the figure, both models show identical predictions on the surface with curvature (the curvy edge of the semi-circle). However, the small difference observed for the square case can also be seen here on the top surface, where the neotissue grows slightly faster in the phase-field model.
 
 \begin{figure}
-\medskip
 \centering
+\medskip
 \includegraphics[width=\textwidth]{simulation_circle.jpg}
 \caption[Simulation result of neotissue growth in the semi-circle domain]{Simulation result of the phase-field (A) and the level-set (B) models for neotissue growth in the semi-circle domain. The evolution occurs from left to right over non-dimensionalized time.}
 \label{fig:tissue_simulation_circle}
@@ -340,8 +340,8 @@ Fig. \ref{fig:tissue_pf_circle_field} shows the evolution of the phase-field var
 
 
 \begin{figure}
-\medskip
 \centering
+\medskip
 \includegraphics[width=\textwidth]{pf_circle_field.jpg}
 \caption[Visualization of the evolution of phase-field variable in the semi-circle domain]{Visualization of the evolution of phase-field variable in the semi-circle domain. The evolution is depicted over time, occurring from top to bottom and from left to right in each row. The red, blue, and white show the +1 region, -1 region, and the transient phase representing the interface, respectively.}
 \label{fig:tissue_pf_circle_field}
@@ -350,8 +350,8 @@ Fig. \ref{fig:tissue_pf_circle_field} shows the evolution of the phase-field var
 Similar results are obtained in 3D, where the cells are seeded on the circumstance of a cuboid. Fig. \ref{fig:tissue_pf_3d} shows the simulation results of this 3D case, in which the evolution of the phase-field variable is converted to a bulk of the formed neotissue. As can be seen in this figure, the phase-field model performs well in 3D, showing a similar growth behavior to the 2D model. The mesh in the 3D case is relatively coarse, but the captured behavior of tissue growth by the phase-field model seems to be more acceptable than in the 2D case. This claim can be observed on the top and bottom surfaces of the cube, where the interface does not move until a curvature is created in those regions, a behavior that was captured better by the level-set model in the 2D cases. 
 
 \begin{figure}
-\medskip
 \centering
+\medskip
 \includegraphics[width=0.7\textwidth]{pf_3d.jpg}
 \caption[Simulation result of the phase-field model for neotissue growth in a 3D cube domain]{Simulation result of the phase-field model for neotissue growth in a 3D cube domain, in which the +1 regions of the phase-field variable are visualized to show the formation of neotissue over non-dimensionalized time.}
 \label{fig:tissue_pf_3d}
@@ -360,8 +360,8 @@ Similar results are obtained in 3D, where the cells are seeded on the circumstan
 Fig. \ref{fig:tissue_ls_tpms} depicts various simulation results of the netissue formation in gyroid-\gls{TPMS} scaffolds, demonstrating an example of the final application of these models in action. The reason for choosing gyroid-\gls{TPMS} scaffolds is their promising performance for neotissue formation due to their favourable local curvature. Various geometries for investigating the pore size and wall thickness were evaluated in order to obtain the combination leading to optimal neotissue growth. Pore size was varied between $700  \mu m$ and $1.3 mm $, and wall thickness was varied from $200 \mu m $ to $800 \mu m$, which are ranges that take into account restrictions of the manufacturing process in terms of the smallest feature dimensions. Balancing the need for swift neotissue ingrowth (Fig. \ref{fig:tissue_ls_tpms}-B, relevant for short-term implant stability) with the volume of neotissue formed (Fig. \ref{fig:tissue_ls_tpms}-A, relevant for long-term dental implant stability), the combination of $700 \mu m$ pore size and $200 \mu m $ wall thickness (Fig. \ref{fig:tissue_ls_tpms}-C) seemed to be the most optimal structure.
 
 \begin{figure}
-\medskip
 \centering
+\medskip
 \includegraphics[width=\textwidth]{ls_tpms.jpg}
 \caption[Simulation results of the level-set model for neotissue formation on TPMS scaffolds]{Neotissue formation quantified in absolute volume (A) and filling percentage (B) for cylindrical test samples (diameter 6 mm, height 6 mm). The different combinations are indicated in the legend by 2 numbers, the first of which refers to pore size (7: 700 $\mu$m, 10: 1 mm, 13: 1.3 mm), and the second refers to wall thickness (2: 200 $\mu$m; 5: 500 $\mu$m; 8: 800 $\mu$m;). (C) Side view and cross-sectional view of neotissue growth in gyroid (7-2) scaffold for different levels of filling, starting with the initial condition at t=0 (top). Scale bars: 6 mm.}
 \label{fig:tissue_ls_tpms}
@@ -371,7 +371,7 @@ The study shown as an example above \cite{Hede2021} demonstrates the relevance o
 
 \section{Challenges in coupling tissue growth and biodegradation models} \label{sec:tissue_challenges}
 
-Coupling our biodegradation model \cite{Barzegari2021} with the developed tissue growth model in this chapter could have been a milestone of the current Ph.D. thesis, where the neotissue is produced by the cells seeded on a biodegradable scaffold. Another interesting example could be using biodegradable porous implants in bone healing applications (similar to the model presented in Chapter \ref{ch:cup}), in which the implant degrades while new bone forms and replaces the porous implant. However, despite the effort made on tissue growth modeling, such coupling can be complicated to accomplish in a mechanistic manner due to specific technical difficulties. In this section, these challenges are briefly reviewed. 
+Coupling our biodegradation model \cite{Barzegari2021} with the developed tissue growth model in this chapter could have been a milestone of the current Ph.D. thesis, where the neotissue is produced by the cells seeded on a biodegradable scaffold. Another interesting example could be using biodegradable porous implants in bone healing applications (similar to the model presented in Chapter \ref{ch:cup}), in which the implant degrades while new bone forms and replaces the porous implant. However, despite the effort made on tissue growth modeling, such coupling can be complicated to accomplish in a mechanistic manner due to specific technical difficulties. In this section, these challenges are briefly reviewed.
 
 Both the biodegradation and the tissue growth models are free boundary problems, in which an interface capturing method (phase-field or level-set for the tissue growth and level-set for the biodegradation) was used to track the movement of a boundary. The moving boundary in the biodegradation model is the corrosion front, the interface between the metallic part and the surrounding environment, which can be a static electrolyte in immersion tests or circulated solutions in a perfusion setup. Various mass transfer boundary conditions are defined on this boundary \cite{Barzegari2021}, meaning that the boundary conditions are not fixed and move with the evolution of the surface. In other words, the boundary conditions of a set of equations are defined on the solution of one of the governing equations of the model (level-set equation), which is one of the challenging parts of the implementation of that model. On the other hand, the moving boundary in the tissue growth model is the surface of the formed neotissue, the interface between the neotissue and the surrounding environment in the bioreactor, which is considered as the void space since there is no tissue in that region. Coupling these two models requires defining the moving boundary problem of neotissue growth on the solution of the interface capturing of the biodegradation model. Regardless of using the same technique for both problems or using separate methods for each problem, such coupling can be quite challenging from the implementation perspective.
 
@@ -379,8 +379,8 @@ The second problem is related to the behavior of neotissue formation after coupl
 
 
 \begin{figure}
-\medskip
 \centering
+\medskip
 \includegraphics[width=\textwidth]{coupling_challenge.jpg}
 \caption[Schematic presentation of coupled neotissue growth and biodegradation models]{Schematic presentation of coupled neotissue growth and biodegradation models (implemented using phase-field and level-set methods respectively): A) initial state of the system with level-set ($\psi$) and phase-field ($\phi$) variables dividing the domain for the biodegradation and neotissue growth models, respectively, B) the state of the system after some time steps, in which the biodegradation shrinks the scaffold to the left, the neotissue grows to the right, and a new area emerges between the scaffold and the neotissue.}
 \label{fig:tissue_coupling_challenge}
@@ -389,7 +389,7 @@ The second problem is related to the behavior of neotissue formation after coupl
 The next challenge would be the validation of the coupled model. In addition to the necessity mentioned above for performing dedicated experiments to observe the actual behavior of tissue growth on biodegradable scaffolds, such experiments are crucial to validate the model from a quantitative point of view. Doing these experimental studies seems to be challenging and resource-demanding because both the qualitative behavior and quantitative measurements should be recorded. The qualitative behavior is crucial to observe how tissue growth reacts to the shrinkage of the material underneath, while the quantitative output of the experiments can be directly used to validate the rate of degradation and neotissue formation predicted by the coupled model. Such resource-demanding experiments were never planned as part of this Ph.D., and as a result, the coupled models could not be easily validated.
 
 
-A suitable workaround for the aforementioned challenges can be coupling the biodegradation model with a simpler tissue growth model in the first place. A simpler model here implies that it does not include an interface tracking sub-model, for which the above challenges may appear in the implementation. An example of such simplified coupling is the work of Byrne et al. \cite{Byrne2007}, in which random walk algorithms were used to model neotissue differentiation, scaffold degradation, and their coupled effect phenomenologically. Another example of a more straightforward model is Carlier et al. work \cite{Carlier2012,Carlier2016}, in which they solved a set of taxis-diffusion-reaction \gls{PDE}s describing the evolution of biochemical factors, cells, and extracellular matrices to model the healing process, assuming the entire domain is already occupied by some form of tissue (no void space). Due to the lack of interface capturing, such a model is easier to integrate with the biodegradation model. This approach can be more difficult to validate, but it comes with the advantage of a more straightforward implementation. Looking at the time scales of the both processes however, several weeks for neotissue filling of a 3D porous scaffold of 6 mm cube and several months to years for the degradation of the same scaffold (depending on composition and circumstances), a practical work-around might be to decouple them. This would mean first simulating the neotissue growth until complete filling and only then considering scaffold degradation which focuses all the attention on the zone between the tissue and the scaffold.  
+A suitable workaround for the aforementioned challenges can be coupling the biodegradation model with a simpler tissue growth model in the first place. A simpler model here implies that it does not include an interface tracking sub-model, for which the above challenges may appear in the implementation. An example of such simplified coupling is the work of Byrne et al. \cite{Byrne2007}, in which random walk algorithms were used to model neotissue differentiation, scaffold degradation, and their coupled effect phenomenologically. Another example of a more straightforward model is Carlier et al. work \cite{Carlier2012,Carlier2016}, in which they solved a set of taxis-diffusion-reaction \gls{PDE}s describing the evolution of biochemical factors, cells, and extracellular matrices to model the healing process, assuming the entire domain is already occupied by some form of tissue (no void space). Due to the lack of interface capturing, such a model is easier to integrate with the biodegradation model. This approach can be more difficult to validate, but it comes with the advantage of a more straightforward implementation. Looking at the time scales of the both processes however, several weeks for neotissue filling of a 3D porous scaffold of 6 mm cube and several months to years for the degradation of the same scaffold (depending on composition and circumstances), a practical work-around might be to decouple them. This would mean first simulating the neotissue growth until complete filling and only then considering scaffold degradation which focuses all the attention on the zone between the tissue and the scaffold.
 
 
 %\begin{subappendices}
@@ -412,8 +412,6 @@ A suitable workaround for the aforementioned challenges can be coupling the biod
 %\end{subappendices}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Keep the following \cleardoublepage at the end of this file, 
+% Keep the following \cleardoublepage at the end of this file,
 % otherwise \includeonly includes empty pages.
 \cleardoublepage
-
-

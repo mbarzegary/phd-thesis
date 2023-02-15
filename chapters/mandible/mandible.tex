@@ -18,6 +18,7 @@ The use of biodegradable metals to support tissue regeneration is mentioned in v
 
 \begin{figure}[ht]
     \centering
+    \medskip
     \includegraphics[width=0.86\textwidth]{MechanicalIntegrityTissueStrength.png}
     \caption[The change in mechanical integrity of the implant and tissue strength over time]{The change in mechanical integrity of the implant and tissue strength over time (adapted from \cite{KChen}).}
     \label{fig:rateofdeg}
@@ -25,14 +26,15 @@ The use of biodegradable metals to support tissue regeneration is mentioned in v
 
 \begin{figure}[ht]
     \centering
+    \medskip
     \includegraphics[width=0.8\textwidth]{ModelCoupling.png}
     \caption{Coupling of the models and indication of software used.}
     \label{fig:ModelCoupling}
 \end{figure}
 
-The mandible is the second most frequently fractured bone of the face and the tenth most frequently fractured bone of the body \cite{Bhavik}. Common causes for a mandible fracture are violence, car crashes and sports. It occurs more frequently in males than females and most often between the ages of 16 and 30. The weakest section of the mandible is the angle because there is an abrupt change in direction between the mandibular body and the ascending ramus, both in the sagittal and transverse planes, resulting in the involvement of the mandibular angle in up to 28.5\% of jaw fractures \cite{Levy}. The most common treatment of mandible fractures is with a mandibular fixation plate (further referred to as jaw plate) to stabilize the fracture and allow the healing process to take place. Though the plate is traditionally made of an inert implant material (e.g., titanium), biodegradable materials are explored to take advantage of the aforementioned benefits. 
+The mandible is the second most frequently fractured bone of the face and the tenth most frequently fractured bone of the body \cite{Bhavik}. Common causes for a mandible fracture are violence, car crashes and sports. It occurs more frequently in males than females and most often between the ages of 16 and 30. The weakest section of the mandible is the angle because there is an abrupt change in direction between the mandibular body and the ascending ramus, both in the sagittal and transverse planes, resulting in the involvement of the mandibular angle in up to 28.5\% of jaw fractures \cite{Levy}. The most common treatment of mandible fractures is with a mandibular fixation plate (further referred to as jaw plate) to stabilize the fracture and allow the healing process to take place. Though the plate is traditionally made of an inert implant material (e.g., titanium), biodegradable materials are explored to take advantage of the aforementioned benefits.
 
-Computational models provide useful tools for designing plates and studying the implant-bone complex given their ability to simultaneously capture the mechanics and mechanisms of both the plate degradation and bone regeneration. Multiple studies reported in the literature focus on the biological processes after mandibular surgery, the design of the implant or its degradation separately and we refer to the reader to \cite{Vautrin2021}, \cite{Zheng2019}, \cite{Wu2020}, \cite{Boccaccio2008} and references within for an overview of those models. The combination of concurrent implant biodegradation and bone regeneration has been developed for long bones by Mehboob et al. \cite{Mehboob2015} and by Ma et al. \cite{Ma2018} while Vautrin et al. developed a combined biodegradation and tissue regeneration model in the context of orthognatic surgery \cite{Vautrin2021}. The bone healing algorithm of the latter was based on the model that Alierta et al. developed, but was generalized to be applicable to a larger fracture gap \cite{Alierta2013}. It modeled the growth of the contribution of cartilage and bone to the mechanical properties of each element within the fracture gap based on the principal element strains under physiological loading. The biodegradation algorithm was limited to being phenomenological to reduce the computational cost. It included only localized corrosion by incorporating a random pitting corrosion algorithm. 
+Computational models provide useful tools for designing plates and studying the implant-bone complex given their ability to simultaneously capture the mechanics and mechanisms of both the plate degradation and bone regeneration. Multiple studies reported in the literature focus on the biological processes after mandibular surgery, the design of the implant or its degradation separately and we refer to the reader to \cite{Vautrin2021}, \cite{Zheng2019}, \cite{Wu2020}, \cite{Boccaccio2008} and references within for an overview of those models. The combination of concurrent implant biodegradation and bone regeneration has been developed for long bones by Mehboob et al. \cite{Mehboob2015} and by Ma et al. \cite{Ma2018} while Vautrin et al. developed a combined biodegradation and tissue regeneration model in the context of orthognatic surgery \cite{Vautrin2021}. The bone healing algorithm of the latter was based on the model that Alierta et al. developed, but was generalized to be applicable to a larger fracture gap \cite{Alierta2013}. It modeled the growth of the contribution of cartilage and bone to the mechanical properties of each element within the fracture gap based on the principal element strains under physiological loading. The biodegradation algorithm was limited to being phenomenological to reduce the computational cost. It included only localized corrosion by incorporating a random pitting corrosion algorithm.
 
 In this study, we started from an in-house developed biodegradation algorithm based on the chemistry of biodegradation of WE43 and combined it with a phenomenological bone regeneration algorithm. We used this combination of models to investigate the impact of biodegradation on the strength of the jaw plate. Additionally, we looked into the effect of the number of plate holes left unscrewed on the overall mechanics.
 
@@ -46,6 +48,7 @@ The implant simulated in this study was a jaw plate, shown in Fig. \ref{fig:jawP
 
 \begin{figure}[h]
     \centering
+    \medskip
     \includegraphics[width=\textwidth]{jawPlateDim.png}
     \caption[Indication of dimensions and screws placement on the jaw plate]{Jaw plate. a) Indication of inner (screw hole) radius $R_i$, outer radius $R_o$, height $H$ and length $L$ and boundary conditions for the five-screw case (red indicates the region where a fixed boundary condition is applied, blue indicates the region where a displacement boundary condition is applied, accompanied by arrows for direction). b) Different angle showing the depth of the jaw plate. c) Indication of screw placement in the three different cases.}
     \label{fig:jawPlateDim}
@@ -53,6 +56,7 @@ The implant simulated in this study was a jaw plate, shown in Fig. \ref{fig:jawP
 
 \begin{figure}[h]
     \centering
+    \medskip
     \includegraphics[width=0.7\textwidth]{MandibleForceLeverArm.PNG}
     \caption{Mandible with indication of fracture line, jaw plate, lever arm and load}
     \label{fig:MandibleForceLeverArm}
@@ -65,7 +69,7 @@ The implant simulated in this study was a jaw plate, shown in Fig. \ref{fig:jawP
 
 The biodegradation process was modeled as a set of partial differential equations (\gls{PDE}s), formulating the mass transfer phenomena as well as tracking the location of the surface of the implant during degradation as described in \cite{Barzegari2021} and summarized below. For the mass transfer model, a system of time-dependent reaction-diffusion PDEs was derived from the underlying oxidation-reduction reactions in simulated body fluid (\gls{SBF}) solutions. This includes the oxidation of the metallic part, reduction of water and oxygen, changes in pH, the effect of different ions in the medium, and formation of a protective film on the surface of the scaffold, slowing down the rate of degradation. Additionally, investigating the structural changes of implants requires monitoring the morphological changes, which was achieved by tracking the movement of the corrosion front. This was done by constructing an equation based on the Level Set formalism, capturing the movement of the environment-implant interface by defining an implicit surface. So, the zero-iso contour of this implicit Level Set function determines the surface of the implant. The derived equations were coupled and solved implicitly using the finite element method, implemented in FreeFEM \cite{Hecht2012}. Experimental data to validate the developed biodegradation model were collected from immersion tests of simple blocks. Details on model implementation and validation can be found in \cite{Barzegari2021}.
 
-The material properties, including the diffusion coefficient of various contributing ions and reaction rates were set to mimic the degradation condition in \gls{SBF} solutions, which are buffered solutions designed to mimic the \textit{in vivo} environment of implants and medical devices \textit{in vitro}. The preferred values for \gls{SBF} solutions as well as the process for obtaining them is described in detail in our previous work \cite{Barzegari2021}. 
+The material properties, including the diffusion coefficient of various contributing ions and reaction rates were set to mimic the degradation condition in \gls{SBF} solutions, which are buffered solutions designed to mimic the \textit{in vivo} environment of implants and medical devices \textit{in vitro}. The preferred values for \gls{SBF} solutions as well as the process for obtaining them is described in detail in our previous work \cite{Barzegari2021}.
 
 The mesh was refined adaptively on the corrosion front to increase the numerical accuracy of the interface tracking equation, leading to a computational-intensive model. So, in order to increase performance and reduce the simulation time, the code was parallelized in a way that the computation could be distributed across several computing nodes. This was mainly achieved using domain decomposition techniques and high-performance solvers. More information about this efficient implementation as well as a performance analysis of the model is presented in previous work \cite{Barzegari2022}. For the biodegradation simulation in this study, the jaw plate was embedded into a cubic container acting as the surrounding environment. The mesh refinement on the metal bulk interface lead to a mesh comprising of 19,924,153 elements and 3,316,135 degrees of freedom (\gls{DOF}) for each PDE. The biodegradation simulation was carried out using 170 computing cores on the Flemish Supercomputer VSC.
 
@@ -87,7 +91,7 @@ Sensitivity analyses were performed on various parameters of the explicit dynami
 \small
 \begin{tabular}{|l|r|ccccc|}
 \hline
-                   & \textbf{Time after im-}          &            &             &             &              &              \\ 
+                   & \textbf{Time after im-}          &            &             &             &              &              \\
                    & \textbf{plantation{[}days{]}}    & \textbf{0} & \textbf{28} & \textbf{77} & \textbf{124} & \textbf{170} \\ \hline
 Geometrical para-  & \textbf{Depth{[}mm{]}}           & 1          & 0.95        & 0.9         & 0.85         & 0.8          \\
 meters obtained    & \textbf{H{[}mm{]}}               & 4          & 3.95        & 3.9         & 3.85         & 3.8          \\
@@ -112,6 +116,7 @@ Fig. \ref{fig:MandibleCrossSec}a shows a cross-section of the jaw plate at the l
 
 \begin{figure}[h]
     \centering
+    \medskip
     \includegraphics[width=0.7\textwidth]{MandibleCrossSec.png}
     \caption[Cross-sections as used for the beam theory analysis]{Cross-sections as used for the beam theory analysis. a) Cross-section of the jaw plate (indicated with JP in the figure) around the third hole (arbitrary, break does not always occur around this hole) with indication of height ($h_{JP}$) and width ($w_{JP}$) as they are used in the beam theory equations (merged to one rectangle with height $h_{JP}$ and width $w_{JP}$). b) Cross-section of the mandibular body and approximation of this cross-section with simple geometries. $w_{o,bone}$ and $h_{o,bone}$ are the outer width and height of the cross-section, respectively. $t_{cortical}$ is the thickness of the cortical bone.}
     \label{fig:MandibleCrossSec}
@@ -150,7 +155,9 @@ The biodegradation simulation results were used to derive the changes in geometr
 The simulation of 120 days of the degradation of the jaw bone plate took 18 hours to run using 170 computing cores. Fig. \ref{fig:results_degradation} shows the visualized interface and magnesium ions release during the corrosion process. It also depicts the mass loss of the bone plate in the \gls{SBF} solution over time as well as the geometries used to perform the mechanical analysis at predefined time points.
 
 \begin{figure}[t]
-\center \includegraphics[width=13cm]{results_degradation.jpg}
+\centering
+\medskip
+\includegraphics[width=13cm]{results_degradation.jpg}
 \caption[Simulation results of the degradation model of the jaw bone plate]{Simulation results. (a) A cross-section of the computational mesh and simulation results of the degradation model of the jaw bone plate in Simlated Body Fluid solution as well as (b) the mass loss graph over time. (c) Degradation of the plate over time. The contours display the concentration of magnesium ions on a cross-section view of the medium beside the moving surface of the bone plate at days 1, 40, 80 and 120. The gray surface is the zero iso-contour of the Level Set function, which corresponds to the surface of the bone plate.} \label{fig:results_degradation}
 \end{figure}
 
@@ -163,7 +170,7 @@ All models for the tensile tests had a mesh size chosen to ensure presence of fo
 The results from the sensitivity analyses showed that the mass scaling and the use of multiple processors for computation had no impact on the force-displacement curves. The maximum degradation (the point at which an element is removed from the analysis as its load-bearing capacities have diminished due to plastic deformation) only caused changes in the force-displacement curve after the maximum force had been reached, and hence did not impact the maximum bearable force. The displacement at failure and the mesh size, however, did have a strong impact on the resulting force-displacement curves. The maximum bearable force was drastically increased with an increased value of the displacement at failure. Changing the mesh size (i.e. size of the mesh elements) led to the opposite behavior: the maximum force was lower with a larger value of the mesh size. The relationship between both was identified and the numerical misbehavior could be eliminated by adjusting the displacement at failure to the mesh size according to the following general relationship:
 
 \begin{equation}
-X_{DAF}=0.6^{log_{0.5}(X_{mesh})} 
+X_{DAF}=0.6^{log_{0.5}(X_{mesh})}
 \end{equation}
 
 \noindent $X_{DAF}$ is the factor with which the \gls{DAF} value should be multiplied when the global mesh size is multiplied with $X_{mesh}$.
@@ -176,6 +183,7 @@ The location of the neutral axis was analyzed for the base-line set-up (five-scr
 
 \begin{figure}[h]
     \centering
+    \medskip
     \includegraphics[width=0.8\textwidth]{force_displacement.png}
     \caption{Results of tensile test on jaw plate with five screws with different amounts of corrosion}
     \label{fig:forcedisp}
@@ -183,6 +191,7 @@ The location of the neutral axis was analyzed for the base-line set-up (five-scr
 
 \begin{figure}[h]
     \centering
+    \medskip
     \includegraphics[width=0.8\textwidth]{force_time.png}
     \caption[Estimation of load occurrence as a function of time after implantation for five-screw set-up]{Estimation of load occurrence as a function of time after implantation (days) for five-screw set-up. Maximal force that can be carried by the jaw plate in the different set-ups modeled in this study (same plate, fixed with 5, 4 or 2 screws) calculated at days 28, 77, 124 and 170.}
     \label{fig:forcetime}
@@ -198,7 +207,7 @@ In this work, a coupled mechanical-degradation model was presented to study the 
 
 The use of a "universal" jaw plate with multiple holes allows the jaw plate to be used in various situations involving mandible fractures. Depending on the exact location of fracture lines and the presence of stronger and weaker sections of bone, the amount and placement of screws can be decided upon by the surgeon. The downside to this is that the differences in mechanical behavior and the change thereof as a result of corrosion between the different cases (5/4/2 screws) can lead to unexpected results if not anticipated correctly by the jaw plate designer and the surgeon. The insertion of screws close to the fracture line was found to be an independent predictive risk factor for implant breakage \cite{Lv2017}. Plates with additional (unused) holes were also found to have an increased risk of breakage. A patient-specific jaw plate can be designed to meet a specific mechanical behavior. As proposed by Lv et al. \cite{Lv2017}, plates should be designed without holes close to the fracture line. The placement of holes can then be a design element for obtaining the desired mechanical behavior of the jaw plate (over time).
 
-The results of the strength simulations provided useful knowledge about the limits in terms of the mechanical strength of the jaw plate and how that evolved during the biodegradation process. Matched with an accurate characterization of the loading, the point at which the jaw plate fails could be predicted. The loading on the jaw plate was derived from the maximal biting force during eating with plate failure occurring if this maximal biting force would be exerted after the point at which the strength curve falls below the loading curve. In practice, the strength of the jaw plate and the way in which this evolves during the biodegradation process are influenced by a range of parameters. Most of these are related to the situation/patient: mandible dimensions, bone properties, fracture line geometry, etc. Others are, however, free to be chosen by the implant designer: the jaw plate material and geometry, the location, the number of screws, etc. Certain restrictions on what food may be eaten by the patient for a certain time period can be given to reduce the maximal biting force and preventive measures should be implemented to avoid bruxism during this period. 
+The results of the strength simulations provided useful knowledge about the limits in terms of the mechanical strength of the jaw plate and how that evolved during the biodegradation process. Matched with an accurate characterization of the loading, the point at which the jaw plate fails could be predicted. The loading on the jaw plate was derived from the maximal biting force during eating with plate failure occurring if this maximal biting force would be exerted after the point at which the strength curve falls below the loading curve. In practice, the strength of the jaw plate and the way in which this evolves during the biodegradation process are influenced by a range of parameters. Most of these are related to the situation/patient: mandible dimensions, bone properties, fracture line geometry, etc. Others are, however, free to be chosen by the implant designer: the jaw plate material and geometry, the location, the number of screws, etc. Certain restrictions on what food may be eaten by the patient for a certain time period can be given to reduce the maximal biting force and preventive measures should be implemented to avoid bruxism during this period.
 
 This study has some limitations. First of, the separate analysis of mechanical behavior of and loading on the implant are simplified compared to a structural mechanics model of the entire mandible with jaw plate. This would more accurately capture the loading on the bone-implant complex, including loading modes that deviate from the purely tensile loading as assumed in this study. Secondly, the biodegradation algorithm does not account for pitting corrosion. Since the reality of corrosion always involves a combination of localized and uniform corrosion, adding the localized corrosion to the simulations will be a relevant extension. Third, the results from the biodegradation simulation were simplified to geometry changes based on mass loss data, instead of on its direct output. Fourth, the bone healing algorithm was also simplified to linear increases in E-modulus of the bone in the fracture area. Finally, while looking at the relative change in force values led to interesting conclusions, the absolute values of the results obtained in this study were not validated. Manufacturing real samples, immersing them in \gls{SBF}, and objecting them to a tensile test would give \textit{in vitro} results that can be compared to the simulation predictions.
 
@@ -241,11 +250,11 @@ Volume=InitialVolume\cdot  \frac{100-MassLoss(\%)}{100}
 \section{Beam theory equations}
 \label{sec:beamtheory}
 
-\noindent The formulas in this appendix were based on the book 'Advanced Mechanics of Materials and Applied Elasticity' by Ugural and Fenster \cite{beamtheory}. The mandibular body behaved as a beam and as a result the moment $M$ in the fracture as a result of the load was given by: 
+\noindent The formulas in this appendix were based on the book 'Advanced Mechanics of Materials and Applied Elasticity' by Ugural and Fenster \cite{beamtheory}. The mandibular body behaved as a beam and as a result the moment $M$ in the fracture as a result of the load was given by:
 
 \begin{equation}
 M=lever arm\cdot load
-\end{equation} 
+\end{equation}
 
 \subsection{Neutral axis}
 
@@ -258,7 +267,7 @@ h_{i,bone}=h_{o,bone}-2t_{cortical}
 w_{i,bone}=w_{o,bone}-2t_{cortical}
 \end{equation}
 
-\noindent The relevant dimensions of the jaw plate (abbreviated as JP) cross-section were the height ($h_{JP}$) and the width ($h_{JP}$). The two individual rectangles were treated as one, since this made no difference in the calculations. As mentioned above, the widths of the trabecular bone and the jaw plate were adjusted: 
+\noindent The relevant dimensions of the jaw plate (abbreviated as JP) cross-section were the height ($h_{JP}$) and the width ($h_{JP}$). The two individual rectangles were treated as one, since this made no difference in the calculations. As mentioned above, the widths of the trabecular bone and the jaw plate were adjusted:
 
 \begin{equation}
 w'_{i,bone}=w_{i,bone}\cdot \frac{E_{trab.bone}}{E_{cort.bone}}
