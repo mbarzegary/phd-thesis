@@ -108,7 +108,7 @@ Since the film is a porous layer and allows the ions to diffuse through it, the 
 D_{\mathrm{Mg}}^{e}=D_{\mathrm{Mg}}\left(\left(1-\frac{C_{\mathrm{Film}}}{[\mathrm{Film}]_{\max }}\right)+\frac{C_{\mathrm{Film}}}{[\mathrm{Film}]_{\max }} \frac{\epsilon}{\tau}\right).
 \end{equation}
 
-\subsection{Level set method}
+\subsection{Level-set method}
 
 The level set method is a methodology that allows moving interfaces to be described by an implicit function. In other words, the boundaries of domains can be tracked as a function instead of being explicitly defined. In the level set method, a signed distance function, $\phi = \phi(x,y,z,t)$, describes the distance of each point in space to the interface, and the zero iso-contour of this function implies the interface \cite{RonaldFedkiw2002}. In the current study, this function was defined in a way that divides the domain into two subdomains: 1) the bulk material, in which the implicit function is positive ($\phi > 0$), and 2) the medium, in which the function is negative ($\phi < 0$). The interface is defined as the points in space where $\phi = 0$. Fig. \ref{fig:level_set_domain} shows a schematic representation of the solid-medium interface in the current study, in which the interface moves as the material degrades over time.
 
