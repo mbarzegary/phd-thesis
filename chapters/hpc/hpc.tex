@@ -153,7 +153,7 @@ Eq. \ref{eq:lsm_final_parallel} is the final formulation of the level set equati
 
 The developed mathematical model comprised of Eqs. \ref{eq:pde_mg_parallel}, \ref{eq:pde_film_parallel}, and \ref{eq:lsm_final_parallel} cannot be solved using analytical techniques. The alternative approach in these scenarios is solving the derived \gls{PDE}s numerically. In this study, we used a combination of finite element and finite difference methods to solve the aforementioned equations. In the developed numerical model, the \gls{PDE}s are solved one by one, each of which is a linear equation, so the model implementation follows the principles of solving linear systems. In the following section, only the process to obtain the solution of Eq. \ref{eq:pde_mg_parallel} is described in detail, but the other \gls{PDE}s were solved using the same principle. Although the adopted finite element method is standard, we elaborate on its derivation to clarify the bottlenecks of the later-discussed implementation.
 
-\subsection{Finite element discretization (bottleneck of the algorithm)}
+\subsection[Finite element discretization]{Finite element discretization (bottleneck of the algorithm)}
 
 In order to solve Eq. \ref{eq:pde_mg_parallel} numerically, we used a finite difference scheme for the temporal term and a finite element formulation for the spatial terms. For simplicity of writing, notations of variables are changed, so $C_\mathrm{Mg}$ is represented as $u$ (the main unknown state variable to find), $C_\mathrm{Film}$ is denoted by $p$, $[\mathrm{Cl}]$ is denoted by $q$, and the saturation term $(1-\frac{F}{F_{\max }})$ is denoted by $s$. By doing this, Eq. \ref{eq:pde_mg_parallel} can be written as
 \begin{equation} \label{eq:pde_changed_not}
@@ -323,7 +323,7 @@ Krylov methods have been frequently used by researchers as robust iterative appr
 In order to yield the highest performance, a variety of different combinations of \gls{KSP} types and preconditioners were evaluated, such as Conjugate Gradients (\gls{CG}) \cite{hestenes1952}, Successive Over-Relaxation (\gls{SOR}) \cite{habetler1961}, block Jacobi, and Algebraic Multigrid (\gls{AMG}) \cite{mccormick1987}, to name a few. The performance tests results are presented in the appendix section of this chapter. The best performance for the reaction-diffusion system model was achieved using the HYPRE preconditioner \cite{Falgout2002} and the \gls{GMRES} solver \cite{Saad1986}. This was the combination used for all the performance analysis tests.
 
 
-\subsection{Level set issues}  \label{sec:hpc_ls_issues}
+\subsection{Level-set issues}  \label{sec:hpc_ls_issues}
 
 
 As mentioned before, in order to track the interface of the bulk material and the surrounding fluid, an implicit signed distance function is defined as the solution of Eq. \ref{eq:lsm_final_parallel}. This equation can be solved using the aforementioned finite element discretization, but in a practical implementation, there are usually a couple of problems associated with this \gls{PDE}.
@@ -493,7 +493,7 @@ The investigated problem was the degradation of a magnesium block inside a solut
 
 \begin{subappendices}
 
-\section{Comparing the performance of different combinations of \gls{KSP} types and preconditioners}
+\section[Comparing the performance of different preconditioners]{Comparing the performance of different combinations of \gls{KSP} types and preconditioners}
 In order to yield the highest performance, a variety of different
 combinations of \gls{KSP} types and preconditioners were evaluated, such
 as Conjugate Gradients (\gls{CG}), Successive Over-Relaxation (\gls{SOR}),
@@ -506,7 +506,7 @@ block Jacobi, and Algebraic Multigrid (\gls{AMG}), and Generalized Minimal Resid
 \caption[Performance test result for various preconditioners and solvers]{Performance test result for various combinations of preconditioners and solvers. Results are broken down into contributions  for each \gls{PDE}, which are plotted  cumulatively and separately in the left and right plots, respectively.} \label{fig:compare_precond}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \medskip
 \caption[Performance test result for various preconditioners and solvers]{Performance test result for various combinations of preconditioners and solvers, presented by the execution time of each \gls{PDE}.}
@@ -521,8 +521,10 @@ block Jacobi, and Algebraic Multigrid (\gls{AMG}), and Generalized Minimal Resid
 \multicolumn{2}{c}{Total time (s)}                                                                               & 7.6 & 9.0 & 6.8 & 8.9 & 9.0 & 9.8  & 7.6 & 7.8 \\
 \bottomrule
 \end{tabular}
+\vspace{128in}
 \label{tab:compare_precond}
 \end{table}
+
 
 \end{subappendices}
 
