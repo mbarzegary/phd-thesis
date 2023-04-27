@@ -5,13 +5,13 @@ In this chapter, the developed biodegradation model in chapter \ref{ch:core} is 
 
 \section{Introduction}
 
-Mg-based alloys are called revolutionary metals in biomedical applications \cite{Shuai2019}, but in order to take advantage of these materials in bone tissue engineering applications, their degradation parameters should be tuned to the bone regeneration rate. One approach to investigating biodegradation behavior is to construct computational models to assess the biodegradation properties prior to conducting any \textit{in vitro} or \textit{in vivo} tests. In addition to degradation tuning, these models can be used for evaluating the mechanical integrity of the implants, which can be considered an important application in bone tissue engineering. 
+Mg-based alloys are called revolutionary metals in biomedical applications \cite{Shuai2019}, but in order to take advantage of these materials in bone tissue engineering applications, their degradation parameters should be tuned to the bone regeneration rate. One approach to investigating biodegradation behavior is to construct computational models to assess the biodegradation properties prior to conducting any \textit{in vitro} or \textit{in vivo} tests. In addition to degradation tuning, these models can be used for evaluating the mechanical integrity of the implants, which can be considered an important application in bone tissue engineering.
 
-Mechanical integrity can be studied via the change of mechanical properties of the implant over time, an example of which is the stiffness variations of the implant while the degradation takes place. In this chapter, the stiffness change of porous structures during the biodegradation process is investigated by coupling the degradation model and a mechanical analysis model. Such coupling allows studying the correlation of variations in different quantities in both models, such as the effect of mass loss on the structure's compliance and, as a result, on the stiffness. 
+Mechanical integrity can be studied via the change of mechanical properties of the implant over time, an example of which is the stiffness variations of the implant while the degradation takes place. In this chapter, the stiffness change of porous structures during the biodegradation process is investigated by coupling the degradation model and a mechanical analysis model. Such coupling allows studying the correlation of variations in different quantities in both models, such as the effect of mass loss on the structure's compliance and, as a result, on the stiffness.
 
 \newglossaryentry{TO}{name={TO},description={topology optimization}}
 
-Porous (or partially porous) structures are frequently used in biomedical applications due to their attractive properties , one of which is to allow more interaction between the implant and the body environment \cite{Birmingham2012}. A bone implant with a proper lattice structure manufactured with functionally graded materials can improve the healing process of bone defects \cite{Mahmoud2017}. In this chapter, the investigated porous structures are created using a topology optimization (\gls{TO}) routine, in which a set of different volume constraints leads to different final infill shapes. 
+Porous (or partially porous) structures are frequently used in biomedical applications due to their attractive properties , one of which is to allow more interaction between the implant and the body environment \cite{Birmingham2012}. A bone implant with a proper lattice structure manufactured with functionally graded materials can improve the healing process of bone defects \cite{Mahmoud2017}. In this chapter, the investigated porous structures are created using a topology optimization (\gls{TO}) routine, in which a set of different volume constraints leads to different final infill shapes.
 
 Performing \gls{TO} on degrading structures has been rarely studied, the reason for which is the difficulty of evaluating the sensitivity of the optimization models in the presence of complex biodegradation mechanisms. Zhang et al. \cite{Zhang2021} presented such a model for a simplified degradation mechanism in which a constant mass loss from the surface was considered in a sophisticated level-set based \gls{TO} to mimic the biodegradation process. In their later work \cite{Zhang2021a}, they enhanced their implementation from the \gls{TO} perspective by extending and verifying it in the microscopic scale for stiffness changeable composite structures. Despite the technical difficulty, the model presented in this chapter can be a first step toward building a coupled model for designing implants by optimizing the structure with the biodegradation tuning taken into account. In this model, the change in the compliance of the degrading structure is calculated in each step of the degradation simulation, making it possible to use it later as the objective function of the \gls{TO} process to consider the effect of biodegradation.
 
@@ -39,7 +39,7 @@ In order to prepare the optimized lattices for the biodegradation simulations, t
 
 \subsection{Biodegradation simulation}\label{section:biodegradation}
 
-The output of the \gls{TO} process for both cases is shown in Fig. \ref{fig:infill_final_cases} (the evolution of the shape to get these lattice structures is discussed later in section \ref{section:infill_results}). Since there is no space surrounding the optimized shapes, this output was embedded in a bigger domain for the biodegradation simulation. For doing this, the output level-set function of the \gls{TO} process was mapped on the mesh of a bigger domain, transforming it into the level-set function of the biodegradation simulation, which is used to track the change in the morphology of the degrading object. 
+The output of the \gls{TO} process for both cases is shown in Fig. \ref{fig:infill_final_cases} (the evolution of the shape to get these lattice structures is discussed later in section \ref{section:infill_results}). Since there is no space surrounding the optimized shapes, this output was embedded in a bigger domain for the biodegradation simulation. For doing this, the output level-set function of the \gls{TO} process was mapped on the mesh of a bigger domain, transforming it into the level-set function of the biodegradation simulation, which is used to track the change in the morphology of the degrading object.
 
 \begin{figure}[h]
 \centering
@@ -48,7 +48,7 @@ The output of the \gls{TO} process for both cases is shown in Fig. \ref{fig:infi
 \caption[Topology optimization output to be used in the biodegradation simulations]{Topology optimization output to be used in the biodegradation simulations. The black region depicts the optimized material distribution, and the gray zone is the void space. } \label{fig:infill_final_cases}
 \end{figure}
 
-The biodegradation simulation was performed using the developed mechanistic model of biodegradation (chapter \ref{ch:core} and \cite{Barzegari2021}), in which the chemistry of the corrosion process is converted to a set of partial differential equations. The derived \gls{PDE}s are solved using the finite element method implemented in FreeFEM. After mapping the level-set function of the \gls{TO} process to that of the biodegradation model, the computational mesh was refined on the interface of the degrading lattice to increase the accuracy of the interface capturing method, the result of which is demonstrated in Fig. \ref{fig:infill_mesh}.
+The biodegradation simulation was performed using the developed mechanistic model of biodegradation (Chapter \ref{ch:core} and \cite{Barzegari2021}), in which the chemistry of the corrosion process is converted to a set of partial differential equations. The derived \gls{PDE}s are solved using the finite element method implemented in FreeFEM. After mapping the level-set function of the \gls{TO} process to that of the biodegradation model, the computational mesh was refined on the interface of the degrading lattice to increase the accuracy of the interface capturing method, the result of which is demonstrated in Fig. \ref{fig:infill_mesh}.
 
 
 \begin{figure}[h]
@@ -58,13 +58,13 @@ The biodegradation simulation was performed using the developed mechanistic mode
 \caption[Computational mesh for the biodegradation simulations]{Computational mesh for the biodegradation simulations resulted from mapping the \gls{TO} process output to a bigger domain and refining the mesh on the surface of the lattice. The lower row shows the zoomed view of the regions denoted by the dashed rectangle.} \label{fig:infill_mesh}
 \end{figure}
 
-The change in the stiffness of the structure was measured during the biodegradation process by applying the boundary condition illustrated in Fig. \ref{fig:infill_domain}. The stiffness was calculated as the inverse of the compliance computed using Eq. \ref{Eq: G'}, which is the sensitivity criterion used for the \gls{TO} process. The biodegradation simulations were performed in three different diffusion regimes (high, low, and medium) in order to investigate the effect of the corrosive environment. 
+The change in the stiffness of the structure was measured during the biodegradation process by applying the boundary condition illustrated in Fig. \ref{fig:infill_domain}. The stiffness was calculated as the inverse of the compliance computed using Eq. \ref{Eq: G'}, which is the sensitivity criterion used for the \gls{TO} process. The biodegradation simulations were performed in three different diffusion regimes (high, low, and medium) in order to investigate the effect of the corrosive environment.
 
 
 
 \section{Results and discussion}\label{section:infill_results}
 
-The coupled biodegradation and structural mechanics models were constructed using the output of the \gls{TO} procedure. Fig. \ref{fig:infill_case1_to_steps} shows the temporary evolving shapes of the infilled structures during the optimization process for case 1, each of which is taken by skipping 40 intermediate steps. Fig. \ref{fig:infill_case2_to_steps} shows a similar 2D visualization for case 2. As mentioned in Section \ref{Section: numerical examples}, the difference between these two cases is related to the applied constraints, where a local volume constraint and a global volume constraint were assigned for case 1 and case 2, respectively. 
+The coupled biodegradation and structural mechanics models were constructed using the output of the \gls{TO} procedure. Fig. \ref{fig:infill_case1_to_steps} shows the temporary evolving shapes of the infilled structures during the optimization process for case 1, each of which is taken by skipping 40 intermediate steps. Fig. \ref{fig:infill_case2_to_steps} shows a similar 2D visualization for case 2. As mentioned in Section \ref{Section: numerical examples}, the difference between these two cases is related to the applied constraints, where a local volume constraint and a global volume constraint were assigned for case 1 and case 2, respectively.
 
 
 \begin{figure}[h]
@@ -94,7 +94,7 @@ Fig. \ref{fig:infill_degradation_stiffness} shows the quantitative results of bo
 
 Case 2 has a higher initial stiffness due to more constitutive materials, but it is also subject to a higher loss of stiffness in the investigated time window compared to case 1 in the high diffusion model (Fig. \ref{fig:infill_degradation_stiffness}). In the first place, this effect may seem to be related to a higher degradation rate and loss of material, i.e., more exposed surfaces to corrosion. However, the mass loss plots show the opposite, where the degradation rate of case 1 is higher in the simulated time window. This observation is more complicated for the medium diffusion regime ($D=0.01$), in which both the drop in stiffness and mass loss are higher for case 1. In low diffusion, both cases show similar behavior. Although not quantitatively validated, these observations demonstrate the necessity of this study, where the mutual effect of biodegradation and the structural characteristics can be investigated to find out the variability of these structural parameters in respect to different degradation parameters. In this study, the effect of only one degradation parameter (diffusion rate) was tested, but the analysis should be further extended by performing sophisticated \gls{VVUQ} analysis on various biodegradation parameters such as the reaction rates. Moreover, the interplay of various parameters can be included in the \gls{TO} process such that the change of morphology of the structure due to biodegradation is taken into account for computing the compliance (TO objective function), yielding more accurate optimization of the morphology of the implants.
 
-Fig. \ref{fig:infill_results_mechanics} demonstrate what the qualitative results of the coupled model look like, in which the infilled part undergoes the degradation and mechanical loading simultaneously. The green surface results from the mechanical analysis, visualized by bending the part according to the computed deformation vector in each node. The light gray surface is the degradation object visualized without bending, showing the change of the morphology due to biodegradation (by comparing the green and gray objects), while the release of the metallic ions is also depicted. The red region shows the release of Mg ions to the surrounding medium, moving the biodegradation interface by shrinkage. This visualization demonstrates the result of the applied boundary condition depicted in Fig. \ref{fig:infill_domain}, where a load is applied to the circumference of the right hole, and the left hole is fixed. These boundary conditions were also used for the \gls{TO} process to get the optimized morphology of the infilled structures. 
+Fig. \ref{fig:infill_results_mechanics} demonstrate what the qualitative results of the coupled model look like, in which the infilled part undergoes the degradation and mechanical loading simultaneously. The green surface results from the mechanical analysis, visualized by bending the part according to the computed deformation vector in each node. The light gray surface is the degradation object visualized without bending, showing the change of the morphology due to biodegradation (by comparing the green and gray objects), while the release of the metallic ions is also depicted. The red region shows the release of Mg ions to the surrounding medium, moving the biodegradation interface by shrinkage. This visualization demonstrates the result of the applied boundary condition depicted in Fig. \ref{fig:infill_domain}, where a load is applied to the circumference of the right hole, and the left hole is fixed. These boundary conditions were also used for the \gls{TO} process to get the optimized morphology of the infilled structures.
 
 
 \begin{figure}[h]
@@ -104,7 +104,7 @@ Fig. \ref{fig:infill_results_mechanics} demonstrate what the qualitative results
 \caption[Coupled model results showing the structural analysis taking place during biodegradation simulation]{Coupled model results showing the structural analysis taking place during the biodegradation simulation. The green surface shows the deformed infilled structure, and the light gray surface is the state of the morphology during biodegradation. The contour part shows the concentration of metallic ions as being released from the surface of the degrading part.} \label{fig:infill_results_mechanics}
 \end{figure}
 
-In order to visualize the biodegradation only, the green surface is removed from Fig. \ref{fig:infill_results_mechanics}, and the results are plotted at various time points during the process. Figs. \ref{fig:infill_results_degradation_case1} and \ref{fig:infill_results_degradation_case2} show such visualization for case 1 and case 2, respectively, showing how the metallic ions are released during the biodegradation process, in which the surface of the degrading part is depicted in light gray. From the biodegradation perspective, the biggest difference between the two studied cases is the exposed surface area, which is higher for case 1, as can be seen in these figures. This fact impacts the degradation rate (Fig. \ref{fig:infill_degradation_stiffness}), leading to a higher loss of material in case 1 in the same simulation time period. However, another crucial aspect to consider is the saturation of the holes disconnected from the bulk electrolyte, where the released materials get accumulate since there is no way for them to spread away. This accumulation prevents further corrosion in the developed biodegradation model because the level-set formulation for the movement of the degradation front works based on the gradient of the concentration of released materials. The absence of gradient caused by the accumulation impacts the rate of degradation, as can be seen in Fig. \ref{fig:infill_degradation_stiffness}, in which the rate of materials loss tends to slow down for case 1. This behavior is more dominant in the high diffusion regime, meaning that the effect can be observed in earlier stages. On the other side, the material loss curve for case 2 shows a semi-linear behavior tending to increase and achieve stability in later stages in comparison to case 1, due to bigger holes in the optimized structure. 
+In order to visualize the biodegradation only, the green surface is removed from Fig. \ref{fig:infill_results_mechanics}, and the results are plotted at various time points during the process. Figs. \ref{fig:infill_results_degradation_case1} and \ref{fig:infill_results_degradation_case2} show such visualization for case 1 and case 2, respectively, showing how the metallic ions are released during the biodegradation process, in which the surface of the degrading part is depicted in light gray. From the biodegradation perspective, the biggest difference between the two studied cases is the exposed surface area, which is higher for case 1, as can be seen in these figures. This fact impacts the degradation rate (Fig. \ref{fig:infill_degradation_stiffness}), leading to a higher loss of material in case 1 in the same simulation time period. However, another crucial aspect to consider is the saturation of the holes disconnected from the bulk electrolyte, where the released materials get accumulate since there is no way for them to spread away. This accumulation prevents further corrosion in the developed biodegradation model because the level-set formulation for the movement of the degradation front works based on the gradient of the concentration of released materials. The absence of gradient caused by the accumulation impacts the rate of degradation, as can be seen in Fig. \ref{fig:infill_degradation_stiffness}, in which the rate of materials loss tends to slow down for case 1. This behavior is more dominant in the high diffusion regime, meaning that the effect can be observed in earlier stages. On the other side, the material loss curve for case 2 shows a semi-linear behavior tending to increase and achieve stability in later stages in comparison to case 1, due to bigger holes in the optimized structure.
 
 \begin{figure}[h]
 \centering
@@ -157,7 +157,7 @@ For the basic concept of the level-set-based \gls{TO} method, we followed the wo
 		{-1 \leq \phi(\boldsymbol{x})<0} & {\text { for } \boldsymbol{x} \in \Omega \backslash \Omega_{s}},
 	\end{array}\right.
 \end{equation}
-in which the solid--void interface $\partial \Omega_{s}$ can be represented by the zero level-set iso-surface.  
+in which the solid--void interface $\partial \Omega_{s}$ can be represented by the zero level-set iso-surface.
 
 Next, using a Heaviside step function, the material field can be modeled using a ``1/0 binary structure'' by the projection of the level-set function $\phi(\mathbf{x})$ to the characteristic function $\chi_{\phi}$ as
 \begin{equation}
@@ -175,24 +175,24 @@ Using the Ersatz material approach, the material properties inside the computati
 	\end{array}\right.
 	\label{eq: reaction diffusion equation semi discretize}
 \end{equation}
-where $\boldsymbol{n}$ is the unit normal vector, $\mathcal{F}'$ is the topological design sensitivity, $\tilde{C}$ is the normalizer for the sensitivity, and $\tau$ is the regularization parameter, which can be used to control the complexity of the optimal configuration. The subscript $n$ indicates the fictitious time step. For more details, the reader is referred to the work of Li et al. \cite{li2021full}. 
+where $\boldsymbol{n}$ is the unit normal vector, $\mathcal{F}'$ is the topological design sensitivity, $\tilde{C}$ is the normalizer for the sensitivity, and $\tau$ is the regularization parameter, which can be used to control the complexity of the optimal configuration. The subscript $n$ indicates the fictitious time step. For more details, the reader is referred to the work of Li et al. \cite{li2021full}.
 
 \subsection{Maximum length-scale constraint}\label{Section: Maximum length-scale constraint}
 A geometrical constraint is introduced to generate feature-rich structures observed in a natural system such as the trabecular bone. Here, we adopt the idea of Wu et al.\ \cite{wu2017infill} by imposing a maximum allowable volume fraction to the local averaged value of the characteristic function, $\bar{\chi}$. To approximate the maximum value of $\bar{\chi}_i$, we use the $p$-norm function as
 \begin{equation} \label{eq:infill_vmax_1}
-\max_{\forall i} \left(\bar{\chi}_i \right) \approx  
+\max_{\forall i} \left(\bar{\chi}_i \right) \approx
 \|\bar{\chi}_i \|_{p}=\left(\sum_i^n \bar{\chi}_{i}^{p}\right)^{1/p}
-\leq \left( \sum_{i}^n \bar{V}_{\max}^p \right)^{1/p}, 
+\leq \left( \sum_{i}^n \bar{V}_{\max}^p \right)^{1/p},
 \end{equation}
 which can be rewritten as
 \begin{equation} \label{eq:infill_vmax_2}
 \left(\dfrac{1}{n} \sum_{i} \bar{\chi}_{i}^{p}\right)^{1 / p} \leq \bar{V}_{\max },
 \end{equation}
-where $n$ is the total number of vertices and $p=10$ in this chapter \cite{li2021full}. Note that in FreeFEM \cite{Hecht2012}, the software package used to solve the derived system, the design variable, i.e. the characteristic function, is defined on the nodes of each element. $ \bar{V}_{\max }$ is the maximum allowable local volume fraction. 
+where $n$ is the total number of vertices and $p=10$ in this chapter \cite{li2021full}. Note that in FreeFEM \cite{Hecht2012}, the software package used to solve the derived system, the design variable, i.e. the characteristic function, is defined on the nodes of each element. $ \bar{V}_{\max }$ is the maximum allowable local volume fraction.
 
 Then, we use a \gls{PDE}-filter\ \cite{lazarov2011filters,kawamoto2011heaviside} to compute the local average value $\bar{\chi}$, as
 \begin{equation}
-	\left\{\begin{aligned}	
+	\left\{\begin{aligned}
 		& -r^2 \nabla^2 \bar{\chi} +  \bar{\chi} =  \chi & \text{ in } \Omega \\
 		& \nabla \bar{\chi} \cdot \boldsymbol{n} = 0 & \text{ on } \partial \Omega,
 	\end{aligned}\right.
@@ -233,7 +233,7 @@ where $\Gamma$ is the boundary, $\mathbb{C}$ the fourth-order elasticity tensor,
 \begin{equation}
 	\mathbb{C}_{\chi_{\phi}} = \chi_{\phi} \left(\mathbb{C}_{\text{s}} - \mathbb{C}_{\text{v}} \right) + \mathbb{C}_{\text{v}},
 \end{equation}
-where $\mathbb{C}_{\text{s}}$ and $\mathbb{C}_{\text{v}}$ are the constitutive tensors for solid and void materials, respectively. 
+where $\mathbb{C}_{\text{s}}$ and $\mathbb{C}_{\text{v}}$ are the constitutive tensors for solid and void materials, respectively.
 
 As it is well-known that the mean compliance problem is self-adjoint, the topological design sensitivity can be derived as
 \begin{equation}
@@ -244,7 +244,7 @@ where $\lambda_{1}$ and $\lambda_{2}$ are the Lagrange multipliers associated wi
 
 The sensitivity associated with the local volume constraint (denoted by $\mathcal{G}'$) is computed as the solution of the following system of equations:
 \begin{equation}
-	\left\{\begin{aligned}	
+	\left\{\begin{aligned}
 		& -r^2 \nabla^2 \mathcal{G}' +  \mathcal{G}' =  \dfrac{\partial G_2}{\partial \bar{\chi}} & \text{ in } \Omega \\
 		& \nabla\mathcal{G}' \cdot \boldsymbol{n} = 0 & \text{ on } \partial \Omega.
 	\end{aligned}\right.
@@ -258,8 +258,6 @@ The sensitivity associated with the local volume constraint (denoted by $\mathca
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Keep the following \cleardoublepage at the end of this file, 
+% Keep the following \cleardoublepage at the end of this file,
 % otherwise \includeonly includes empty pages.
 \cleardoublepage
-
-
