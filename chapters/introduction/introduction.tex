@@ -112,6 +112,7 @@ The term "simulated body fluid" is generally used to refer to solutions containi
 
 There are various evaluation techniques for measuring the degradation rate of Mg, among which the weight loss, hydrogen evolution, potentiodynamic polarization, and electrochemical impedance spectroscopy are the commonly used ones. Generally speaking, the method used for evaluating the degradation rate can affect the reported behavior. For example, it has been shown that in \gls{HBSS}, the measured corrosion rate of Mg is lower (slower) when evaluated using hydrogen evolution in comparison to the rate found by direct weight loss measurements \cite{Johnston2015,Johnston2019}, which can be due to the secondary dissolution of evolved hydrogen. Moreover, oxygen consumption due to secondary \gls{ORR} can affect the volume of evolved gas, which is more significant for media with slower degradation rates such as \gls{HBSS} and \gls{MEM} \cite{Wang2020}. Table \ref{tab:methods_intro} summarizes the advantages and shortcomings of widely used techniques for measuring degradation rate \cite{Mei2020}. 
 
+Discussing the degradation rate of Mg-based materials can be tricky because as mentioned before, the measurement method and the employed solution can influence the measured degradation rate \cite{Pogorielov2017}. However, certain studies have performed this quantitative measurement using different representative media for \textit{in vivo} conditions, resulting in different reported values. The corrosion rate for pure Mg in \gls{EBSS} was reported to be $0.39 \text{ mm.year}^{-1}$ \cite{Walker2012}, but in \gls{SBF} and \gls{HBSS}, the reported values are $1.39$ \cite{Gu2009} and $2.05 \text{ mm.year}^{-1}$ \cite{Abidin2013}, respectively. Alloying Mg and adding Ca-P coating seems to decrease the degradation rate to $0.25 \text{ mm.year}^{-1}$ in \gls{HBSS} \cite{Wang2011} and $1.88 \text{ mm.year}^{-1}$ in \gls{SBF} \cite{Barfield2012}, although no direct correlation between alloying compounds and the degradation rate has been found yet \cite{Sanchez2015}.
 
 \begin{table}[h]
 \caption[Summary of various common methods to assess the degradation rate of Mg]{Summary of various common methods to assess the degradation rate of Mg \cite{Mei2020}}
@@ -155,8 +156,6 @@ Among the relevant studies, mass transfer-related models were more successful in
 \newglossaryentry{LSM}{name={LSM},description={level-set method}}
 
 One of the important applications of biodegradation models is to investigate the change of shape and morphology of the implants and medical devices over time. To this end, appropriate interface capturing methods should be used to track the corrosion interface during the biodegradation process. Bajger et al. developed a mathematical model to study the degradation of Mg implants by reaction-diffusion equations and level-set method (\gls{LSM}), which enabled them to track the geometrical changes of the implant during degradation \cite{Bajger2016}. Similarly, Sanz-Herrera et al. developed a comprehensive computational model as a tool for Mg implant design \cite{Sanz-Herrera2018}. They combined multiple diffusion-reaction equations to study the change of concentration of the chemical components that play an essential role in \textit{in vitro} biodegradation of Mg implants. A summary of the studies mentioned above is represented in Table \ref{tab:intro_review}. The reader is encouraged to refer to \cite{Albaraghtheh2022} for a more complete list of recent published mechanistic and phenomenological models of the biodegradation process of Mg-based implants.
-
-\clearpage
 
 \newglossaryentry{FVM}{name={FVM},description={finite volume method}}
 \newglossaryentry{FEM}{name={FEM},description={finite element method}}
@@ -261,8 +260,6 @@ Artery &
 \end{tabular}}
 \label{tab:intro_review}
 \end{table}
-
-\clearpage
 
 The approach taken by Bajger et al. was followed in the current thesis, in which an improved model was developed by considering more chemical components and phenomena, allowing us to perform a more accurate validation using \textit{in vitro} data. Although the biodegradation models are getting more mature and more promising for simulating experimental situations, their integration into other models, such as mechanical stability analysis or neotissue growth, to construct fully-coupled models has remained a challenge. Solving this challenge will enable future models to replicate complex \textit{in vivo} conditions more accurately \textit{in silico}.
 
