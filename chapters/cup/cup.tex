@@ -99,7 +99,7 @@ Fig. \ref{fig:cup_degradation_rate} shows the mass loss during the biodegradatio
 \begin{figure}[h]
 \centering
 \medskip
-\includegraphics[width=0.9\textwidth]{degradation_rate.png}
+\includegraphics[width=0.7\textwidth]{degradation_rate.png}
 \caption[Biodegradation rate for the acetabular implant]{Rate of mass loss during the biodegradation of the porous acetabular implant in saline and buffered solutions.} \label{fig:cup_degradation_rate}
 \end{figure}
 
@@ -133,13 +133,13 @@ The results of the strong scaling tests are plotted in Fig. \ref{fig:cup_strong_
 \caption[Strong scaling of individual and combined components of the biodegradation model]{Strong scaling of the computational model, performed using the small, medium, and large mesh for the solution of individual and combined equations of the biodegradation model (Chapter \ref{ch:core}), in which the execution time is plotted in the logarithmic scale versus the varying \gls{CPU} cores.} \label{fig:cup_strong_scaling}
 \end{figure}
 
-\clearpage
+%\clearpage
 
 As can be seen in the strong scaling results, different \gls{PDE}s show different scaling behavior, the most distinct of which belongs to the OH equation used to calculate the pH change in the surrounding environment. The different scaling behavior is rooted in the boundary conditions used for each equation. They impact the formation of the linear system of equations and appear in the scaling results due to the penalization technique used to implement boundary conditions.
 
 The strong scaling test shows that the optimal size for the distributed computing environment is \num{5000} \gls{CPU} cores, above which no significant improvement in the execution time was observed in all three tested problem sizes. However, the scaling behavior of models slightly differs depending on the size. As expected, in problems with smaller size, the costs associated with inter nodes communication become effective faster in comparison to bigger models, and as a result, increasing the number of nodes becomes useless in earlier stages in these model sizes. This fact can be seen in the cumulative strong scaling plots (the plot in the bottom right), where the graph for the small model tends to reach a vertical line slightly faster in comparison to the graph for the big model.
 
-Fig. \ref{fig:cup_weak_strong} shows the results of the strong and weak scaling tests side by side. As can be seen in the weak scaling result, the model shows an ideal scaling behavior in environments with less than \num{1000} cores. The system shows non-ideal behavior with more \gls{CPU} cores than this, as can be observed in strong scaling results, in which adding more \gls{CPU} cores does not cause a linear drop in the execution time (wall time).
+Fig. \ref{fig:cup_weak_strong} shows the results of the strong and weak scaling tests side by side. As can be seen in the weak scaling result, the model shows an ideal scaling behavior in environments with less than \num{1000} cores. The system shows non-ideal behavior with more \gls{CPU} cores than this, as can be observed in strong scaling results, in which adding more \gls{CPU} cores does not cause a linear drop in the execution time (wall time). The parallel efficiency graphs plotted in Fig. \ref{fig:cup_efficiency} show this behavior more clearly, which are calculated from the strong scaling results.
 
 The weak and strong scaling results clearly indicate that the code can be improved from the performance point of view. Given the current state of \gls{HPC} for biomedical-related simulations and computational modeling works,  even taking 10K \gls{CPU} cores is not unrealistic. The first part of improvement seems to be related to assembling the linear system, in which the schemes used for numerical integration, the order of elements used for various involved physics, and the method for applying boundary conditions play an essential role. Secondly, the configuration of employed preconditioners and iterative solvers can be modified for individual components according to the numerical computing requirements, which can affect their scaling behavior (Fig. \ref{fig:cup_strong_scaling}). However, making a more tangible conclusion on the performance bottlenecks of the developed model requires further analysis of the results for the parallel speedup, similar to the analysis performed in Chapter \ref{ch:hpc} and \cite{Barzegari2022}. Furthermore, it should be taken into account that such performance analysis has an inherent simplification of more complex technical aspects affecting the simulation execution time, such as load balancing, network communication, and per-node limitations in memory access, which may differ in each \gls{HPC} environment due to the configurations made by the system maintainers.
 
@@ -148,6 +148,13 @@ The weak and strong scaling results clearly indicate that the code can be improv
 \medskip
 \includegraphics[width=\textwidth]{weak_strong.png}
 \caption[Weak and strong scaling of the acetabular implant model]{Weak and strong scaling of the computational biodegradation model of the acetabular implant, plotted for the total time needed to solve all the equations in a single time step.} \label{fig:cup_weak_strong}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\medskip
+\includegraphics[width=0.7\textwidth]{efficiency.png}
+\caption[Parallel efficiency of the acetabular implant model]{Parallel efficiency calculated from the strong scaling results of the computational biodegradation model of the acetabular implant, plotted separately for the small, medium and big models.} \label{fig:cup_efficiency}
 \end{figure}
 
 
