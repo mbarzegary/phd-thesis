@@ -404,6 +404,11 @@ The next challenge would be the validation of the coupled model. In addition to 
 
 A suitable workaround for the aforementioned challenges can be coupling the biodegradation model with a simpler tissue growth model in the first place. A simpler model here implies that it does not include an interface tracking sub-model, for which the above challenges may appear in the implementation. An example of such simplified coupling is the work of Byrne et al. \cite{Byrne2007}, in which random walk algorithms were used to model neotissue differentiation, scaffold degradation, and their coupled effect phenomenologically. Another example of a more straightforward model is Carlier et al. work \cite{Carlier2012,Carlier2016}, in which they solved a set of taxis-diffusion-reaction \gls{PDE}s describing the evolution of biochemical factors, cells, and extracellular matrices to model the healing process, assuming the entire domain is already occupied by some form of tissue (no void space). Due to the lack of interface capturing, such a model is easier to integrate with the biodegradation model. This approach can be more difficult to validate, but it comes with the advantage of a more straightforward implementation. Looking at the time scales of the both processes however, several weeks for neotissue filling of a 3D porous scaffold of 6 mm cube and several months to years for the degradation of the same scaffold (depending on composition and circumstances), a practical work-around might be to decouple them. This would mean first simulating the neotissue growth until complete filling and only then considering scaffold degradation which focuses all the attention on the zone between the tissue and the scaffold.
 
+\section{Conclusion}
+
+In this chapter, two curvature-driven models of the neotissue growth process were developed using the phase-field and level-set interface tracking methods. The models were used in various 2D and 3D growth simulations with cells seeded on the circumference of basic geometrical primitives, showing the similarities and differences between the phase-field and level-set methods.
+
+
 %\begin{subappendices}
 %
 %\section{Implementing the phase-field model using physics-informed neural networks}
