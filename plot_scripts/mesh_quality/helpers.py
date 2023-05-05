@@ -37,10 +37,10 @@ def process_case(case_name):
     aspect_ratio, aspect_ratio_elements = load_aspect_ratio(f"{case_name}_aspect_ratio_3d.txt")
     gamma, gamma_elements = load_gamma(f"{case_name}_gamma.txt")
 
-    plot_fig(ax[0], aspect_ratio, aspect_ratio_elements, None, 'blue', '', 1.0, None, 5)
+    plot_fig(ax[0], aspect_ratio, aspect_ratio_elements, 'o', 'blue', '', 1.0, None, 5)
     ax[0].set_xlabel("Aspect ratio")
 
-    plot_fig(ax[1], gamma, gamma_elements, None, 'orange', '', 1.0, None, 5)
+    plot_fig(ax[1], gamma, gamma_elements, 'o', 'orange', '', 1.0, None, 5)
     ax[1].set_xlabel("Gamma")
 
     for i, axes in enumerate(ax.flat):
