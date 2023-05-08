@@ -310,7 +310,7 @@ The initial configuration of the phase-field variable and level-set distance fun
 The derived weak forms were implemented using FreeFEM open-source \gls{PDE} solver \cite{Hecht2012}. An Eulerian computational mesh for each simulation was constructed by generating tetrahedral elements using the internal mesh generator of FreeFEM, called BAMG. To decrease run time and increase the performance of the simulation, the mesh was partitioned using  METIS graph partitioner \cite{METIS1998} and \gls{HPDDM} preconditioner \cite{Jolivet2013}, available in FreeFEM and the \gls{PETSc} toolkit \cite{petsc}. Moreover, the efficiency was boosted by using the HYPRE BoomerAMG preconditioner \cite{Falgout2002} and the \gls{GMRES} iterative solver \cite{Saad1986} of the \gls{PETSc} toolkit.
 
 
-\section{Results and Discussion}
+\section{Results and discussion}
 
 In the current study, various 2D and 3D cases for the simulation of curvature-based neotissue formation were prepared and separately simulated using the phase-field and level-set models. The cases were a square and a semi-circle for 2D simulations, mimicking the situation in which cells were homogeneously seeded onto the scaffold to initiate the production of extracellular matrix. Similarly, a 3D cube was considered for evaluating the performance of the implementation of both models in 3D. Additionally, the level-set model was used to simulate cell proliferation on TMPS scaffolds with quantitative measurements being carried out for the percentage and filling rate of generation of neotissue.
 
