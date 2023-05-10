@@ -1,0 +1,107 @@
+%\documentclass[showinstructions,faculty=firw,department=wtk,phddegree=wtk]{adsphd}
+%\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,doctoralschool=ads]{adsphd}
+%\documentclass[showinstructions,showlabels,coverfontpercent=100,faculty=firw,department=cws,phddegree=cws]{adsphd}
+%\documentclass[croppedpdf,showinstructions,faculty=firw,department=cws,phddegree=cws]{adsphd}
+\documentclass[cam,cover,final,faculty=firw,department=wtk,phddegree=wtk]{adsphd}
+%\documentclass[print,bleed,cropmarks,faculty=firw,department=cws,phddegree=cws]{adsphd} % include bleed for the print service
+%\documentclass[print,faculty=firw,department=cws,phddegree=cws]{adsphd}
+%\documentclass[final,faculty=firw,department=cws,phddegree=cws]{adsphd}
+%\documentclass[showinstructions,faculty=firw,department=cws,phddegree=cws,epub]{adsphd}
+
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!                                                               !!
+% !!  WARNING: do not remove the following lines between           !!
+% !!  "%%% COVER: Settings %%%" and "%%% COVER: End settings %%%"  !!
+% !!                                                               !!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+%%% COVER: Settings %%%
+\title{Mathematical and computational modeling of metallic biomaterials biodegradation}
+%\subtitle{Multiscale computing for Dummies}
+
+\author{Mojtaba}{Barzegari Shankil}
+
+\supervisor{Prof.~dr.~ir.~L.~Geris}{}
+\president{Prof.~dr.~ir.~O.~Van~der~Biest}{}
+\jurymember{Prof.~dr.~ir.~H.~Van~Oosterwyck}{}
+\jurymember{Prof.~dr.~ir.~N.~Moelans}{}
+\jurymember{Prof.~dr.~ir.~J.~Vander~Sloten}{}
+\externaljurymember{Prof.~dr.~G.~Závodszky}{University of Amsterdam}
+\externaljurymember{Prof.~dr.~R.~Willumeit-Römer}{Helmholtz-Zentrum Geesthacht}
+
+% Your research group within the department
+% e.g. iMinds-DistriNet, Scientific Computing Group, ...
+\researchgroup{Biomechanics Section}
+\website{} % Leave empty to hide
+\email{} % Leave empty to hide
+
+\address{Celestijnenlaan 300 box 2419}
+% \addresscity{B-3001 Leuven} % This is the default value. Note
+                              % that 'B-3001 Heverlee' is _incorrect_!!
+                              % /[https://www.kuleuven.be/communicatie/marketing/intranet/huisstijl/taalgebruik.html]
+
+\date{June 2023}
+\copyyear{2023}
+%\udc{XXX.XX}            % UDC, deposit number and ISBN are no longer necessary.
+%\depot{XXXX/XXXX/XX}    % Leave out the initial D/ (it is added
+                         % automatically)
+%\isbn{XXX-XX-XXXX-XXX-X}
+
+
+% Set spine width:
+\setlength{\adsphdspinewidth}{17mm}
+
+%% Set bleeds
+%\setlength{\defaultlbleed}{7mm}
+%\setlength{\defaultrbleed}{7mm}
+
+% Compute total page width
+\newlength{\fullpagewidth}
+\setlength{\fullpagewidth}{2\adsphdpaperwidth}
+\addtolength{\fullpagewidth}{2\defaultlbleed}
+\addtolength{\fullpagewidth}{2\defaultrbleed}
+\addtolength{\fullpagewidth}{\adsphdspinewidth}
+
+\geometry{
+	paperwidth=\fullpagewidth,
+	paperheight=\adsphdpaperheight,
+}
+
+
+\pagestyle{empty}
+
+% Set custom cover page
+% \setcustomcoverpage{mycoverpage.tex} % mycoverpage.tex is the default
+
+%%% COVER: End settings %%%
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makefullcoverpage{\adsphdspinewidth}{115mm}
+
+%\mbox{}
+%\newpage
+%\subsection*{Used settings:}
+%\begin{itemize}
+%	\item Total width: \printlength{\fullpagewidth}\\
+%	\item Spine width: \printlength{\adsphdspinewidth}\\
+%	\item Left bleed: \printlength{\lbleed}\\
+%	\item Right bleed: \printlength{\rbleed}\\
+%	\item Paper width: \printlength{\adsphdpaperwidth}\\
+%	\item Paper height: \printlength{\adsphdpaperheight}\\
+%	\item Text width: \printlength{\textwidth}\\
+%	\item Text height: \printlength{\textheight}\\
+%\end{itemize}
+
+\end{document}
+
