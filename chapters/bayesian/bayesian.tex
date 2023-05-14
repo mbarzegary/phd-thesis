@@ -64,9 +64,11 @@ The learning material is provided as a single Jupyter notebook, in which all the
 
 To get started with the module, the user should set up the environment first. The setup instructions are provided in the \texttt{README.md} file of the repository. After setting up the Jupyter notebook and installing the required packages, the user can navigate to the \texttt{src} folder and run the notebook file. No further action is needed as the content of the notebook is self-explanatory and easy-to-follow.
 
-\section{Acknowledgements}
+\clearpage
 
-This research is financially supported by the Prosperos project, funded by the Interreg VA Flanders – The Netherlands program, CCI grant no. 2014TC16RFCB046 and by the Fund for Scientific Research Flanders (FWO), grant G085018N. We acknowledge support from the European Research Council under the European Union's Horizon 2020 research and innovation programmen, ERC CoG 772418.
+%\section{Acknowledgements}
+%
+%This research is financially supported by the Prosperos project, funded by the Interreg VA Flanders – The Netherlands program, CCI grant no. 2014TC16RFCB046 and by the Fund for Scientific Research Flanders (FWO), grant G085018N. We acknowledge support from the European Research Council under the European Union's Horizon 2020 research and innovation programmen, ERC CoG 772418.
 
 
 \begin{subappendices}
@@ -87,7 +89,7 @@ Back to our example problem, our objective function will be the difference betwe
 
 \subsection{Bayesian optimization}
 
-To describe how the Bayesian optimization approach helps us to overcome the problem mentioned above, I use the great description made by @WillKoehrsen\footnote{\url{https://github.com/WillKoehrsen}}. I cannot explain it better (you can find the full interactive document at\\ \url{https://github.com/WillKoehrsen/hyperparameter-optimization}:
+To describe how the Bayesian optimization approach helps us to overcome the problem mentioned above, I use the great description made by @WillKoehrsen\footnote{\url{https://github.com/WillKoehrsen}}. I cannot explain it better (you can find the full interactive document at\\ \url{https://github.com/WillKoehrsen/hyperparameter-optimization}):
 
 \begin{itshape}
 Evaluating the objective function is the expensive part of optimization, so ideally, we want to limit calls to this function. One way we can limit calls is by choosing the next values to try in the objective function based on the past results. Bayesian optimization differs from random or grid search by doing exactly this: rather than just selecting from a grid uninformed by past objective function evaluations, Bayesian methods take into account the previous results to try more promising values. They work by constructing a probability model of the objective function (called a surrogate function) $p(\text{score} | \text{parameters})$ which is much easier to optimize than the actual objective function. $p (A\mid B)$, the conditional probability, is the probability of A given B, i.e., A after B is observed.
