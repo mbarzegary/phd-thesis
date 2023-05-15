@@ -81,6 +81,8 @@ The coupled biodegradation and structural mechanics models were constructed usin
 \caption[Evolution of the topology optimization level-set function for case 2]{Evolution of the topology optimization level-set function to get the optimized shape for case 2, where only the global volume constraint was imposed.} \label{fig:infill_case2_to_steps}
 \end{figure}
 
+\newglossaryentry{UQ}{name={UQ},description={uncertainty quantification}}
+
 Fig. \ref{fig:infill_degradation_stiffness} shows the quantitative results of both components of the coupled computational model for the investigated cases. On the upper row, the degradation rate is plotted by measuring the mass loss over time, showing how the diffusion rate of the Mg ions affects the rate of biodegradation in this model. On the lower row, the change of the stiffness during the biodegradation is plotted, where the stiffness is calculated by inverting the compliance, the objective function of the \gls{TO} routine calculated in each time step after adjusting the geometry in the presence of degradation. The morphology of the object changes as the degradation continues, leading to an increment in compliance and, subsequently, a decrease in the structure's stiffness. This behavior is adequately captured by the coupled model, demonstrating that the models are correctly coupled. Validating the correct predictions of the model on the quantitative effect of degradation on the strength of the structures requires performing further \gls{UQ} analysis to check the sensitivity of the coupled model to chosen parameters.
 
 \begin{figure}[h]
