@@ -226,7 +226,7 @@ In this section, the numerical solution of the stationary form (Eq. \ref{eq:stat
 \left\{\begin{array}{ll}
 \frac{\partial \phi}{\partial t}-\Delta \phi+\frac{1}{w^{2}} f(\phi)=0, & (x, t) \in \Omega \times(0, T] \\
 \left.\frac{\partial \phi}{\partial n} \right|_{\partial \Omega}=0 \\
-\left.\phi\right|_{t=0}=u_{0}
+\left.\phi\right|_{t=0}=\phi_{0}
 \end{array}\right.
 \end{equation}
 which demonstrates the \gls{PDE}, the boundary condition, and the initial condition of the phase-field variable where $\Omega$ is the domain of interest, $\partial \Omega$ is its boundary, and $T$ is the final time. Deriving the weak formulation of Eq. \ref{eq:fe_problem} is relatively straightforward as it can be seen as a time-dependent diffusion-reaction \gls{PDE}, but the difficulty arises in choosing the numerical stability scheme for discretizing the temporal derivative and dealing with the nonlinearity of $f(\phi)$ when normally the $\frac{1}{w^{2}}$ coefficient is a small number.
@@ -314,7 +314,7 @@ The derived weak forms were implemented using FreeFEM open-source \gls{PDE} solv
 
 In the current study, various 2D and 3D cases for the simulation of curvature-based neotissue formation were prepared and separately simulated using the phase-field and level-set models. The cases were a square and a semi-circle for 2D simulations, mimicking the situation in which cells were homogeneously seeded onto the scaffold to initiate the production of extracellular matrix. Similarly, a 3D cube was considered for evaluating the performance of the implementation of both models in 3D. Additionally, the level-set model was used to simulate cell proliferation on TMPS scaffolds with quantitative measurements being carried out for the percentage and filling rate of generation of neotissue.
 
-The results of neotissue growth model simulations can be visualized by depicting the +1 part of the phase-field variable (Eq. \ref{eq:pf_domains}) and the positive part of the level-set function (Eq. \ref{eq:ls_domains}). Fig. \ref{fig:tissue_simulation_square} demonstrates such a visualization for the phase-field and level-set simulations performed on the square domain. Cells were seeded on the circumstance of the square, and the formation of neotissue was modeled using the evolution of the phase-field variable and level-set function. The light gray region in these figures shows the +1 part of the phase-field variable and the positive part of the level-set function.
+The results of neotissue growth model simulations can be visualized by depicting the +1 part of the phase-field variable (Eq. \ref{eq:pf_domains}) and the positive part of the level-set function (Eq. \ref{eq:ls_domains}). Fig. \ref{fig:tissue_simulation_square} demonstrates such a visualization for the phase-field and level-set simulations performed on the square domain. Cells were seeded on the perimeter of the square, and the formation of neotissue was modeled using the evolution of the phase-field variable and level-set function. The light gray region in these figures shows the +1 part of the phase-field variable and the positive part of the level-set function.
 
 \begin{figure}
 \centering
