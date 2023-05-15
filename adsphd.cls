@@ -1298,6 +1298,13 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   {\sffamily \textcolor{white} {\@faculty}}
   \end{flushright}
   \end{textblock*}
+  
+  % Added for cover picture
+  \begin{textblock*}{125mm}(33mm+#1,82mm)
+  \textblockcolour{}
+  \vspace{-8mm}
+  \includegraphics[width=95mm]{image/coverfigure.jpg}
+  \end{textblock*}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1428,11 +1435,11 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %
   % Place the title and subtitle
   %\typeout{Title position: 17.5mm+\the#1}
-  \begin{textblock*}{135mm}(17.5mm+#1,100mm)
+  \begin{textblock*}{140mm}(20.5mm+#1,50mm)
   \textblockcolour{}
   \vspace{-\parskip}
   \raggedright
-  \coverfontsize{30}{34}\selectfont\sffamily{\color{kulprimaryblue}\@title}\\
+  \coverfontsize{24}{24}\selectfont\sffamily{\color{kulprimaryblue}\@title}\\
   \coverfontsize{20}{25}\selectfont\sffamily{\@subtitle}
   \end{textblock*}
   %
