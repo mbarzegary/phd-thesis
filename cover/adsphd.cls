@@ -1309,9 +1309,9 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   \end{textblock*}
   
   % Added for cover picture
-  \begin{textblock*}{125mm}(40mm+#1,82mm)
+  \begin{textblock*}{125mm}(33mm+#1,82mm)
   \textblockcolour{}
-  \vspace{-10mm}
+  \vspace{-8mm}
   \includegraphics[width=95mm]{image/coverfigure.jpg}
   \end{textblock*}
 }
@@ -1444,7 +1444,7 @@ De appendices kunnen desgevallend worden gebundeld in een apart boekdeel.
   %
   % Place the title and subtitle
   %\typeout{Title position: 17.5mm+\the#1}
-  \begin{textblock*}{140mm}(10.5mm+#1,50mm)
+  \begin{textblock*}{140mm}(20.5mm+#1,50mm)
   \textblockcolour{}
   \vspace{-\parskip}
   \raggedright
