@@ -130,7 +130,7 @@
 \usepackage{multirow}
 \usepackage[group-separator={,}]{siunitx}
 
-\usepackage{appendix}
+\usepackage[page,titletoc]{appendix}
 \usepackage{caption}
 
 \usepackage{cite}
@@ -220,9 +220,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\appendix
+\begin{appendices}
 
 \includeappendix{appendix}
+
+\end{appendices}
 
 \includecv{curriculum}
 
