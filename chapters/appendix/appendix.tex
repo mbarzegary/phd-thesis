@@ -1,21 +1,21 @@
 % !TeX root = ../../thesis.tex
 \chapter{Mesh quality plots}\label{ch:appendix}
 
-This chapter aims to visualize some mesh quality metrics for various 3D mesh geometries used allover the current thesis. Th mesh quality plots show the uniformity of generated meshes considering the applied refinement on the biodegradation interface.
+This appendix aims to visualize some mesh quality metrics for various 3D mesh geometries used throughout the current thesis. The mesh quality plots show the uniformity of generated meshes considering the applied refinement on the biodegradation interface.
 
 \section{Mesh quality metrics}
 
 In finite element simulations, the accuracy and reliability of results are heavily dependent on the quality of the mesh. Mesh quality metrics are therefore used to assess the quality of the mesh before analysis. Some common metrics used to evaluate the quality of a mesh include aspect ratio, skewness, orthogonality, and element size. Aspect ratio measures the ratio of the longest side of an element to the shortest side, while skewness measures the deviation of the element from an ideal shape. Orthogonality measures the angle between adjacent element faces, and element size measures the minimum size of the element. A good mesh should have well-shaped elements, minimal skewness and distortion, and uniform element size distribution.
 
-For measuring the quality of various 3D meshes in the current thesis, two metrics were selected to be measured: Gamma index and aspect ratio, both plotted versus the number of elements sharing the same metric value. The Gamma value, calculated using GMSH, is obtained by dividing the inscribed radius of each element to it circumscribed radius. In GMSH, it is calculated by dividing the volume of each element to the sum of it faces area multiplied by the maximum edge length. 
+For measuring the quality of various 3D meshes in the current thesis, two metrics were selected to be measured: Gamma index and aspect ratio, both plotted versus the number of elements sharing the same metric value. The Gamma value, calculated using GMSH, is obtained by dividing the inscribed radius of each element to it circumscribed radius. In GMSH, it is calculated by dividing the volume of each element to the sum of the area of its faces, multiplied by the maximum edge length. 
 
 Aspect ratio measures the ratio of the longest edge of an element to the shortest edge length and is used to assess the distortion of the element. A high aspect ratio indicates that the element is highly distorted and can cause inaccurate results or numerical instability in the simulation. In contrast, a low aspect ratio indicates a more regular shape and a better representation of the geometry being simulated. Generally, a good mesh should have elements with an aspect ratio as close to one as possible, which indicates that the elements are well-shaped and do not deviate significantly from their ideal geometries. 
 
-The aspect ratio measurements were done using SALOME platform. For a  tetrahedral element shown in Fig. \ref{fig:appendix_tetrahedral}, the aspect ratio is calculated as:
+The aspect ratio measurements were done using the SALOME platform. For a  tetrahedral element shown in Fig. \ref{fig:appendix_tetrahedral}, the aspect ratio is calculated as:
 \begin{equation}
 Q=\frac{h_{\max }}{2 \sqrt{6} r},
 \end{equation}
-in which $h_{\max}$ is the maximum edge length ($h_{\max }=\max \left(h_{a b}, h_{a c}, h_{a d}, h_{b c}, h_{b d}, h_{c d}\right)$), and $r$ is the inradius of the tetrahedron, which can be calculated like: 
+in which $h_{\max}$ is the maximum edge length ($h_{\max }=\max \left(h_{a b}, h_{a c}, h_{a d}, h_{b c}, h_{b d}, h_{c d}\right)$), and $r$ is the inradius of the tetrahedron, which can be calculated as follows: 
 \begin{equation}
 r=\frac{|\alpha|}{\left\|N_{\{a, b, c\}}\right\|+\left\|N_{\{a, b, d\}}\right\|+\left\|N_{\{a, c, d\}}\right\|+\left\|N_{\{b, c, d\}}\right\|},
 \end{equation} 
