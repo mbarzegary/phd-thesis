@@ -302,6 +302,6 @@ TSWLatexianTemp*
 #*Notes.bib
 
 # exclude the output file temporarily to save disk space (by avoiding storing the file in each commit)
-thesis.pdf
+# thesis.pdf
 
 __pycache__
