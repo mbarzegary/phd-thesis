@@ -23,7 +23,10 @@ To compile the LaTeX files and generate the final PDF, follow these steps:
 
 ```bash
 xelatex thesis.tex
+makeglossaries thesis
 bibtex thesis
 xelatex thesis.tex
 xelatex thesis.tex
 ```
+
+If you use a LaTeX editor, make sure to build the list of abbreviations by invoking `makeglossaries` or `makeindex` command during the compile process (like by putting `makeindex %.idx %.glo -t %.glg -s %.ist -o %.gls` as a User Command in `Texmaker`). Omit this step if you don't need the list of abbreviations with page numbers.
